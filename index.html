@@ -1,0 +1,3305 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%23302617%27/%3E%3Ctext x=%2732%27 y=%2746%27 font-size=%2738%27 font-family=%27serif%27 text-anchor=%27middle%27 fill=%27%23D4A94E%27%3E%E6%95%A6%3C/text%3E%3C/svg%3E">
+    <title>敦煌遗音 - 千年丝路的音乐回响</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%; height: 100%; overflow: hidden;
+            font-family: "STKaiti", "KaiTi", "FangSong", "Noto Serif SC", "Source Han Serif SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", serif;
+            background: #0a0502; color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #ffe8b0 0%, #c9a050 50%, #ffe8b0 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; filter: drop-shadow(0 0 12px rgba(200,150,50,0.5));
+        }
+        .btn-gold {
+            position: relative; padding: 12px 32px;
+            background: linear-gradient(135deg, rgba(255,200,80,0.15) 0%, rgba(200,150,50,0.25) 100%);
+            border: 1px solid rgba(255,200,80,0.5); border-radius: 4px;
+            color: #ffe8b0; font-size: 16px; letter-spacing: 0.2em;
+            cursor: pointer; transition: all 0.3s ease; font-family: inherit;
+        }
+        .btn-gold:hover {
+            background: linear-gradient(135deg, rgba(255,200,80,0.25) 0%, rgba(200,150,50,0.35) 100%);
+            box-shadow: 0 0 20px rgba(255,200,80,0.3); transform: translateY(-2px);
+        }
+        .scene {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; visibility: hidden;
+            transition: opacity 1.2s cubic-bezier(0.25,0.46,0.45,0.94), visibility 1.2s ease;
+            z-index: 1;
+        }
+        .scene.active { opacity: 1; visibility: visible; z-index: 10; }
+
+        /* ========== 第一幕 ========== */
+        #scene-opening { background: #000; }
+        .opening-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 1s ease; }
+        .opening-video.fade-out { opacity: 0; }
+        .opening-cave-entrance { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.5s ease; }
+        .opening-cave-entrance.show { opacity: 1; }
+        .opening-cave-entrance img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) saturate(1.1); }
+        .opening-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 50% 60%, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%),
+                        linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none; z-index: 2;
+        }
+        .opening-particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; overflow: hidden; opacity: 0; transition: opacity 1s ease; }
+        .opening-particles.show { opacity: 1; }
+        .opening-particle { position: absolute; width: 2px; height: 2px; background: rgba(255,200,80,0.8); border-radius: 50%; box-shadow: 0 0 6px rgba(255,200,80,0.5); animation: openingFloat 10s ease-in-out infinite; }
+        @keyframes openingFloat {
+            0%,100% { transform: translateY(0) translateX(0); opacity: 0; }
+            20% { opacity: 1; } 80% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+        }
+        .opening-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; opacity: 0; visibility: hidden; transition: opacity 1.5s ease, visibility 1.5s ease; overflow: hidden; }
+        .opening-content.show { opacity: 1; visibility: visible; }
+        .opening-title-img { position: absolute; top: 5vh; left: 50%; transform: translateX(-50%); height: 80vh; max-width: 100vw; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
+        .opening-logo-img { position: absolute; top: 46vh; left: 50%; transform: translateX(-50%); height: 18vh; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
+        .opening-explore-btn { position: absolute; top: 65vh; left: 50%; transform: translateX(-50%); width: 55%; max-width: 30vh; height: auto; object-fit: contain; cursor: pointer; transition: transform 0.3s ease; animation: yiBreath 2.6s ease-in-out infinite; }
+        .opening-explore-btn:hover { transform: translateX(-50%) scale(1.05); }
+        @keyframes yiBreath { 0%,100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } }
+
+        /* 封面引入层 */
+        .opening-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 6; opacity: 1; visibility: visible; transition: opacity 1s ease, visibility 1s ease; overflow: hidden; }
+        .opening-cover.hide { opacity: 0; visibility: hidden; }
+        .opening-cover .cover-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .opening-cover .cover-title { position: absolute; top: 5vh; left: 50%; transform: translateX(-50%); height: 80vh; max-width: 100vw; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
+        .opening-cover .cover-logo { position: absolute; top: 46vh; left: 50%; height: 18vh; width: auto; object-fit: contain; animation: coverFloat 2.4s ease-in-out infinite; mix-blend-mode: multiply; cursor: pointer; }
+        .opening-cover .cover-enter { position: absolute; top: 65vh; left: 50%; transform: translateX(-50%); height: 13.5vh; width: auto; max-width: 92%; object-fit: contain; }
+        @keyframes coverFloat { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateX(-50%) translateY(30px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        @keyframes breathe { 0%,100% { box-shadow: 0 0 20px rgba(255,200,80,0.3); } 50% { box-shadow: 0 0 40px rgba(255,200,80,0.6); } }
+        .skip-btn { position: absolute; top: 30px; right: 30px; z-index: 20; padding: 8px 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,200,80,0.3); border-radius: 20px; color: rgba(255,232,176,0.7); font-size: 14px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; backdrop-filter: blur(4px); }
+        .skip-btn:hover { background: rgba(255,200,80,0.1); color: #ffe8b0; border-color: rgba(255,200,80,0.5); }
+        .skip-btn.hidden { opacity: 0; visibility: hidden; }
+
+        /* 音乐开关按钮 */
+        .music-toggle-btn {
+            position: absolute; top: 30px; left: 30px; z-index: 20; width: 44px; height: 44px;
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,200,80,0.3); border-radius: 50%;
+            color: rgba(255,232,176,0.7); font-size: 18px; cursor: pointer; transition: all 0.3s ease;
+            font-family: inherit; backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center;
+        }
+        .music-toggle-btn:hover { background: rgba(255,200,80,0.1); color: #ffe8b0; border-color: rgba(255,200,80,0.5); }
+        .music-toggle-btn.muted { opacity: 0.5; }
+        .music-toggle-btn .music-wave { display: none; }
+        .music-toggle-btn.playing .music-wave { display: block; position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(255,200,80,0.4); animation: musicWave 1.5s ease-out infinite; }
+        @keyframes musicWave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+
+        /* ========== 第二幕 ========== */
+        #scene-second { background: #1a1008; overflow: hidden; }
+        .second-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(180deg, rgba(10,5,2,0.9) 0%, rgba(10,5,2,0.5) 50%, transparent 100%); }
+        .second-header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.4), transparent); }
+        .second-title { font-size: 1.2rem; letter-spacing: 0.3em; position: relative; }
+        .second-title::before, .second-title::after { content: '❋'; font-size: 0.8rem; color: rgba(200,150,50,0.6); margin: 0 12px; vertical-align: middle; }
+        .progress-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; gap: 12px; }
+        .progress-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,200,80,0.3); border: 1px solid rgba(255,200,80,0.5); cursor: pointer; transition: all 0.3s ease; }
+        .progress-dot.active { background: rgba(255,200,80,0.8); box-shadow: 0 0 10px rgba(255,200,80,0.6); transform: scale(1.2); }
+
+        /* 全景漫游容器 */
+        .panorama-viewport { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; touch-action: none; overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
+        .panorama-track { position: absolute; top: 0; left: 0; height: 100%; display: flex; will-change: transform; }
+        .panorama-scene { position: relative; height: 100%; flex-shrink: 0; overflow: hidden; }
+        .panorama-scene .scene-bg-layer { position: absolute; top: 0; left: 0; height: 100%; will-change: transform; }
+        .panorama-scene .scene-bg-layer img { height: 100%; width: auto; max-width: none; display: block; filter: saturate(0.9) contrast(1.05); }
+
+        /* 视差层 */
+        .parallax-far { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #1a1008 0%, #2a1a0c 30%, #25160a 60%, #1a1008 100%); z-index: 1; }
+        .parallax-far::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background-image: radial-gradient(1px 1px at 20% 30%, rgba(255,200,80,0.4), transparent), radial-gradient(1px 1px at 60% 20%, rgba(255,200,80,0.3), transparent), radial-gradient(1px 1px at 80% 40%, rgba(255,200,80,0.5), transparent), radial-gradient(1px 1px at 40% 50%, rgba(255,200,80,0.3), transparent), radial-gradient(1px 1px at 90% 15%, rgba(255,200,80,0.4), transparent); background-size: 200px 200px; animation: twinkle 4s ease-in-out infinite; }
+        @keyframes twinkle { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .parallax-mid { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
+
+        .scene-vignette { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at center, transparent 35%, rgba(8,4,2,0.45) 70%, rgba(4,2,1,0.8) 100%); pointer-events: none; z-index: 5; }
+        .scene-foreground { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
+        .scene-foreground > * { pointer-events: auto; }
+        .scene-text { position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); text-align: center; z-index: 15; }
+        .scene-name { font-size: clamp(1.5rem,4vw,2.5rem); letter-spacing: 0.25em; margin-bottom: 8px; font-weight: normal; }
+        .scene-desc { font-size: clamp(0.8rem,1.5vw,1rem); letter-spacing: 0.2em; color: rgba(220,190,140,0.8); }
+        .scene-hotspot { position: absolute; cursor: pointer; z-index: 20; }
+        .hotspot-pulse { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,200,80,0.5); background: radial-gradient(circle, rgba(255,200,80,0.15) 0%, transparent 60%); animation: hotspotPulse 2s ease-in-out infinite; }
+        .hotspot-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: rgba(255,215,0,0.9); box-shadow: 0 0 12px rgba(255,200,50,0.6), 0 0 24px rgba(255,180,30,0.3); }
+        @keyframes hotspotPulse { 0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 1; } 50% { transform: translate(-50%,-50%) scale(1.5); opacity: 0.5; } }
+        .scene-bottom-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 30%; background: linear-gradient(0deg, rgba(15,8,3,0.65) 0%, transparent 100%); pointer-events: none; z-index: 8; }
+        .scroll-hint { position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 8px; color: rgba(220,190,140,0.6); font-size: 14px; letter-spacing: 0.1em; animation: scrollHint 2s ease-in-out infinite; }
+        .scroll-hint-arrow { width: 20px; height: 2px; background: rgba(255,200,80,0.5); position: relative; }
+        .scroll-hint-arrow::after { content: ''; position: absolute; right: 0; top: -3px; width: 8px; height: 8px; border-top: 2px solid rgba(255,200,80,0.5); border-right: 2px solid rgba(255,200,80,0.5); transform: rotate(45deg); }
+        @keyframes scrollHint { 0%,100% { opacity: 0.6; transform: translateX(-50%) translateX(0); } 50% { opacity: 1; transform: translateX(-50%) translateX(5px); } }
+        .enter-third-btn { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); z-index: 30; display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; opacity: 0; animation: fadeInRight 1s ease 0.5s forwards; }
+        .enter-third-btn-text { font-size: 1rem; letter-spacing: 0.3em; writing-mode: vertical-rl; text-orientation: mixed; }
+        .enter-third-btn-line { width: 2px; height: 60px; background: linear-gradient(180deg, rgba(255,200,80,0.8), transparent); animation: lineGrow 2s ease-in-out infinite; }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateY(-50%) translateX(20px); } to { opacity: 1; transform: translateY(-50%) translateX(0); } }
+        @keyframes lineGrow { 0%,100% { height: 60px; opacity: 0.8; } 50% { height: 80px; opacity: 1; } }
+
+        /* 场景切换过渡 */
+        .panorama-scene { transition: opacity 0.6s ease; }
+        .panorama-scene.active { opacity: 1; }
+        .panorama-scene:not(.active) { opacity: 1; }
+
+        /* 场景内文字提示 */
+        .scene-drag-hint { position: absolute; bottom: 22%; left: 50%; transform: translateX(-50%); font-size: 13px; color: rgba(220,190,140,0.5); letter-spacing: 0.15em; z-index: 15; animation: breathe 2s ease-in-out infinite; opacity: 0; transition: opacity 0.5s ease; }
+        .scene-drag-hint.show { opacity: 1; }
+/* ========== 第三幕：乐舞敦煌（重制·寻乐器） ========== */
+        #scene-third { background: #0a0502; overflow: hidden; }
+        .yi-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; display: none; }
+        .yi-bg.yi-bg-show { display: block; }
+        .yi-stage { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 2; }
+        .yi-canvas { position: relative; width: min(100%, 56.28vh); height: min(100%, 177.68vw); }
+        .yi-content { position: absolute; inset: 0; transition: filter 0.25s ease; }
+        .yi-content.bw { filter: grayscale(1) brightness(0.72) contrast(1.05); }
+        .yi-screen { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 0.6s ease, visibility 0.6s ease; }
+        .yi-screen.active { opacity: 1; visibility: visible; }
+        .yi-abs { position: absolute; transform: translate(-50%,-50%); -webkit-user-select: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+        .yi-btn { cursor: pointer; pointer-events: auto; transition: transform 0.25s ease, filter 0.25s ease; -webkit-tap-highlight-color: transparent; }
+        .yi-btn:hover { transform: translate(-50%,-50%) scale(1.06); filter: brightness(1.08); }
+        .yi-btn:active { transform: translate(-50%,-50%) scale(0.96); }
+        /* 画面A/E 共用：卷轴 / 胡人汉人 / 对话框 */
+        .yi-juanzhou1 { left: 49.8%; top: 49.5%; width: 112.1%; height: 95.2%; }
+        .yi-huhan { left: 29.6%; top: 64.7%; height: 57.4%; }
+        .yi-dialog { left: 49.9%; top: 21.5%; width: 69.3%; }
+        .yi-dialog-a { animation: yiDialogBreath 2.6s ease-in-out infinite; }
+        .yi-dialog-gongxi { animation: yiDialogBreath 2.6s ease-in-out infinite; }
+
+        /* ========== 第二幕：遗音不绝 ========== */
+        .er-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f0e3c4; overflow: hidden; }
+        .er-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
+        .er-screen.active { display: block; }
+        .er-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .er-abs { position: absolute; transform: translate(-50%,-50%); -webkit-user-select: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+        .er-btn { cursor: pointer; pointer-events: auto; transition: transform 0.25s ease, filter 0.25s ease; -webkit-tap-highlight-color: transparent; }
+        .er-btn:hover { transform: translate(-50%,-50%) scale(1.06); filter: brightness(1.08); }
+        .er-btn:active { transform: translate(-50%,-50%) scale(0.96); }
+        .er-breath { animation: erBreath 2.4s ease-in-out infinite; }
+        @keyframes erBreath { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.05); } }
+
+        /* 屏幕1：转场 */
+        .er-s1-pangbai { left: 50%; top: 42%; width: 86%; }
+        .er-s1-fanhui { left: 26%; top: 75%; width: 30%; }
+        .er-s1-jixu { left: 74%; top: 75%; width: 36%; }
+
+        /* 屏幕2：三站 */
+        .er-s2-title { left: 50%; top: 7%; width: 43%; }
+        .er-s2-jieshi { left: 50%; top: 15%; width: 85%; }
+        .er-s2-chatu { left: 50%; top: 56%; width: 96%; }
+        .er-s2-guyin { left: 72%; top: 33%; width: 14%; }
+        .er-s2-yimai { left: 40%; top: 59%; width: 14%; }
+        .er-s2-yicai { left: 72%; top: 86%; width: 14%; }
+
+        /* 屏幕3通用：古音新编/一脉西传/异彩纷呈（统一注释大小） */
+        .er-s3-title { left: 50%; top: 6%; width: 34%; }
+        .er-s3-jieshi { left: 50%; top: 13%; width: 64%; }
+        .er-s3-juanzhou { left: 50%; top: 53.5%; width: 100%; height: 73%; }
+        .er-s3-img { left: 50%; top: 32.5%; width: 68%; }
+        .er-s3-img-ym { width: 58%; }
+        .er-s3-text { left: 50%; top: 59%; width: 68%; }
+        .er-s3-shiting { left: 50%; top: 80.5%; width: 32%; }
+        .er-s3-fanhui { left: 50%; top: 95%; width: 21%; }
+
+        /* 异彩纷呈：左右箭头 + 中间按钮 */
+        .er-s3-arrow-l { left: 18%; top: 80.5%; width: 11%; }
+        .er-s3-arrow-r { left: 82%; top: 80.5%; width: 11%; }
+        .er-s3-form { left: 50%; top: 80.5%; width: 28%; }
+
+        /* 乐团底部：返回 + 重新体验 */
+        .er-s3-chongxin { left: 74%; top: 95%; width: 28%; }
+        @keyframes yiDialogBreath { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.04); } }
+        .yi-btn-a1 { left: 77%; top: 42%; height: 16.1%; }
+        .yi-btn-a2 { left: 77.4%; top: 61.2%; height: 16.1%; }
+        .yi-btn-a3 { left: 77.6%; top: 80.4%; height: 16.1%; }
+        /* 画面C：洞窟简介 */
+        .yi-cjuanzhou { left: 50.1%; top: 42.7%; width: 101.4%; height: 73.9%; }
+        .yi-chatu { left: 49.7%; top: 22.2%; width: 73%; }
+        .yi-cjianjie { left: 49.2%; top: 52.8%; width: 70.8%; }
+        .yi-cfanhui { left: 50.1%; top: 89.3%; width: 28.6%; height: 7.2%; }
+        /* 画面D：寻找乐器 */
+        .yi-djuanzhou { left: 50%; top: 44.3%; width: 100%; height: 70%; }
+        .yi-beibi { left: 49.8%; top: 44.16%; width: 75.6%; height: 61.18%; }
+        .yi-title { left: 50%; top: 4.9%; width: 82%; }
+        .yi-mural-inst { cursor: pointer; pointer-events: auto; -webkit-tap-highlight-color: transparent; animation: yiFloat 3.2s ease-in-out infinite; transition: opacity 0.25s ease, filter 0.25s ease; }
+        .yi-mural-inst:hover { filter: brightness(1.15) drop-shadow(0 0 12px rgba(255,220,150,0.75)); }
+        .yi-mural-inst.found { opacity: 0; pointer-events: none; }
+        @keyframes yiFloat { 0%,100% { transform: translate(-50%,-50%) translateY(0); } 50% { transform: translate(-50%,-50%) translateY(-7px); } }
+        .yi-ju1 { left: 50%; top: 90.9%; width: 87.1%; }
+        .yi-slot-frame { position: absolute; transform: translate(-50%,-50%); width: 19.6%; height: 11.2%; border: 3px solid rgba(188,158,106,0.95); border-radius: 9px; box-sizing: border-box; transition: opacity 0.15s ease, visibility 0s 0.15s; }
+        .yi-ju2 { position: absolute; transform: translate(-50%,-50%); width: 19.6%; height: 11.2%; object-fit: cover; border-radius: 6px; opacity: 0.68; transition: opacity 0.15s ease, visibility 0s 0.15s; }
+        .yi-suo { height: 7.1%; transition: opacity 0.15s ease, visibility 0s 0.15s; }
+        .yi-locked { transition: opacity 0.3s ease; }
+        .yi-lockgone { opacity: 0 !important; visibility: hidden; }
+        /* 画面E：体验演奏 */
+        .yi-btn-e1 { left: 76.2%; top: 48.5%; height: 18.1%; }
+        .yi-btn-e2 { left: 76.7%; top: 77.8%; height: 18.1%; }
+        /* 画面F：选择乐器（对照 选择乐器-筚篥.jpg） */
+        .yi-f-title { left: 50%; top: 14.5%; width: 90.3%; }
+        .yi-f-hanren { left: 15.5%; top: 47.8%; width: 32.3%; }
+        .yi-f-huren { left: 88.4%; top: 47.8%; width: 34%; }
+        .yi-f-kuang { left: 50%; top: 57.5%; width: 82%; }
+        .yi-f-inst { left: 49%; top: 54%; width: 25%; }
+        .yi-f-mingzi { left: 50%; top: 73.2%; width: 39.6%; }
+        .yi-f-btn1 { left: 18%; top: 88.7%; width: 27.4%; }
+        .yi-f-btn2 { left: 50%; top: 88.7%; width: 27.4%; }
+        .yi-f-btn3 { left: 83%; top: 88.7%; width: 27.4%; }
+        @keyframes yiScale { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.05); } }
+        .yi-f-title-anim { animation: yiScale 2.4s ease-in-out infinite; }
+        /* 画面G：体验演奏（对照 体验乐器-筚篥.jpg：卷轴等比全幅、乐器素材原尺寸、手指左上、文字/按钮按参考图） */
+        .yi-g-juanzhou { left: 50%; top: 42.8%; width: 100%; }
+        .yi-g-inst { left: 50%; top: 43.4%; width: 35.7%; cursor: pointer; pointer-events: auto; -webkit-tap-highlight-color: transparent; transition: filter 0.2s ease, transform 0.2s ease; }
+        .yi-g-inst:hover { filter: brightness(1.1) drop-shadow(0 0 14px rgba(255,220,150,0.7)); }
+        .yi-g-finger { left: 30.2%; top: 32.8%; width: 9.8%; animation: yiFinger 2.2s ease-in-out infinite; }
+        .yi-g-finger.paused { animation-play-state: paused; }
+        @keyframes yiFinger {
+            0%, 100% { transform: translate(-50%,-50%) translate(0,0) rotate(0deg); }
+            28% { transform: translate(-50%,-50%) translate(2.2%, 5.5%) rotate(5deg); }
+            42% { transform: translate(-50%,-50%) translate(2.6%, 7%) rotate(7deg) scale(0.92); }
+            58% { transform: translate(-50%,-50%) translate(2%, 4.5%) rotate(5deg); }
+            78% { transform: translate(-50%,-50%) translate(0.6%, 1.2%) rotate(1.5deg); }
+        }
+        .yi-g-tip { left: 33.4%; top: 49.8%; width: 5%; }
+        .yi-g-btn1 { left: 24.5%; top: 90%; width: 32%; }
+        .yi-g-btn2 { left: 73.4%; top: 90%; width: 32%; }
+        /* 画面H：一二幕转场（对照 一二幕转场.jpg） */
+        .yi-h-pangbai { left: 50%; top: 19%; width: 88.2%; }
+        .yi-h-huhan { left: 42%; top: 64.8%; width: 59.3%; }
+        .yi-h-btn1 { left: 83%; top: 53.6%; width: 14.3%; }
+        .yi-h-btn2 { left: 83%; top: 82.7%; width: 14.3%; }
+        /* 乐器简介弹窗 */
+        .yi-popup { position: absolute; left: 49.7%; top: 39.8%; width: 62.3%; transform: translate(-50%,-50%) scale(0.9); opacity: 0; visibility: hidden; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease; z-index: 50; pointer-events: none; }
+        .yi-popup-img { display: none; width: 100%; height: auto; }
+        .yi-popup-img.yi-popup-show { display: block; }
+        .yi-popup.show { opacity: 1; visibility: visible; transform: translate(-50%,-50%) scale(1); }
+        /* 画面右上角背景音乐控制按钮 */
+        .yi-music-btn { position: absolute; top: 2%; right: 1.5%; width: 7.5%; aspect-ratio: 1; background: rgba(20,10,4,0.45); border: 1px solid rgba(255,220,150,0.35); border-radius: 50%; cursor: pointer; pointer-events: auto; z-index: 80; display: flex; align-items: center; justify-content: center; transition: opacity 0.25s ease, transform 0.25s ease, background 0.25s ease; -webkit-tap-highlight-color: transparent; }
+        .yi-music-btn:hover { transform: scale(1.08); background: rgba(20,10,4,0.65); }
+        .yi-music-btn:active { transform: scale(0.94); }
+        .yi-music-btn .yi-music-icon { width: 58%; height: 58%; fill: #fff; }
+        .yi-music-btn .yi-music-off { width: 58%; height: 58%; stroke: #ff7a66; stroke-width: 2.4; stroke-linecap: round; display: none; }
+        .yi-music-btn.off .yi-music-icon { display: none; }
+        .yi-music-btn.off .yi-music-off { display: block; }
+        .yi-music-btn.off { background: rgba(20,10,4,0.3); }
+        .particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: hidden; }
+        .particle { position: absolute; width: 3px; height: 3px; background: rgba(255,200,80,0.6); border-radius: 50%; animation: float 8s ease-in-out infinite; box-shadow: 0 0 6px rgba(255,200,80,0.4); }
+        @keyframes float { 0%,100% { transform: translateY(0) translateX(0) scale(1); opacity: 0; } 10% { opacity: 1; } 50% { transform: translateY(-50vh) translateX(15px) scale(0.8); } 90% { opacity: 0.8; } 100% { transform: translateY(-100vh) translateX(20px) scale(0.5); opacity: 0; } }
+        .particle.large { width: 5px; height: 5px; box-shadow: 0 0 10px rgba(255,200,80,0.5); }
+        .particle.small { width: 2px; height: 2px; box-shadow: 0 0 4px rgba(255,200,80,0.3); }
+
+        /* ========== 第四幕：心境·古音答心 ========== */
+        #scene-fourth { background: #0a0602; overflow: hidden; }
+        .fourth-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: url("assets/第四幕/bg_dunhuang.png") center/cover no-repeat;
+            filter: brightness(0.35) saturate(0.8);
+        }
+        .fourth-bg-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(10,6,2,0.7) 0%, rgba(15,8,3,0.5) 40%, rgba(10,6,2,0.8) 100%);
+        }
+        .fourth-bg::before { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.4; pointer-events: none;
+        }
+        .fourth-bg::after { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(255,200,80,0.04) 0%, transparent 40%), 
+                        radial-gradient(circle at 80% 70%, rgba(255,200,80,0.02) 0%, transparent 30%);
+            pointer-events: none;
+        }
+        .fourth-header { 
+            position: absolute; top: 40px; left: 0; right: 0; text-align: center; z-index: 50; 
+            opacity: 0; transform: translateY(-20px); transition: all 0.8s ease;
+        }
+        .fourth-header.show { opacity: 1; transform: translateY(0); }
+        .fourth-title { 
+            font-size: clamp(1.5rem,4vw,2.5rem); letter-spacing: 0.3em; margin-bottom: 8px; 
+            font-weight: normal; position: relative; display: inline-block;
+        }
+        .fourth-title::before, .fourth-title::after { 
+            content: ''; position: absolute; top: 50%; width: 80px; height: 1px; transform: translateY(-50%);
+        }
+        .fourth-title::before { right: 100%; margin-right: 20px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.5)); }
+        .fourth-title::after { left: 100%; margin-left: 20px; background: linear-gradient(90deg, rgba(200,150,50,0.5), transparent); }
+        .fourth-subtitle { font-size: clamp(0.8rem,1.5vw,1rem); letter-spacing: 0.3em; color: rgba(220,190,140,0.7); }
+
+        /* 心境选择页 - 圆形环绕布局 */
+        .mood-selection-page { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 20; transition: all 0.6s ease;
+        }
+        .mood-selection-page.hidden { opacity: 0; visibility: hidden; transform: scale(0.95); }
+
+        .mood-orbit-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .mood-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 25;
+            pointer-events: none;
+        }
+        .mood-center-text .mood-main-title {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            letter-spacing: 0.25em;
+            color: rgba(220,190,140,0.9);
+            margin-bottom: 8px;
+            animation: fadeInDown 0.8s ease;
+        }
+        .mood-center-text .mood-sub-hint {
+            font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+            letter-spacing: 0.15em;
+            color: rgba(200,150,50,0.6);
+            animation: fadeInDown 0.8s ease 0.2s both;
+        }
+        @keyframes fadeInDown { 
+            from { opacity: 0; transform: translateY(-20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .mood-orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(80vw, 500px);
+            height: min(80vw, 500px);
+            max-width: 500px;
+            max-height: 500px;
+        }
+
+        .mood-orbit-item {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(212,196,160,0.2) 0%, rgba(180,160,120,0.15) 100%);
+            border: 1px solid rgba(200,170,100,0.4);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            animation: orbitAppear 0.6s ease forwards;
+            z-index: 30;
+        }
+
+        @keyframes orbitAppear {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .mood-orbit-item:hover {
+            background: linear-gradient(135deg, rgba(212,196,160,0.35) 0%, rgba(180,160,120,0.3) 100%);
+            border-color: rgba(255,200,80,0.7);
+            box-shadow: 0 0 30px rgba(255,200,80,0.2), 0 4px 20px rgba(0,0,0,0.3);
+            transform: scale(1.15);
+            z-index: 35;
+        }
+
+        .mood-orbit-item .orbit-label {
+            font-size: 16px;
+            letter-spacing: 0.2em;
+            color: #e8d5b0;
+            font-family: "STKaiti","KaiTi",serif;
+            font-weight: bold;
+        }
+
+        .mood-orbit-item .orbit-desc {
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            color: rgba(200,170,100,0.6);
+            margin-top: 2px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* 6个位置 - 均匀分布在圆周上 */
+        .mood-orbit-item:nth-child(1) { top: 0; left: 50%; transform: translate(-50%, -50%); animation-delay: 0.1s; }
+        .mood-orbit-item:nth-child(2) { top: 25%; right: 0; transform: translate(50%, -50%); animation-delay: 0.2s; }
+        .mood-orbit-item:nth-child(3) { bottom: 25%; right: 0; transform: translate(50%, 50%); animation-delay: 0.3s; }
+        .mood-orbit-item:nth-child(4) { bottom: 0; left: 50%; transform: translate(-50%, 50%); animation-delay: 0.4s; }
+        .mood-orbit-item:nth-child(5) { bottom: 25%; left: 0; transform: translate(-50%, 50%); animation-delay: 0.5s; }
+        .mood-orbit-item:nth-child(6) { top: 25%; left: 0; transform: translate(-50%, -50%); animation-delay: 0.6s; }
+
+        .mood-orbit-item:nth-child(1):hover { transform: translate(-50%, -50%) scale(1.15); }
+        .mood-orbit-item:nth-child(2):hover { transform: translate(50%, -50%) scale(1.15); }
+        .mood-orbit-item:nth-child(3):hover { transform: translate(50%, 50%) scale(1.15); }
+        .mood-orbit-item:nth-child(4):hover { transform: translate(-50%, 50%) scale(1.15); }
+        .mood-orbit-item:nth-child(5):hover { transform: translate(-50%, 50%) scale(1.15); }
+        .mood-orbit-item:nth-child(6):hover { transform: translate(-50%, -50%) scale(1.15); }
+
+        /* 连接线 */
+        .mood-orbit-ring::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            border: 1px dashed rgba(200,150,50,0.15);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .mood-footer-hint {
+            position: absolute;
+            bottom: 100px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            color: rgba(220,190,140,0.5);
+            animation: breathe 2s ease-in-out infinite;
+            z-index: 25;
+        }
+        .mood-footer-hint::before, .mood-footer-hint::after { 
+            content: '◆'; font-size: 0.5rem; color: rgba(200,150,50,0.4); margin: 0 10px; vertical-align: middle;
+        }
+
+        /* 解忧卡片页 */
+        .relief-card-page { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 30; display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.6s ease;
+            overflow-y: auto;
+        }
+        .relief-card-page.active { opacity: 1; visibility: visible; }
+        .relief-card-wrapper { 
+            display: flex; flex-direction: column; align-items: center;
+            gap: 20px; padding: 40px 20px;
+        }
+        .card-back-btn { 
+            position: absolute; top: 20px; left: 20px; z-index: 50;
+            padding: 8px 18px; background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,200,80,0.3); border-radius: 20px;
+            color: rgba(255,232,176,0.7); font-size: 13px; cursor: pointer;
+            transition: all 0.3s ease; font-family: inherit; letter-spacing: 0.1em;
+            backdrop-filter: blur(4px);
+        }
+        .card-back-btn:hover { 
+            background: rgba(255,200,80,0.1); color: #ffe8b0; 
+            border-color: rgba(255,200,80,0.5);
+        }
+
+        .relief-card { 
+            width: 90%; max-width: 380px;
+            background: linear-gradient(180deg, #f5f0e6 0%, #ebe4d4 100%);
+            border-radius: 6px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4); position: relative;
+            animation: cardAppear 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+        }
+        @keyframes cardAppear { 
+            from { opacity: 0; transform: translateY(30px) scale(0.95); } 
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .relief-card::before { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 1;
+        }
+        .relief-card::after { 
+            content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(160,128,48,0.2); border-radius: 3px; pointer-events: none; z-index: 2;
+        }
+
+        .card-art-area { 
+            width: 100%; height: 220px; position: relative; z-index: 3;
+            background: linear-gradient(180deg, rgba(200,220,230,0.2) 0%, rgba(180,200,210,0.15) 100%);
+            overflow: hidden;
+        }
+        .card-art-area img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            filter: sepia(0.1) contrast(0.95) brightness(0.95);
+        }
+        .card-art-placeholder { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            font-size: 0.85rem; color: rgba(139,105,20,0.4); letter-spacing: 0.1em;
+        }
+
+        .card-poem-area { 
+            padding: 20px 25px 15px; text-align: center; position: relative; z-index: 3;
+        }
+        .card-poem-lines { 
+            font-size: 1.3rem; color: #5c3a1e; letter-spacing: 0.15em; 
+            line-height: 2.2; font-family: "STKaiti","KaiTi",serif;
+            min-height: 60px;
+        }
+        .card-poem-lines .poem-line { 
+            opacity: 0; transform: translateY(10px); 
+            animation: poemLineReveal 0.6s ease forwards;
+        }
+        .card-poem-lines .poem-line:nth-child(1) { animation-delay: 0.3s; }
+        .card-poem-lines .poem-line:nth-child(2) { animation-delay: 0.6s; }
+        .card-poem-lines .poem-line:nth-child(3) { animation-delay: 0.9s; }
+        @keyframes poemLineReveal { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card-poem-source { 
+            font-size: 0.8rem; color: #8b6914; margin-top: 10px; 
+            letter-spacing: 0.1em; opacity: 0; animation: fadeIn 0.6s ease 1s forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .card-mood-transition { 
+            display: flex; align-items: center; justify-content: center; 
+            gap: 12px; padding: 0 25px; position: relative; z-index: 3;
+            opacity: 0; animation: fadeIn 0.6s ease 1.2s forwards;
+        }
+        .card-old-mood { 
+            font-size: 1rem; color: #b03020; text-decoration: line-through; 
+            opacity: 0.6; font-family: "STKaiti","KaiTi",serif;
+        }
+        .card-arrow { font-size: 0.9rem; color: #8b6914; }
+        .card-new-mood { 
+            font-size: 1.2rem; color: #2d7a5e; font-weight: bold; 
+            font-family: "STKaiti","KaiTi",serif;
+        }
+
+        .card-advice { 
+            padding: 15px 25px; font-size: 0.85rem; 
+            color: rgba(90,60,30,0.85); letter-spacing: 0.05em; 
+            line-height: 1.8; text-align: center; position: relative; z-index: 3;
+            opacity: 0; animation: fadeIn 0.6s ease 1.4s forwards;
+        }
+
+        .card-music-control { 
+            padding: 0 25px 20px; text-align: center; position: relative; z-index: 3;
+            opacity: 0; animation: fadeIn 0.6s ease 1.6s forwards;
+        }
+        .card-music-btn { 
+            padding: 10px 28px; 
+            background: linear-gradient(135deg, rgba(160,128,48,0.2) 0%, rgba(139,105,20,0.3) 100%);
+            border: 1px solid rgba(160,128,48,0.5); border-radius: 25px;
+            color: #5c3a1e; font-size: 14px; letter-spacing: 0.15em;
+            cursor: pointer; transition: all 0.3s ease; font-family: inherit;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .card-music-btn:hover { 
+            background: linear-gradient(135deg, rgba(160,128,48,0.35) 0%, rgba(139,105,20,0.45) 100%);
+            box-shadow: 0 0 15px rgba(160,128,48,0.3); transform: translateY(-2px);
+        }
+        .card-music-btn.playing { 
+            background: linear-gradient(135deg, rgba(160,128,48,0.4) 0%, rgba(139,105,20,0.5) 100%);
+            box-shadow: 0 0 20px rgba(160,128,48,0.4);
+        }
+        .card-music-btn .music-icon { font-size: 16px; }
+        .card-music-btn.playing .music-icon { animation: notePulse 1s ease-in-out infinite; }
+        @keyframes notePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+        .card-music-hint { 
+            margin-top: 8px; font-size: 12px; color: rgba(139,105,20,0.5); 
+            letter-spacing: 0.1em;
+        }
+
+        .card-seal { 
+            position: absolute; bottom: 15px; right: 15px; width: 50px; height: 50px;
+            border: 2px solid rgba(180,50,30,0.8); border-radius: 3px;
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(180,50,30,0.85); font-size: 0.65rem; letter-spacing: 0.05em;
+            line-height: 1.3; transform: rotate(-8deg);
+            box-shadow: 0 0 8px rgba(180,50,30,0.15);
+            font-family: "STKaiti","KaiTi",serif; background: rgba(180,50,30,0.05);
+            z-index: 10;
+        }
+
+        /* 卡片下方按钮 */
+        .card-buttons { 
+            display: flex; justify-content: center; gap: 15px; 
+            position: relative; z-index: 30;
+            opacity: 0; animation: fadeIn 0.6s ease 1.8s forwards;
+        }
+        .card-btn { 
+            padding: 10px 28px;
+            background: linear-gradient(135deg, rgba(255,200,80,0.15) 0%, rgba(200,150,50,0.25) 100%);
+            border: 1px solid rgba(255,200,80,0.5); border-radius: 4px;
+            color: #ffe8b0; font-size: 14px; letter-spacing: 0.2em;
+            cursor: pointer; transition: all 0.3s ease; font-family: inherit;
+        }
+        .card-btn:hover { 
+            background: linear-gradient(135deg, rgba(255,200,80,0.25) 0%, rgba(200,150,50,0.35) 100%);
+            box-shadow: 0 0 15px rgba(255,200,80,0.3); transform: translateY(-2px);
+        }
+        .card-btn-primary { 
+            background: linear-gradient(135deg, rgba(255,200,80,0.25) 0%, rgba(200,150,50,0.35) 100%);
+        }
+
+        /* 底部按钮 */
+        .fourth-footer { 
+            position: absolute; bottom: 30px; left: 0; right: 0; 
+            text-align: center; z-index: 50;
+        }
+        .fourth-hint { 
+            font-size: 14px; letter-spacing: 0.2em; color: rgba(220,190,140,0.6);
+            animation: breathe 2s ease-in-out infinite; position: relative; display: inline-block;
+            margin-bottom: 20px;
+        }
+        .fourth-hint::before, .fourth-hint::after { 
+            content: '✦'; font-size: 0.6rem; color: rgba(200,150,50,0.5); 
+            margin: 0 10px; vertical-align: middle;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .mood-orbit-ring {
+                width: 90vw;
+                height: 90vw;
+            }
+            .mood-orbit-item {
+                width: 65px;
+                height: 65px;
+            }
+            .mood-orbit-item .orbit-label {
+                font-size: 14px;
+            }
+            .mood-orbit-item .orbit-desc {
+                font-size: 9px;
+            }
+        }/* ========== 第五幕 ========== */
+        #scene-fifth { background: #050301; overflow: hidden; }
+        .fifth-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url("assets/第五幕/bg_starry_desert.png") center/cover no-repeat, linear-gradient(180deg, rgba(5,3,1,0.65) 0%, rgba(8,5,2,0.45) 50%, rgba(5,3,1,0.7) 100%); }
+        .fifth-bg::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); opacity: 0.3; pointer-events: none; }
+        .fifth-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,200,80,0.06) 0%, rgba(255,180,60,0.02) 40%, transparent 70%); border-radius: 50%; animation: glowPulse 4s ease-in-out infinite; pointer-events: none; }
+        @keyframes glowPulse { 0%,100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.1); } }
+        .identity-page { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 20; 
+            transition: all 0.6s ease;
+            padding-bottom: 80px;
+            box-sizing: border-box;
+        }
+        .identity-page.hidden { opacity: 0; visibility: hidden; }
+        .scroll-card { 
+            width: 90%; 
+            max-width: 500px; 
+            max-height: 70vh;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #e8d5b5 0%, #d4c4a0 20%, #c9b896 50%, #d4c4a0 80%, #e8d5b5 100%); 
+            border-radius: 4px; 
+            padding: 50px 40px; 
+            position: relative; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.1); 
+            color: #3a2510; 
+            font-family: "STKaiti","KaiTi","FangSong",serif; 
+            -webkit-overflow-scrolling: touch;
+        }
+        .scroll-card::before { content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; background: linear-gradient(90deg, #8b7355 0%, #a08b6d 5%, transparent 5%, transparent 95%, #a08b6d 95%, #8b7355 100%), linear-gradient(0deg, #8b7355 0%, #a08b6d 5%, transparent 5%, transparent 95%, #a08b6d 95%, #8b7355 100%); border-radius: 8px; z-index: -1; opacity: 0.6; }
+        .scroll-card::after { content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 110%; height: 20px; background: linear-gradient(90deg, #5c4033 0%, #8b6914 20%, #a08030 50%, #8b6914 80%, #5c4033 100%); border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .scroll-bottom-rod { position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 110%; height: 20px; background: linear-gradient(90deg, #5c4033 0%, #8b6914 20%, #a08030 50%, #8b6914 80%, #5c4033 100%); border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .scroll-texture { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fiber'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23fiber)' opacity='0.08'/%3E%3C/svg%3E"); opacity: 0.5; pointer-events: none; border-radius: 4px; }
+        .scroll-aging { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at 30% 20%, rgba(160,130,80,0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(140,110,70,0.1) 0%, transparent 50%); pointer-events: none; border-radius: 4px; }
+        .scroll-wear { position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-shadow: inset 0 0 30px rgba(100,80,50,0.2); border-radius: 4px; pointer-events: none; }
+        .scroll-header { text-align: center; margin-bottom: 30px; position: relative; z-index: 2; }
+        .scroll-header-title { font-size: 1.6rem; letter-spacing: 0.4em; color: #5c3a1e; margin-bottom: 8px; font-weight: bold; }
+        .scroll-header-sub { font-size: 0.85rem; letter-spacing: 0.2em; color: #8b6914; }
+        .scroll-divider { width: 60%; height: 1px; background: linear-gradient(90deg, transparent, #a08030, transparent); margin: 20px auto; position: relative; }
+        .scroll-divider::before, .scroll-divider::after { content: '◆'; position: absolute; top: 50%; transform: translateY(-50%); color: #a08030; font-size: 0.6rem; }
+        .scroll-divider::before { left: -15px; } .scroll-divider::after { right: -15px; }
+        .scroll-content { position: relative; z-index: 2; padding: 0 10px; }
+        .scroll-item-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px dashed rgba(160,128,48,0.3); }
+        .scroll-item-label { font-size: 0.95rem; color: #6b4e2e; letter-spacing: 0.15em; white-space: nowrap; }
+        .scroll-item-value { font-size: 1.1rem; color: #3a2510; letter-spacing: 0.1em; text-align: right; flex: 1; margin-left: 20px; }
+        .scroll-proverb { margin: 25px 0; padding: 20px; background: rgba(160,128,48,0.08); border-left: 3px solid #a08030; font-size: 1.2rem; line-height: 1.8; color: #4a3018; letter-spacing: 0.1em; text-align: center; font-style: italic; }
+        .scroll-footer { margin-top: 30px; text-align: center; position: relative; z-index: 2; }
+        .scroll-time { font-size: 0.85rem; color: #8b6914; letter-spacing: 0.15em; margin-bottom: 15px; }
+        .scroll-number { font-size: 1.3rem; color: #5c3a1e; letter-spacing: 0.2em; font-family: "Courier New",monospace; font-weight: bold; }
+        .identity-seal { position: absolute; bottom: 30px; right: 30px; width: 70px; height: 70px; border: 3px solid rgba(180,50,30,0.85); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: rgba(180,50,30,0.9); font-size: 0.8rem; letter-spacing: 0.08em; line-height: 1.3; transform: rotate(-8deg); box-shadow: 0 0 8px rgba(180,50,30,0.15); font-family: "STKaiti","KaiTi",serif; background: rgba(180,50,30,0.05); z-index: 10; }
+        .poster-page { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 20; 
+            opacity: 0; 
+            visibility: hidden; 
+            transition: all 0.6s ease;
+            padding-bottom: 80px;
+            box-sizing: border-box;
+        }
+        .poster-page.active { opacity: 1; visibility: visible; }
+        .poster-card { width: 360px; max-height: calc(100vh - 150px); height: auto; min-height: 380px; background: linear-gradient(180deg, #2a1a0c 0%, #1a0f08 100%); border: 2px solid rgba(200,150,50,0.5); border-radius: 8px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+        .poster-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E"); pointer-events: none; }
+        .poster-border-inner { position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px; border: 1px solid rgba(200,150,50,0.3); border-radius: 4px; pointer-events: none; }
+        .poster-header { text-align: center; margin-bottom: 20px; position: relative; z-index: 2; }
+        .poster-title { font-size: 1.4rem; letter-spacing: 0.3em; color: #ffe8b0; margin-bottom: 6px; }
+        .poster-subtitle { font-size: 0.75rem; letter-spacing: 0.2em; color: rgba(220,190,140,0.7); }
+        .poster-mural { width: 100%; height: 18vh; min-height: 100px; max-height: 160px; flex-shrink: 0; background: rgba(0,0,0,0.2); border-radius: 4px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; overflow: hidden; }
+        .poster-mural img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; filter: sepia(0.2) brightness(0.85); }
+        .poster-mural-placeholder { font-size: 0.9rem; color: rgba(200,150,50,0.5); letter-spacing: 0.1em; }
+        .poster-info { flex: 1; position: relative; z-index: 2; padding: 0 10px; overflow-y: auto; min-height: 0; }
+        .poster-info-row { display: flex; justify-content: space-between; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(200,150,50,0.15); }
+        .poster-info-label { font-size: 0.8rem; color: rgba(220,190,140,0.7); letter-spacing: 0.1em; }
+        .poster-info-value { font-size: 0.95rem; color: #ffe8b0; letter-spacing: 0.1em; text-align: right; }
+        .poster-proverb { margin: 15px 0; padding: 15px; background: rgba(255,200,80,0.05); border: 1px solid rgba(200,150,50,0.2); border-radius: 4px; font-size: 1rem; line-height: 1.6; color: rgba(255,232,176,0.9); text-align: center; letter-spacing: 0.05em; }
+        .poster-footer { text-align: center; position: relative; z-index: 2; margin-top: auto; padding-top: 15px; }
+        .poster-slogan { font-size: 0.8rem; letter-spacing: 0.15em; color: rgba(220,190,140,0.8); margin-bottom: 10px; }
+
+        .fifth-buttons { 
+            position: absolute; 
+            bottom: 20px; 
+            left: 0; 
+            right: 0; 
+            text-align: center; 
+            z-index: 50; 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+        .page-toggle-btn { padding: 10px 24px; background: linear-gradient(135deg, rgba(255,200,80,0.15) 0%, rgba(200,150,50,0.25) 100%); border: 1px solid rgba(255,200,80,0.5); border-radius: 4px; color: #ffe8b0; font-size: 14px; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+        .page-toggle-btn:hover { background: linear-gradient(135deg, rgba(255,200,80,0.25) 0%, rgba(200,150,50,0.35) 100%); box-shadow: 0 0 15px rgba(255,200,80,0.3); transform: translateY(-2px); }
+
+        /* 乐器弹窗 */
+        .instrument-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .instrument-modal.active { opacity: 1; visibility: visible; }
+        .modal-content { position: relative; width: 90%; max-width: 600px; background: linear-gradient(135deg, rgba(40,28,15,0.98) 0%, rgba(25,15,8,0.98) 100%); border: 1px solid rgba(200,150,50,0.4); border-radius: 12px; padding: 40px; text-align: center; transform: scale(0.9) translateY(20px); transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 80px rgba(200,150,50,0.1); }
+        .instrument-modal.active .modal-content { transform: scale(1) translateY(0); }
+        .modal-content::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background: linear-gradient(135deg, #ffe8b0, #c9a050, #ffe8b0); border-radius: 14px; z-index: -1; opacity: 0.3; filter: blur(10px); }
+        .modal-corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(200,150,50,0.6); }
+        .modal-corner.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+        .modal-corner.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+        .modal-corner.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+        .modal-corner.br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 24px; color: rgba(255,232,176,0.6); cursor: pointer; transition: all 0.3s ease; background: none; border: none; font-family: inherit; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .modal-close:hover { color: #ffe8b0; background: rgba(255,200,80,0.1); transform: rotate(90deg); }
+        .modal-image { width: 120px; height: 120px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .modal-image::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 150px; height: 150px; background: radial-gradient(circle, rgba(255,200,80,0.15) 0%, transparent 60%); border-radius: 50%; }
+        .modal-image img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(255,200,80,0.3)); position: relative; z-index: 1; }
+        .modal-name { font-size: 1.8rem; letter-spacing: 0.3em; margin-bottom: 16px; font-weight: normal; position: relative; display: inline-block; }
+        .modal-name::before, .modal-name::after { content: '❋'; font-size: 0.8rem; color: rgba(200,150,50,0.6); margin: 0 12px; vertical-align: middle; }
+        .modal-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.6), transparent); margin: 0 auto 20px; position: relative; }
+        .modal-divider::before, .modal-divider::after { content: ''; position: absolute; top: 50%; width: 4px; height: 4px; background: rgba(200,150,50,0.6); border-radius: 50%; transform: translateY(-50%); }
+        .modal-divider::before { left: -10px; } .modal-divider::after { right: -10px; }
+        .modal-desc { font-size: 15px; line-height: 1.8; color: rgba(220,190,140,0.85); letter-spacing: 0.05em; text-align: left; text-indent: 2em; }
+        .modal-origin { margin-top: 16px; font-size: 13px; color: rgba(200,150,50,0.7); letter-spacing: 0.1em; position: relative; padding-top: 12px; }
+        .modal-origin::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 30px; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.4), transparent); }
+        .modal-audio-btn { margin-top: 24px; padding: 10px 30px; background: linear-gradient(135deg, rgba(255,200,80,0.15) 0%, rgba(200,150,50,0.25) 100%); border: 1px solid rgba(255,200,80,0.5); border-radius: 25px; color: #ffe8b0; font-size: 14px; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s ease; font-family: inherit; display: inline-flex; align-items: center; gap: 8px; }
+        .modal-audio-btn:hover { background: linear-gradient(135deg, rgba(255,200,80,0.25) 0%, rgba(200,150,50,0.35) 100%); box-shadow: 0 0 15px rgba(255,200,80,0.3); transform: translateY(-2px); }
+        .modal-audio-btn.playing { background: linear-gradient(135deg, rgba(255,200,80,0.3) 0%, rgba(200,150,50,0.4) 100%); box-shadow: 0 0 20px rgba(255,200,80,0.4); }
+        .modal-audio-btn::before { content: '♪'; font-size: 16px; }
+        .modal-audio-btn.playing::before { content: '♫'; animation: notePulse 1s ease-in-out infinite; }
+        @keyframes notePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .modal-audio-hint { margin-top: 8px; font-size: 12px; color: rgba(200,150,50,0.5); letter-spacing: 0.1em; }
+
+        /* 响应式 - 全面移动端适配 */
+        @media (max-width: 768px) {
+            /* 基础文字 */
+            .opening-title { font-size: 2.2rem; letter-spacing: 0.2em; }
+            .opening-subtitle { font-size: 0.8rem; letter-spacing: 0.3em; }
+
+            /* 第二幕 */
+            .second-header { padding: 12px 16px; }
+            .second-title { font-size: 0.9rem; }
+            .second-title::before, .second-title::after { display: none; }
+            .scene-name { font-size: 1.1rem; letter-spacing: 0.15em; }
+            .scene-desc { font-size: 0.65rem; }
+            .scroll-hint { bottom: 50px; font-size: 12px; }
+            .progress-bar { bottom: 20px; gap: 8px; }
+            .progress-dot { width: 8px; height: 8px; }
+
+            /* 第三幕（重制）：画布等比缩放，无需额外适配 */
+
+            /* 乐器弹窗 */
+            .modal-content { padding: 24px 16px; width: 92%; }
+            .modal-name { font-size: 1.3rem; }
+            .modal-name::before, .modal-name::after { display: none; }
+            .modal-desc { font-size: 13px; line-height: 1.7; }
+            .modal-image { width: 80px; height: 80px; }
+            .modal-audio-btn { padding: 8px 20px; font-size: 13px; }
+
+            /* 第四幕 - 圆形环绕 */
+            .fourth-title { font-size: 1.4rem; }
+            .fourth-title::before, .fourth-title::after { width: 40px; }
+            .mood-orbit-ring {
+                width: 85vw;
+                height: 85vw;
+            }
+            .mood-orbit-item {
+                width: 60px;
+                height: 60px;
+            }
+            .mood-orbit-item .orbit-label {
+                font-size: 13px;
+            }
+            .mood-orbit-item .orbit-desc {
+                font-size: 9px;
+            }
+            .mood-center-text .mood-main-title {
+                font-size: 1rem;
+            }
+            .mood-center-text .mood-sub-hint {
+                font-size: 0.7rem;
+            }
+            .mood-footer-hint {
+                font-size: 12px;
+                bottom: 80px;
+            }
+
+            /* 解忧卡片 */
+            .relief-card { width: 92%; }
+            .card-art-area { height: 160px; }
+            .card-poem-lines { font-size: 1rem; }
+            .card-old-mood, .card-new-mood { font-size: 0.9rem; }
+            .card-advice { font-size: 0.8rem; padding: 12px 20px; }
+            .card-music-btn { padding: 8px 20px; font-size: 13px; }
+            .card-buttons { gap: 10px; }
+            .card-btn { padding: 8px 18px; font-size: 12px; }
+            .card-back-btn { top: 10px; left: 10px; padding: 6px 14px; font-size: 12px; }
+
+            /* 第五幕 */
+            .scroll-card { width: 88%; padding: 35px 20px; }
+            .scroll-header-title { font-size: 1.3rem; }
+            .scroll-item-label { font-size: 0.85rem; }
+            .scroll-item-value { font-size: 1rem; }
+            .scroll-proverb { font-size: 1rem; padding: 15px; }
+            .identity-seal { width: 55px; height: 55px; font-size: 0.7rem; }
+
+            /* 海报 */
+            .poster-card { width: 90%; max-width: 320px; padding: 20px; }
+            .poster-title { font-size: 1.2rem; }
+            .poster-mural { height: 140px; }
+            .poster-info-label { font-size: 0.75rem; }
+            .poster-info-value { font-size: 0.85rem; }
+            .poster-proverb { font-size: 0.9rem; padding: 12px; }
+
+            /* 底部按钮 */
+            .fifth-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                bottom: 20px;
+                padding: 0 20px;
+            }
+            .fifth-buttons .btn-gold,
+            .fifth-buttons .page-toggle-btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+
+            /* 第四幕底部 */
+            .fourth-footer {
+                bottom: 15px;
+            }
+            .fourth-footer .btn-gold {
+                padding: 10px 24px;
+                font-size: 14px;
+            }
+
+            /* 通用按钮 */
+            .btn-gold {
+                padding: 10px 24px;
+                font-size: 14px;
+            }
+
+            /* 跳过按钮 */
+            .skip-btn {
+                top: 15px;
+                right: 15px;
+                padding: 6px 14px;
+                font-size: 12px;
+            }
+
+            /* 音乐按钮 */
+            .music-toggle-btn {
+                top: 15px;
+                left: 15px;
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+        }
+
+        /* 超小屏幕 */
+        @media (max-width: 375px) {
+            .opening-title { font-size: 1.8rem; }
+            .mood-orbit-item {
+                width: 52px;
+                height: 52px;
+            }
+            .mood-orbit-item .orbit-label {
+                font-size: 11px;
+            }
+            .mood-orbit-item .orbit-desc {
+                font-size: 8px;
+            }
+            .scroll-card { padding: 30px 16px; }
+            .poster-card { width: 92%; padding: 16px; }
+        }
+        /* ========== 序幕：循声入窟（原第二幕丝路寻音改写） ========== */
+        #scene-second .second-header,
+        #scene-second .panorama-viewport,
+        #scene-second .progress-bar,
+        #scene-second .scroll-hint { display: none; }
+
+        .prologue-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; }
+        .prologue-static { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.9s ease; }
+        .prologue-static.show { opacity: 1; }
+        .prologue-static .prologue-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+
+        .prologue-black { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; opacity: 0; transition: opacity 0.35s ease; z-index: 15; pointer-events: none; }
+        .prologue-black.show { opacity: 1; }
+
+        .prologue-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease; pointer-events: none; }
+        .prologue-video.show { opacity: 1; pointer-events: auto; }
+        .prologue-video .prologue-video-el { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .prologue-intro { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(25, 13, 4, 0.55); opacity: 0; transition: opacity 0.25s ease; pointer-events: none; z-index: 12; }
+        .prologue-intro.show { opacity: 1; pointer-events: auto; }
+
+        .prologue-ganlu { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; z-index: 21; }
+        .prologue-ganlu.show { opacity: 1; pointer-events: auto; }
+        .prologue-ganlu .prologue-ganlu-el { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* 序幕按钮（位置/大小严格对照三张参考图） */
+        .xu-btn { position: absolute; cursor: pointer; opacity: 0; transition: opacity 0.55s ease; z-index: 6; -webkit-tap-highlight-color: transparent; pointer-events: none; }
+        .xu-btn.show { opacity: 1; pointer-events: auto; }
+        .xu-btn.quick-hide { transition: opacity 0.15s ease; opacity: 0; }
+
+        .xu-restart { left: 22%; top: 87.8%; transform: translate(-50%, -50%); height: 8%; }        /* 参考图1 重新进入 框50,838,390,918 中心22%,87.8% */
+        .xu-listen { left: 75%; top: 87.8%; transform: translate(-50%, -50%); height: 8%; animation: xuListenBreath 2.6s ease-in-out infinite; }         /* 参考图1 上前聆听 框580,838,920,918 中心75%,87.8% */
+        @keyframes xuListenBreath { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.06); } }
+        .xu-info { left: 22.8%; top: 11.3%; transform: translate(-50%, -50%); height: 9.8%; }         /* 参考图2 乐曲简介 框42,64,414,162 中心22.8%,11.3% */
+        .xu-back { left: 21.9%; top: 87.9%; transform: translate(-50%, -50%); height: 9.4%; }        /* 参考图2 返回 框42,832,396,926 中心21.9%,87.9% */
+        .xu-next { left: 78.35%; top: 87.9%; transform: translate(-50%, -50%); height: 9.4%; }         /* 参考图2 继续探索 框607,832,960,926 中心78.35%,87.9% */
+        .xu-intro-title { position: absolute; left: 23%; top: 11.35%; transform: translate(-50%, -50%); height: 8.5%; }  /* 参考图3 乐曲简介标题 框57,71,403,156 中心23%,11.35% */
+        .xu-intro-panel { position: absolute; left: 50%; top: 24%; transform: translateX(-50%); width: min(94%, 47.5vh); }        /* 参考图3 文字简介面板：横贯画面，文字区对齐 y27.8%-60.2%，返回按钮位于框内底部 */
+        .xu-intro-back { position: absolute; left: 48%; top: 68.2%; transform: translate(-50%, -50%); height: 5%; cursor: pointer; } /* 参考图3 返回 框414,664,546,700 中心48%,68.2%，位于简介框内底部 */
+
+        /* 序幕音符开关 */
+        .xu-music-btn { position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; background: rgba(45, 28, 12, 0.55); border: 1px solid rgba(225, 195, 145, 0.65); color: #EAD8AE; font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 8; -webkit-tap-highlight-color: transparent; }
+        .xu-music-btn.muted { opacity: 0.55; }
+
+    </style>
+</head>
+<body>
+    <!-- ========== 第一幕：开场动画 ========== -->
+    <div id="scene-opening" class="scene active">
+        <video class="opening-video" id="openingVideo" muted playsinline>
+            <source src="assets/opening_animation.mp4" type="video/mp4">
+        </video>
+
+        <!-- 封面引入：点击音符进入 -->
+        <div class="opening-cover" id="openingCover">
+            <img class="cover-bg" src="assets/kaichangbg.png" alt="">
+            <img class="cover-title" src="assets/biaoti.png" alt="敦煌遗音">
+            <img class="cover-logo" src="assets/logo.png" alt="敦煌遗音" onclick="startOpening()">
+            <img class="cover-enter" src="assets/fmwenzi.png" alt="点击音符进入">
+        </div>
+        <div class="opening-cave-entrance" id="openingCaveEntrance">
+            <img src="assets/cave-entrance.png" alt="洞窟入口">
+        </div>
+        <div class="opening-overlay"></div>
+        <div class="opening-particles" id="openingParticles"></div>
+
+        <!-- 音乐开关 -->
+        <button class="music-toggle-btn" id="musicToggleBtn" onclick="toggleOpeningMusic()" title="开关音乐">
+            <span id="musicIcon">♪</span>
+            <span class="music-wave"></span>
+        </button>
+
+        <button class="skip-btn hidden" id="skipBtn" onclick="skipOpening()">跳过</button>
+        <div class="opening-content" id="openingContent">
+            <img class="opening-title-img" src="assets/biaoti.png" alt="敦煌遗音">
+            <img class="opening-logo-img" src="assets/logo.png" alt="敦煌遗音">
+            <img class="opening-explore-btn" src="assets/kaishitansuo.png" alt="开始探索" onclick="enterSecondScene()">
+        </div>
+    </div>
+
+    <!-- ========== 第二幕：丝路寻音 ========== -->
+    <div id="scene-second" class="scene">
+        <!-- 序幕：循声入窟（原第二幕丝路寻音改写） -->
+        <div class="prologue-layer" id="prologueLayer">
+            <!-- 静态演奏画面 -->
+            <div class="prologue-static" id="prologueStatic">
+                <video class="prologue-bg" src="assets/xu/yanzou-yuanjing.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/xu/yanzou.png" onerror="this.outerHTML='<img class=\\'prologue-bg\\' src=\\'assets/xu/yanzou.png\\'>'"></video>
+                <button class="xu-music-btn" id="xuMusicBtn1" onclick="toggleXuMusic()" title="开关音乐"><span>♫</span></button>
+                <img class="xu-btn xu-restart" id="xuRestartBtn" src="assets/xu/chongjin.png" alt="重新进入" onclick="restartToCover()">
+                <img class="xu-btn xu-listen" id="xuListenBtn" src="assets/xu/shangqian.png" alt="上前聆听" onclick="xuStepForward()">
+            </div>
+            <!-- 黑场 -->
+            <div class="prologue-black" id="prologueBlack"></div>
+            <!-- 演奏视频 -->
+            <div class="prologue-video" id="prologueVideoWrap">
+                <video class="prologue-video-el" id="prologueVideo" muted playsinline loop preload="auto" webkit-playsinline>
+                    <source src="assets/xu/yanzou.mp4" type="video/mp4">
+                </video>
+                <button class="xu-music-btn" id="xuMusicBtn2" onclick="toggleXuMusic()" title="开关音乐"><span>♫</span></button>
+                <img class="xu-btn xu-info" id="xuInfoBtn" src="assets/xu/jianjie.png" alt="乐曲简介" onclick="xuShowIntro()">
+                <img class="xu-btn xu-back" id="xuBackBtn" src="assets/xu/fanhui.png" alt="返回" onclick="xuBackToStatic()">
+                <img class="xu-btn xu-next" id="xuNextBtn" src="assets/xu/jixutansuo.png" alt="继续探索" onclick="xuContinue()">
+            </div>
+            <!-- 乐曲简介弹层 -->
+            <div class="prologue-intro" id="prologueIntro">
+                <img class="xu-intro-title" id="xuIntroTitle" src="assets/xu/jianjie.png" alt="乐曲简介">
+                <img class="xu-intro-panel" id="xuIntroPanel" src="assets/xu/jihuxianwen.png" alt="急胡相问简介">
+                <img class="xu-intro-back" id="xuIntroBack" src="assets/xu/fanhui2.png" alt="返回" onclick="xuCloseIntro()">
+            </div>
+            <!-- 甘露视频 -->
+            <div class="prologue-ganlu" id="prologueGanlu">
+                <video class="prologue-ganlu-el" id="ganluVideo" playsinline preload="auto" onended="onGanluEnded()">
+                    <source src="assets/xu/ganlu.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        <div class="second-header">
+            <div class="second-title text-gradient-gold">丝路寻音</div>
+            <div style="font-size:14px;color:rgba(220,190,140,0.6);">第二幕</div>
+        </div>
+
+        <!-- 全景漫游视口 -->
+        <div class="panorama-viewport" id="panoramaViewport">
+            <div class="panorama-track" id="panoramaTrack">
+
+                <!-- 场景1：大漠黄沙 -->
+                <div class="panorama-scene" data-scene="0">
+                    <div class="parallax-far"></div>
+                    <div class="parallax-mid">
+                        <div class="scene-bg-layer" data-parallax="0.3">
+                            <img src="assets/第二幕/scene_desert.png" alt="大漠黄沙" draggable="false">
+                        </div>
+                    </div>
+                    <div class="scene-vignette"></div>
+                    <div class="scene-bottom-gradient"></div>
+                    <div class="scene-foreground">
+                        <div class="scene-text">
+                            <h2 class="scene-name text-gradient-gold">大漠黄沙</h2>
+                            <p class="scene-desc">丝绸之路起点</p>
+                        </div>
+                        <div class="scene-drag-hint" id="dragHint0">← 左右滑动探索全景 →</div>
+                        <div class="scene-hotspot" style="left:35%;top:55%;width:30%;height:25%;" onclick="showHotspotInfo('驼铃声声')">
+                            <div class="hotspot-pulse"></div><div class="hotspot-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 场景2：三危金光 -->
+                <div class="panorama-scene" data-scene="1">
+                    <div class="parallax-far"></div>
+                    <div class="parallax-mid">
+                        <div class="scene-bg-layer" data-parallax="0.3">
+                            <img src="assets/第二幕/scene_sanwei.png" alt="三危金光" draggable="false">
+                        </div>
+                    </div>
+                    <div class="scene-vignette"></div>
+                    <div class="scene-bottom-gradient"></div>
+                    <div class="scene-foreground">
+                        <div class="scene-text">
+                            <h2 class="scene-name text-gradient-gold">三危金光</h2>
+                            <p class="scene-desc">莫高窟起源传说</p>
+                        </div>
+                        <div class="scene-drag-hint" id="dragHint1">← 左右滑动探索全景 →</div>
+                        <div class="scene-hotspot" style="left:45%;top:30%;width:25%;height:35%;" onclick="showHotspotInfo('三危山')">
+                            <div class="hotspot-pulse"></div><div class="hotspot-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 场景3：莫高窟外景 -->
+                <div class="panorama-scene" data-scene="2">
+                    <div class="parallax-far"></div>
+                    <div class="parallax-mid">
+                        <div class="scene-bg-layer" data-parallax="0.3">
+                            <img src="assets/第二幕/scene_mogao.png" alt="莫高窟外景" draggable="false">
+                        </div>
+                    </div>
+                    <div class="scene-vignette"></div>
+                    <div class="scene-bottom-gradient"></div>
+                    <div class="scene-foreground">
+                        <div class="scene-text">
+                            <h2 class="scene-name text-gradient-gold">莫高窟外景</h2>
+                            <p class="scene-desc">崖壁上的千年艺术宝库</p>
+                        </div>
+                        <div class="scene-drag-hint" id="dragHint2">← 左右滑动探索全景 →</div>
+                        <div class="scene-hotspot" style="left:42%;top:20%;width:16%;height:50%;" onclick="showHotspotInfo('九层楼')">
+                            <div class="hotspot-pulse"></div><div class="hotspot-dot"></div>
+                        </div>
+                        <div class="scene-hotspot" style="left:12%;top:25%;width:20%;height:40%;" onclick="showHotspotInfo('北区石窟群')">
+                            <div class="hotspot-pulse"></div><div class="hotspot-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 场景4：洞窟廊道 -->
+                <div class="panorama-scene" data-scene="3">
+                    <div class="parallax-far"></div>
+                    <div class="parallax-mid">
+                        <div class="scene-bg-layer" data-parallax="0.3">
+                            <img src="assets/第二幕/scene_corridor.png" alt="洞窟廊道" draggable="false">
+                        </div>
+                    </div>
+                    <div class="scene-vignette"></div>
+                    <div class="scene-bottom-gradient"></div>
+                    <div class="scene-foreground">
+                        <div class="scene-text">
+                            <h2 class="scene-name text-gradient-gold">洞窟廊道</h2>
+                            <p class="scene-desc">穿越千年的壁画长廊</p>
+                        </div>
+                        <div class="scene-drag-hint" id="dragHint3">← 左右滑动探索全景 →</div>
+                        <div class="enter-third-btn" onclick="enterThirdScene()">
+                            <span class="enter-third-btn-text text-gradient-gold">进入乐舞世界</span>
+                            <div class="enter-third-btn-line"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-dot active" data-scene="0" onclick="scrollToScene(0)"></div>
+            <div class="progress-dot" data-scene="1" onclick="scrollToScene(1)"></div>
+            <div class="progress-dot" data-scene="2" onclick="scrollToScene(2)"></div>
+            <div class="progress-dot" data-scene="3" onclick="scrollToScene(3)"></div>
+        </div>
+        <div class="scroll-hint" id="scrollHint">
+            <span>滑动探索</span><div class="scroll-hint-arrow"></div>
+        </div>
+    </div>
+<!-- ========== 第三幕：乐舞敦煌（重制·寻乐器） ========== -->
+    <div id="scene-third" class="scene">
+        <img class="yi-bg yi-bg-show" id="yiBgA" src="assets/yi/beijingtu.png" alt="">
+        <img class="yi-bg" id="yiBgC" src="assets/yi/xuanze-beijing.png" alt="">
+        <div class="yi-stage">
+            <div class="yi-canvas">
+                <div class="yi-content" id="yiContent">
+
+                    <!-- 画面A：选择（寻找乐器 / 洞窟简介 / 返回） -->
+                    <div class="yi-screen active" id="yiScreenA">
+                        <img class="yi-abs yi-juanzhou1" src="assets/yi/juanzhou1.png" alt="卷轴">
+                        <img class="yi-abs yi-huhan" src="assets/yi/huhan.png" alt="胡人汉人">
+                        <img class="yi-abs yi-dialog yi-dialog-a" src="assets/yi/xunzhaowz.png" alt="提示">
+                        <img class="yi-abs yi-btn yi-btn-a1" src="assets/yi/xunzhaoyueqi.png" alt="寻找乐器" onclick="yiInitHunt()">
+                        <img class="yi-abs yi-btn yi-btn-a2" src="assets/yi/dongkujianjie.png" alt="洞窟简介" onclick="yiShowScreen('yiScreenC')">
+                        <img class="yi-abs yi-btn yi-btn-a3" src="assets/yi/fanhui.png" alt="返回" onclick="yiBackToPrologue()">
+                    </div>
+
+                    <!-- 画面C：洞窟简介 -->
+                    <div class="yi-screen" id="yiScreenC">
+                        <img class="yi-abs yi-cjuanzhou" src="assets/yi/jianjie-juanzhou.png" alt="卷轴">
+                        <img class="yi-abs yi-chatu" src="assets/yi/220chatu.png" alt="220窟壁画">
+                        <img class="yi-abs yi-cjianjie" src="assets/yi/220jianjie.png" alt="洞窟简介">
+                        <img class="yi-abs yi-btn yi-cfanhui" src="assets/yi/jianjie-fanhui.png" alt="返回" onclick="yiShowScreen('yiScreenA')">
+                    </div>
+
+                    <!-- 画面D：寻找乐器 -->
+                    <div class="yi-screen" id="yiScreenD">
+                        <img class="yi-abs yi-djuanzhou" src="assets/yi/juanzhou.png" alt="卷轴">
+                        <img class="yi-abs yi-beibi" src="assets/yi/beibi.jpg" alt="北壁壁画">
+                        <img class="yi-abs yi-title" src="assets/yi/wenzi.png" alt="请找到所有隐藏的乐器">
+                        <!-- 待寻找的乐器（可点击，带浮动；位置对照北壁壁画） -->
+                        <img class="yi-abs yi-mural-inst" src="assets/yi/bili1.png" alt="筚篥" style="left:50.9%;top:24.1%;width:12.8%;animation-delay:0s;" onclick="yiFindInstrument('bili', this)">
+                        <img class="yi-abs yi-mural-inst" src="assets/yi/shukonghou1.png" alt="竖箜篌" style="left:62.0%;top:29.7%;width:12%;animation-delay:0.7s;" onclick="yiFindInstrument('shukonghou', this)">
+                        <img class="yi-abs yi-mural-inst" src="assets/yi/dalagu1.png" alt="答腊鼓" style="left:48.9%;top:54.7%;width:12.8%;animation-delay:1.4s;" onclick="yiFindInstrument('dalagu', this)">
+                        <img class="yi-abs yi-mural-inst" src="assets/yi/jiegu1.png" alt="羯鼓" style="left:66.4%;top:74.8%;width:16%;animation-delay:2.1s;" onclick="yiFindInstrument('jiegu', this)">
+                        <!-- 底部卷轴棕色矩形 -->
+                        <img class="yi-abs yi-ju1" src="assets/yi/ju1.png" alt="">
+                        <!-- 槽位1：筚篥 -->
+                        <div class="yi-slot-frame" data-lock="bili" style="left:21.3%;top:90.9%;"></div>
+                        <img class="yi-abs yi-locked" src="assets/yi/bili2.png" alt="筚篥" style="left:21.3%;top:90.9%;width:17.2%;">
+                        <img class="yi-abs yi-ju2" data-lock="bili" src="assets/yi/ju2.jpg" alt="遮挡" style="left:21.3%;top:90.9%;">
+                        <img class="yi-abs yi-suo" data-lock="bili" src="assets/yi/suo.png" alt="锁" style="left:21.3%;top:90.9%;">
+                        <!-- 槽位2：竖箜篌 -->
+                        <div class="yi-slot-frame" data-lock="shukonghou" style="left:39.9%;top:90.9%;"></div>
+                        <img class="yi-abs yi-locked" src="assets/yi/shukonghou2.png" alt="竖箜篌" style="left:39.9%;top:90.9%;height:10.9%;">
+                        <img class="yi-abs yi-ju2" data-lock="shukonghou" src="assets/yi/ju2.jpg" alt="遮挡" style="left:39.9%;top:90.9%;">
+                        <img class="yi-abs yi-suo" data-lock="shukonghou" src="assets/yi/suo.png" alt="锁" style="left:39.9%;top:90.9%;">
+                        <!-- 槽位3：答腊鼓 -->
+                        <div class="yi-slot-frame" data-lock="dalagu" style="left:61.6%;top:90.9%;"></div>
+                        <img class="yi-abs yi-locked" src="assets/yi/dalagu2.png" alt="答腊鼓" style="left:61.6%;top:90.9%;width:15.4%;">
+                        <img class="yi-abs yi-ju2" data-lock="dalagu" src="assets/yi/ju2.jpg" alt="遮挡" style="left:61.6%;top:90.9%;">
+                        <img class="yi-abs yi-suo" data-lock="dalagu" src="assets/yi/suo.png" alt="锁" style="left:61.6%;top:90.9%;">
+                        <!-- 槽位4：羯鼓 -->
+                        <div class="yi-slot-frame" data-lock="jiegu" style="left:82.9%;top:90.9%;"></div>
+                        <img class="yi-abs yi-locked" src="assets/yi/jiegu2.png" alt="羯鼓" style="left:82.9%;top:90.9%;width:16.2%;">
+                        <img class="yi-abs yi-ju2" data-lock="jiegu" src="assets/yi/ju2.jpg" alt="遮挡" style="left:82.9%;top:90.9%;">
+                        <img class="yi-abs yi-suo" data-lock="jiegu" src="assets/yi/suo.png" alt="锁" style="left:82.9%;top:90.9%;">
+                    </div>
+
+                    <!-- 画面E：体验演奏 -->
+                    <div class="yi-screen" id="yiScreenE">
+                        <img class="yi-abs yi-juanzhou1" src="assets/yi/juanzhou1.png" alt="卷轴">
+                        <img class="yi-abs yi-huhan" src="assets/yi/huhan.png" alt="胡人汉人">
+                        <img class="yi-abs yi-dialog yi-dialog-gongxi" src="assets/yi/gongxiw.png" alt="恭喜">
+                        <img class="yi-abs yi-btn yi-btn-e1" src="assets/yi/yueqiyanzou.png" alt="乐器演奏" onclick="yiGoSelect()">
+                        <img class="yi-abs yi-btn yi-btn-e2" src="assets/yi/zailaiyici.png" alt="再来一次" onclick="yiRestartHunt()">
+                    </div>
+
+                    <!-- 画面F：选择乐器 -->
+                    <div class="yi-screen" id="yiScreenF">
+                        <img class="yi-abs yi-f-title yi-f-title-anim" src="assets/yi/xuanze.png" alt="请选择想要体验的乐器">
+                        <img class="yi-abs yi-f-hanren" src="assets/yi/hanren-xuanze.png" alt="汉人">
+                        <img class="yi-abs yi-f-huren" src="assets/yi/huren-xuanze.png" alt="胡人">
+                        <img class="yi-abs yi-f-kuang" src="assets/yi/xuanzekuang.png" alt="选择框">
+                        <img class="yi-abs yi-f-inst" id="yiSelInst" src="assets/yi/xuanze-bili.png" alt="筚篥">
+                        <img class="yi-abs yi-f-mingzi" id="yiSelMingzi" src="assets/yi/mingzi-bili.png" alt="筚篥">
+                        <img class="yi-abs yi-btn yi-f-btn1" src="assets/yi/shangyige.png" alt="上一个" onclick="yiSelPrev()">
+                        <img class="yi-abs yi-btn yi-f-btn2" src="assets/yi/xiayige.png" alt="下一个" onclick="yiSelNext()">
+                        <img class="yi-abs yi-btn yi-f-btn3" src="assets/yi/lijitiyan.png" alt="立即体验" onclick="yiGoExperience()">
+                    </div>
+
+                    <!-- 画面G：体验演奏 -->
+                    <div class="yi-screen" id="yiScreenG">
+                        <img class="yi-abs yi-g-juanzhou" src="assets/yi/tiyan-juanzhou.png" alt="卷轴">
+                        <img class="yi-abs yi-g-inst" id="yiTiyanInst" src="assets/yi/tiyan-bili.png" alt="乐器" onclick="yiPlayInstrument()">
+                        <img class="yi-abs yi-g-finger" id="yiFinger" src="assets/yi/shouzhi.png" alt="手指">
+                        <img class="yi-abs yi-g-tip" id="yiGTip" src="assets/yi/dianjitiyan.png" alt="点击乐器体验演奏">
+                        <img class="yi-abs yi-btn yi-g-btn1" src="assets/yi/chongxinxuanze.png" alt="重新选择" onclick="yiReselect()">
+                        <img class="yi-abs yi-btn yi-g-btn2" src="assets/yi/jixutansuo.png" alt="继续探索" onclick="yiContinueExplore()">
+                    </div>
+
+                    <!-- 画面H：一二幕转场 -->
+                    <div class="yi-screen" id="yiScreenH">
+                        <img class="yi-abs yi-h-pangbai" src="assets/yi/pangbai.png" alt="旁白">
+                        <img class="yi-abs yi-h-huhan" src="assets/yi/huhan.png" alt="胡人汉人">
+                        <img class="yi-abs yi-btn yi-h-btn1" src="assets/yi/xunshengqiannian.png" alt="循声千年" onclick="yiXunshengQiannian()">
+                        <img class="yi-abs yi-btn yi-h-btn2" src="assets/yi/fanhui.png" alt="返回" onclick="yiHBackToSelect()">
+                    </div>
+
+                    <!-- 背景音乐控制按钮（画面A/C/D/E 共享，右上角） -->
+                    <button class="yi-music-btn off" id="yiMusicBtn" onclick="toggleYiMusic()" aria-label="背景音乐开关" title="背景音乐开关">
+                        <svg viewBox="0 0 24 24" class="yi-music-icon"><path d="M9 3v10.55A4 4 0 1 0 11 17V7h6V3H9z"/></svg>
+                        <svg viewBox="0 0 24 24" class="yi-music-off"><line x1="4.5" y1="19.5" x2="19.5" y2="4.5"/></svg>
+                    </button>
+                </div>
+
+                </div>
+                <!-- 乐器简介弹窗 -->
+                <div class="yi-popup" id="yiPopup">
+                    <img class="yi-popup-img" data-pi="bili" src="assets/yi/bilijs.png" alt="筚篥简介">
+                    <img class="yi-popup-img" data-pi="shukonghou" src="assets/yi/shukonghoujs.png" alt="竖箜篌简介">
+                    <img class="yi-popup-img" data-pi="dalagu" src="assets/yi/dalagujs.png" alt="答腊鼓简介">
+                    <img class="yi-popup-img" data-pi="jiegu" src="assets/yi/jiegujs.png" alt="羯鼓简介">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 第二幕：遗音不绝 ========== -->
+    <div id="scene-er" class="scene">
+        <div class="er-canvas">
+
+            <!-- 屏幕1：转场 -->
+            <div class="er-screen" id="erScreen1">
+                <img class="er-bg" src="assets/er/beijing.png" alt="">
+                <img class="er-abs er-s1-pangbai" src="assets/er/pangbai.png" alt="旁白">
+                <img class="er-abs er-btn er-s1-fanhui" src="assets/er/fanhui.png" alt="返回" onclick="erBackToH()">
+                <img class="er-abs er-btn er-breath er-s1-jixu" src="assets/er/jixutansuo.png" alt="继续探索" onclick="erShowScreen('erScreen2')">
+            </div>
+
+            <!-- 屏幕2：三站选择 -->
+            <div class="er-screen" id="erScreen2">
+                <img class="er-bg" src="assets/er/beijing.png" alt="">
+                <img class="er-abs er-s2-title" src="assets/er/yiyinbujue.png" alt="遗音不绝">
+                <img class="er-abs er-s2-jieshi" src="assets/er/jieshi.png" alt="注释">
+                <img class="er-abs er-s2-chatu" src="assets/er/sanzhanchatu.png" alt="三站插画">
+                <img class="er-abs er-btn er-s2-guyin" src="assets/er/guyinxinbian.png" alt="古音新编" onclick="erGoGuyin()">
+                <img class="er-abs er-btn er-s2-yimai" src="assets/er/yimaixichuan.png" alt="一脉西传" onclick="erGoYimai()">
+                <img class="er-abs er-btn er-s2-yicai" src="assets/er/yicaifencheng.png" alt="异彩纷呈" onclick="erGoYicai(0)">
+            </div>
+
+            <!-- 屏幕3：古音新编 -->
+            <div class="er-screen" id="erScreen3a">
+                <img class="er-bg" src="assets/er/beijing.png" alt="">
+                <img class="er-abs er-s3-title" src="assets/er/guyinxinbian2.png" alt="古音新编">
+                <img class="er-abs er-s3-jieshi" src="assets/er/jieshi2.png" alt="注释">
+                <img class="er-abs er-s3-juanzhou" src="assets/er/juanzhou-xinbian.png" alt="卷轴">
+                <img class="er-abs er-s3-img" src="assets/er/dunhuangguyuetuan.png" alt="敦煌古乐团">
+                <img class="er-abs er-s3-text" src="assets/er/xinbianjs.png" alt="文字介绍">
+                <img class="er-abs er-btn er-breath er-s3-shiting" src="assets/er/shiting.png" alt="点击试听" onclick="erPlayAudio('xinbian')">
+                <img class="er-abs er-btn er-s3-fanhui" src="assets/er/fanhui-xinbian.png" alt="返回" onclick="erBackToStations()">
+            </div>
+
+            <!-- 屏幕4：一脉西传 -->
+            <div class="er-screen" id="erScreen3b">
+                <img class="er-bg" src="assets/er/beijing.png" alt="">
+                <img class="er-abs er-s3-title" src="assets/er/yimaixichuan2.png" alt="一脉西传">
+                <img class="er-abs er-s3-jieshi" src="assets/er/jieshi3.png" alt="注释">
+                <img class="er-abs er-s3-juanzhou" src="assets/er/juanzhou-xinbian.png" alt="卷轴">
+                <img class="er-abs er-s3-img er-s3-img-ym" src="assets/er/weiwuerzu.png" alt="木卡姆">
+                <img class="er-abs er-s3-text" src="assets/er/mukamujs.png" alt="木卡姆介绍">
+                <img class="er-abs er-btn er-breath er-s3-shiting" src="assets/er/shiting.png" alt="点击聆听" onclick="erPlayAudio('mukamu')">
+                <img class="er-abs er-btn er-s3-fanhui" src="assets/er/fanhui-xinbian.png" alt="返回" onclick="erBackToStations()">
+            </div>
+
+            <!-- 屏幕5：异彩纷呈（舞剧/影像/乐团 三态切换） -->
+            <div class="er-screen" id="erScreen3c">
+                <img class="er-bg" src="assets/er/beijing.png" alt="">
+                <img class="er-abs er-s3-title" src="assets/er/yicaifencheng2.png" alt="异彩纷呈">
+                <img class="er-abs er-s3-jieshi" src="assets/er/jieshi4.png" alt="注释">
+                <img class="er-abs er-s3-juanzhou" src="assets/er/juanzhou-xinbian.png" alt="卷轴">
+                <!-- 舞剧态 -->
+                <img class="er-abs er-s3-img" id="erImgWuju" src="assets/er/siluhuayu.png" alt="丝路花雨">
+                <img class="er-abs er-s3-text" id="erTextWuju" src="assets/er/wujujs.png" alt="舞剧介绍">
+                <img class="er-abs er-btn er-breath er-s3-form" id="erFormWuju" src="assets/er/wuju.png" alt="舞剧舞台">
+                <!-- 影像态 -->
+                <img class="er-abs er-s3-img" id="erImgYingxiang" src="assets/er/jilupian.png" alt="纪录片" style="display:none">
+                <img class="er-abs er-s3-text" id="erTextYingxiang" src="assets/er/yingxiangjs.png" alt="影像介绍" style="display:none">
+                <img class="er-abs er-btn er-breath er-s3-form" id="erFormYingxiang" src="assets/er/yingxiangjilu.png" alt="影像记录" style="display:none">
+                <!-- 乐团态 -->
+                <img class="er-abs er-s3-img" id="erImgYuetuan" src="assets/er/yuetuan.png" alt="乐团" style="display:none">
+                <img class="er-abs er-s3-text" id="erTextYuetuan" src="assets/er/yuetuanjs.png" alt="乐团介绍" style="display:none">
+                <img class="er-abs er-btn er-breath er-s3-form" id="erFormYuetuan" src="assets/er/yinyueyuetuan.png" alt="音乐乐团" style="display:none">
+                <!-- 箭头 -->
+                <img class="er-abs er-btn er-s3-arrow-l" src="assets/er/zuojiantou.png" alt="上一个" onclick="erSwitchYicai(-1)">
+                <img class="er-abs er-btn er-s3-arrow-r" src="assets/er/youjiantou.png" alt="下一个" onclick="erSwitchYicai(1)">
+                <!-- 返回按钮 -->
+                <img class="er-abs er-btn er-s3-fanhui" id="erBackBtn" src="assets/er/fanhui-xinbian.png" alt="返回" onclick="erBackToStations()">
+                <img class="er-abs er-btn er-s3-chongxin" id="erChongxinBtn" src="assets/er/chongxintiyan.png" alt="重新体验" style="display:none" onclick="erRestart()">
+            </div>
+
+            <!-- 第二幕音乐控制按钮（右上角） -->
+            <button class="yi-music-btn off" id="erMusicBtn" onclick="toggleErMusic()" aria-label="背景音乐开关" title="背景音乐开关" style="top:16px;right:16px">
+                <svg viewBox="0 0 24 24" class="yi-music-icon"><path d="M9 3v10.55A4 4 0 1 0 11 17V7h6V3H9z"/></svg>
+                <svg viewBox="0 0 24 24" class="yi-music-off"><line x1="4.5" y1="19.5" x2="19.5" y2="4.5"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ========== 第四幕：心境·古音答心 ========== -->
+    <div id="scene-fourth" class="scene">
+        <div class="fourth-bg" id="fourthBg"></div>
+        <div class="fourth-bg-overlay"></div>
+        <div class="particles" id="fourthParticles"></div>
+        
+        <div class="fourth-header" id="fourthHeader">
+            <h2 class="fourth-title text-gradient-gold">心境·古音答心</h2>
+            <p class="fourth-subtitle">第四幕 · 以乐为药，以音解忧</p>
+        </div>
+
+        <!-- 第一步：选择心境关键词 -->
+        <div class="mood-selection-page" id="moodSelectionPage">
+            <div class="mood-orbit-container">
+                <div class="mood-center-text">
+                    <p class="mood-main-title">此刻你的心境，敦煌早有回响</p>
+                    <p class="mood-sub-hint">点击标签，聆听千年解忧之音</p>
+                </div>
+                <div class="mood-orbit-ring" id="moodTagsContainer"></div>
+                <div class="mood-footer-hint">点击心境标签 · 寻找敦煌遗音</div>
+            </div>
+        </div>
+
+        <!-- 第二步：解忧卡片 -->
+        <div class="relief-card-page" id="reliefCardPage">
+            <button class="card-back-btn" onclick="backToMoodSelection()">← 重新选择</button>
+            <div class="relief-card-wrapper">
+                <div class="relief-card" id="reliefCard">
+                    <div class="card-art-area" id="cardArtArea">
+                        <div class="card-art-placeholder" id="cardArtPlaceholder">[敦煌壁画素材]</div>
+                    </div>
+                    <div class="card-poem-area">
+                        <div class="card-poem-lines" id="cardPoemLines"></div>
+                        <div class="card-poem-source" id="cardPoemSource"></div>
+                    </div>
+                    <div class="card-mood-transition">
+                        <span class="card-old-mood" id="cardOldMood"></span>
+                        <span class="card-arrow">→</span>
+                        <span class="card-new-mood" id="cardNewMood"></span>
+                    </div>
+                    <div class="card-advice" id="cardAdvice"></div>
+                    <div class="card-music-control">
+                        <button class="card-music-btn" id="cardMusicBtn" onclick="toggleCardMusic()">
+                            <span class="music-icon">♪</span>
+                            <span class="music-text">播放解忧古音</span>
+                        </button>
+                        <p class="card-music-hint">点击聆听对应心境的敦煌古乐</p>
+                    </div>
+                    <div class="card-seal">敦煌<br>遗音</div>
+                </div>
+                <div class="card-buttons">
+                    <button class="card-btn" onclick="backToMoodSelection()">再次体验</button>
+                    <button class="card-btn card-btn-primary" onclick="enterFifthScene()">进入终章</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部按钮 -->
+        <div class="fourth-footer" id="fourthFooter">
+            <p class="fourth-hint">点击心境 · 聆听敦煌遗音</p>
+            <button class="btn-gold" onclick="enterFifthScene()">进入终章</button>
+        </div>
+    </div>
+
+    <!-- ========== 第五幕：结果·敦煌守护人 ========== -->
+    <div id="scene-fifth" class="scene">
+        <div class="fifth-bg"></div>
+        <div class="fifth-glow"></div>
+        <div class="particles" id="fifthParticles"></div>
+        <div class="identity-page" id="identityPage">
+            <div class="scroll-card" id="scrollCard">
+                <div class="scroll-texture"></div><div class="scroll-aging"></div><div class="scroll-wear"></div>
+                <div class="scroll-bottom-rod"></div>
+                <div class="scroll-header">
+                    <h3 class="scroll-header-title">敦煌守护人</h3>
+                    <p class="scroll-header-sub">专属身份凭证</p>
+                </div>
+                <div class="scroll-divider"></div>
+                <div class="scroll-content">
+                    <div class="scroll-item-row"><span class="scroll-item-label">敦煌名号</span><span class="scroll-item-value" id="identityName">-</span></div>
+                    <div class="scroll-item-row"><span class="scroll-item-label">守护乐器</span><span class="scroll-item-value" id="identityInstrument">-</span></div>
+                    <div class="scroll-item-row"><span class="scroll-item-label">守护心境</span><span class="scroll-item-value" id="identityMood">-</span></div>
+                    <div class="scroll-proverb" id="identityProverb">-</div>
+                    <div class="scroll-item-row" style="border-bottom:none;margin-bottom:0;"><span class="scroll-item-label">守护编号</span><span class="scroll-item-value" id="identityNumber">-</span></div>
+                </div>
+                <div class="scroll-footer">
+                    <p class="scroll-time" id="identityTime">敦煌纪年 公元2026年</p>
+                </div>
+                <div class="identity-seal">敦煌<br>遗音</div>
+            </div>
+        </div>
+        <div class="poster-page" id="posterPage">
+            <div class="poster-card" id="posterCard">
+                <div class="poster-border-inner"></div>
+                <div class="poster-header">
+                    <h3 class="poster-title">敦煌守护人</h3>
+                    <p class="poster-subtitle">千年丝路的音乐回响</p>
+                </div>
+                <div class="poster-mural">
+                    <img src="assets/第五幕/poster_mural.png" alt="敦煌壁画" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <span class="poster-mural-placeholder" style="display:none;">[壁画素材]</span>
+                </div>
+                <div class="poster-info">
+                    <div class="poster-info-row"><span class="poster-info-label">名号</span><span class="poster-info-value" id="posterName">-</span></div>
+                    <div class="poster-info-row"><span class="poster-info-label">乐器</span><span class="poster-info-value" id="posterInstrument">-</span></div>
+                    <div class="poster-info-row"><span class="poster-info-label">心境</span><span class="poster-info-value" id="posterMood">-</span></div>
+                    <div class="poster-proverb" id="posterProverb">-</div>
+                </div>
+                <div class="poster-footer">
+                    <p class="poster-slogan">敦煌遗音 · 寻找你的千年守护音</p>
+                </div>
+            </div>
+        </div>
+        <div class="fifth-buttons">
+            <button class="page-toggle-btn" id="togglePosterBtn" onclick="togglePoster()">生成分享海报</button>
+            <button class="btn-gold" onclick="reselectMood()">重新选择心境</button>
+            <button class="btn-gold" onclick="restartExperience()">再次进入洞窟</button>
+        </div>
+    </div>
+
+    <script>
+
+        // ========== 音效系统 ==========
+        const soundEffects = {};
+        let ambientAudio = null;
+        let currentAmbientScene = null;
+
+        function loadSound(name, src) {
+            soundEffects[name] = new Audio(src);
+            soundEffects[name].preload = 'auto';
+        }
+
+        function playSound(name) {
+            if (soundEffects[name]) {
+                soundEffects[name].currentTime = 0;
+                soundEffects[name].volume = 1;
+                const playPromise = soundEffects[name].play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(err => {
+                        // 移动端自动播放被阻止，静默处理
+                        console.log('音效播放被阻止:', name, err.message);
+                    });
+                }
+            }
+        }
+
+        // 场景背景音
+        const ambientMusic = {
+            opening: 'assets/sound/ambient_desert.mp3',
+            second: 'assets/sound/ambient_desert.mp3',
+            third: 'assets/sound/ambient_mural.mp3',
+            fourth: 'assets/sound/ambient_cave.mp3',
+            fifth: 'assets/sound/ambient_scroll.mp3'
+        };
+
+        function playAmbient(scene) {
+            if (currentAmbientScene === scene) return;
+            if (ambientAudio) {
+                ambientAudio.pause();
+                ambientAudio = null;
+            }
+            currentAmbientScene = scene;
+            if (ambientMusic[scene]) {
+                ambientAudio = new Audio(ambientMusic[scene]);
+                ambientAudio.loop = (scene !== 'fifth');
+                ambientAudio.volume = 0.3;
+                ambientAudio.play().catch(() => {});
+            }
+        }
+
+        function stopAmbient() {
+            if (ambientAudio) {
+                ambientAudio.pause();
+                ambientAudio = null;
+                currentAmbientScene = null;
+            }
+        }
+
+        // 第三幕（乐舞敦煌）专属背景音乐 music.mp3：循环播放 + 右上角音符开关
+        var yiMusic = null;
+        var yiMusicOn = false;
+        function playYiMusic() {
+            if (!yiMusic) {
+                yiMusic = new Audio('assets/yi/music.mp3');
+                yiMusic.loop = true;
+                yiMusic.volume = 0.3;
+            }
+            var p = yiMusic.play();
+            if (p !== undefined) p.catch(function(e) { console.log('背景音乐播放失败:', e); });
+            yiMusicOn = true;
+            updateYiMusicBtn();
+        }
+        function stopYiMusic() {
+            if (yiMusic) { try { yiMusic.pause(); } catch (e) {} }
+            yiMusicOn = false;
+            updateYiMusicBtn();
+        }
+        function toggleYiMusic() {
+            playSound('click');
+            if (yiMusicOn) { stopYiMusic(); } else { playYiMusic(); }
+        }
+        function updateYiMusicBtn() {
+            var b = document.getElementById('yiMusicBtn');
+            if (b) b.classList.toggle('off', !yiMusicOn);
+        }
+
+        // 预加载音效
+        function initSounds() {
+            loadSound('click', 'assets/sound/click.mp3');
+            loadSound('tile', 'assets/sound/book_open.mp3');
+            loadSound('pageFlip', 'assets/sound/page_flip.mp3');
+            loadSound('bookOpen', 'assets/sound/book_open.mp3');
+            loadSound('musicStart', 'assets/sound/click.mp3');
+            loadSound('hover', 'assets/sound/click.mp3');
+            loadSound('transition', 'assets/sound/page_flip.mp3');
+
+            // 预加载 click 音效，确保首次点击能播放
+            if (soundEffects['click']) {
+                soundEffects['click'].load();
+                // 尝试静音播放一次以解锁音频上下文（移动端需要）
+                soundEffects['click'].volume = 0;
+                soundEffects['click'].play().then(() => {
+                    soundEffects['click'].pause();
+                    soundEffects['click'].volume = 1;
+                }).catch(() => {});
+            }
+        }
+
+        // ========== 全局变量 ==========
+        let currentScene = 0;
+        const totalScenes = 4;
+        let isScrolling = false;
+        /* 第二幕变量已在initPanorama中定义 */
+
+        // 开场音乐
+        let openingMusic = null;
+        let isMusicPlaying = false;
+        let musicPlayedOnce = false;
+
+        // 乐器数据
+        const instrumentsData = {
+            pipa: { name: '琵琶', image: 'assets/第三幕/instrument_pipa.png', audio: 'assets/第三幕/audio/pipa.mp3', desc: '琵琶是敦煌壁画中出现最多的弹拨乐器，被誉为"民乐之王"。琵琶音箱呈半梨形，上装四弦，最早名为"批把"，因演奏时向前弹出曰"批"，向后挑进曰"把"而得名。', origin: '起源于西域，汉代传入中原，隋唐时期达到鼎盛' },
+            ruan: { name: '阮', image: 'assets/第三幕/instrument_ruan.png', audio: 'assets/第三幕/audio/ruan.mp3', desc: '阮是一种中国传统弹拨乐器，相传因魏晋名士阮咸善弹此乐器而得名。阮的音色圆润柔和，形似满月，在敦煌壁画中常与其他乐器一同出现，是唐代乐舞中不可或缺的乐器。', origin: '起源于秦汉时期，唐代发展成熟' },
+            konghou: { name: '箜篌', image: 'assets/第三幕/instrument_konghou.png', audio: 'assets/第三幕/audio/konghou.mp3', desc: '箜篌是中国古代传统弹拨乐器，分为卧箜篌和竖箜篌两种。敦煌壁画中的箜篌多为竖箜篌，形态优美，音色清澈如流水，是宫廷雅乐和敦煌乐舞中的重要乐器。', origin: '竖箜篌汉代从西域传入，卧箜篌为中国本土乐器' },
+            sheng: { name: '笙', image: 'assets/第三幕/instrument_sheng.png', audio: 'assets/第三幕/audio/sheng.mp3', desc: '笙是中国最古老的吹奏乐器之一，属于簧片乐器。笙由多根竹管组成，音色清越、高雅，能演奏和声。在敦煌壁画中，笙常与其他乐器配合演奏，是唐代乐队中的重要成员。', origin: '起源于3000多年前的商代，是世界上最早使用自由簧的乐器' },
+            xiao: { name: '箫', image: 'assets/第三幕/instrument_xiao.png', audio: 'assets/第三幕/audio/xiao.mp3', desc: '箫是中国古老的吹奏乐器，分为洞箫和琴箫。箫的音色圆润轻柔，幽静典雅，适合独奏和重奏。在敦煌壁画中，箫常出现在乐舞场景中，是表现清幽意境的重要乐器。', origin: '起源于远古时期，汉代发展成熟' },
+            drum: { name: '鼓', image: 'assets/第三幕/instrument_drum.png', audio: 'assets/第三幕/audio/drum.mp3', desc: '鼓是敦煌壁画中最常见的打击乐器，种类繁多，包括羯鼓、腰鼓、答腊鼓等。鼓在乐舞中起着指挥节奏的重要作用，鼓声激昂有力，能带动整个乐舞的气氛。', origin: '鼓的历史悠久，种类丰富，唐代西域鼓乐传入中原' }
+        };
+
+        let currentAudio = null;
+        let currentInstrument = null;
+
+        // ========== 第四幕数据（敦煌解忧） ==========
+        const moodData = [
+            {
+                key: 'anxiety',
+                label: '焦虑',
+                subLabel: '学业压力 · 未来迷茫',
+                poem: ['莫高千佛映霞光', '丝路驼铃入梦乡'],
+                poemTitle: '《敦煌夜思》',
+                poemAuthor: '【唐】佚名',
+                newMood: '心如止水',
+                advice: '敦煌壁画历经千年风沙，每一笔都是工匠们放下焦虑、专注当下的见证。莫高千佛静观世事，驼铃声远，心自安宁。',
+                artDesc: '莫高窟夕阳下的九层楼',
+                music: 'assets/第四幕/music_anxiety.mp3'
+            },
+            {
+                key: 'confused',
+                label: '迷茫',
+                subLabel: '找不到方向',
+                poem: ['大漠孤烟直', '长河落日圆'],
+                poemTitle: '《使至塞上》',
+                poemAuthor: '【唐】王维',
+                newMood: '豁然开朗',
+                advice: '丝路之上，谁不是在迷雾中摸索前行？张骞西行十三载才归，玄奘取经十七年方回。你此刻的迷茫，正是寻找答案的必经之路。',
+                artDesc: '大漠中前行的商队',
+                music: 'assets/第四幕/music_confused.mp3'
+            },
+            {
+                key: 'obsession',
+                label: '执念',
+                subLabel: '放不下 · 想不通',
+                poem: ['飞天舞袖散花雨', '一曲琵琶解千愁'],
+                poemTitle: '《敦煌乐舞》',
+                poemAuthor: '【唐】敦煌曲子词',
+                newMood: '放下自在',
+                advice: '执念如手中沙，握得越紧，流失越快。看飞天散花，听琵琶一曲，千年洞窟中的壁画告诉我们：放下，即是拥有。',
+                artDesc: '飞天散花壁画',
+                music: 'assets/第四幕/music_obsession.mp3'
+            },
+            {
+                key: 'depressed',
+                label: '消沉',
+                subLabel: '提不起劲 · 情绪低落',
+                poem: ['春风不度玉门关', '羌笛何须怨杨柳'],
+                poemTitle: '《凉州词》',
+                poemAuthor: '【唐】王之涣',
+                newMood: '重拾信心',
+                advice: '玉门关外虽春风难度，但敦煌的壁画却将春色永留人间。低谷不是终点，而是蓄力的起点。千年洞窟中的每一笔，都是希望的见证。',
+                artDesc: '玉门关遗址',
+                music: 'assets/第四幕/music_depressed.mp3'
+            },
+            {
+                key: 'regret',
+                label: '遗憾',
+                subLabel: '错过 · 后悔',
+                poem: ['阳关三叠送故人', '西出阳关无故人'],
+                poemTitle: '《送元二使安西》',
+                poemAuthor: '【唐】王维',
+                newMood: '珍惜当下',
+                advice: '阳关道上，古人送别时也曾遗憾。但敦煌的壁画将那些美好瞬间永远定格。遗憾是人生的常态，但不必让它成为心头的重负。',
+                artDesc: '阳关古道送别图',
+                music: 'assets/第四幕/music_regret.mp3'
+            },
+            {
+                key: 'wasted',
+                label: '虚废',
+                subLabel: '浪费时间 · 碌碌无为',
+                poem: ['凿窟造像千秋业', '一笔一画皆心血'],
+                poemTitle: '《敦煌工匠歌》',
+                poemAuthor: '【唐】敦煌民间',
+                newMood: '勤勉精进',
+                advice: '敦煌莫高窟的每一幅壁画，都是工匠们数十年如一日的勤勉结晶。凿窟造像千秋业，你的时间同样珍贵，此刻开始，便是最好的时机。',
+                artDesc: '敦煌工匠绘制壁画',
+                music: 'assets/第四幕/music_wasted.mp3'
+            }
+        ];
+
+        let selectedMood = null;
+        let lastSelectedMood = null;  // 记录最近一次确认的心境，供未重新选择时兜底
+        let cardAudio = null;
+
+        // ========== 第四幕：心境·古音答心 ==========
+        function initFourthScene() {
+            selectedMood = null;
+            stopCardMusic();
+            document.getElementById('fourthHeader').classList.remove('show');
+            document.getElementById('moodSelectionPage').classList.remove('hidden');
+            document.getElementById('reliefCardPage').classList.remove('active');
+            document.getElementById('fourthFooter').style.display = 'block';
+            renderMoodTags();
+            createFourthParticles();
+            playAmbient('fourth');
+            setTimeout(() => {
+                document.getElementById('fourthHeader').classList.add('show');
+            }, 300);
+        }
+
+        function renderMoodTags() {
+            const container = document.getElementById('moodTagsContainer');
+            container.innerHTML = '';
+            moodData.forEach((mood, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'mood-orbit-item';
+                tag.style.animationDelay = (index * 0.1) + 's';
+                tag.onclick = () => selectMood(mood.key);
+                tag.innerHTML = `
+                    <span class="orbit-label">${mood.label}</span>
+                    <span class="orbit-desc">${mood.subLabel}</span>
+                `;
+                container.appendChild(tag);
+            });
+        }
+
+        function selectMood(key) {
+            if (selectedMood) return;
+            selectedMood = moodData.find(m => m.key === key);
+            if (!selectedMood) return;
+            lastSelectedMood = selectedMood;
+            playSound('click');
+            playSound('pageFlip');
+            document.getElementById('moodSelectionPage').classList.add('hidden');
+            document.getElementById('fourthFooter').style.display = 'none';
+            setTimeout(() => {
+                showReliefCard();
+            }, 400);
+        }
+
+        function showReliefCard() {
+            const page = document.getElementById('reliefCardPage');
+            page.classList.add('active');
+            const poemLinesEl = document.getElementById('cardPoemLines');
+            poemLinesEl.innerHTML = selectedMood.poem.map((line, i) => 
+                `<div class="poem-line" style="animation-delay: ${0.3 + i * 0.3}s">${line}</div>`
+            ).join('');
+            document.getElementById('cardPoemSource').textContent = 
+                selectedMood.poemTitle + ' ' + selectedMood.poemAuthor;
+            document.getElementById('cardOldMood').textContent = selectedMood.label;
+            document.getElementById('cardNewMood').textContent = selectedMood.newMood;
+            document.getElementById('cardAdvice').textContent = selectedMood.advice;
+            const artArea = document.getElementById('cardArtArea');
+            const artImg = `assets/第四幕/art_${selectedMood.key}.png`;
+            const testImg = new Image();
+            testImg.onload = function() {
+                artArea.innerHTML = `<img src="${artImg}" alt="${selectedMood.artDesc}">`;
+            };
+            testImg.onerror = function() {
+                artArea.innerHTML = `<div class="card-art-placeholder">[${selectedMood.artDesc}]</div>`;
+            };
+            testImg.src = artImg;
+            const musicBtn = document.getElementById('cardMusicBtn');
+            musicBtn.classList.remove('playing');
+            musicBtn.innerHTML = '<span class="music-icon">♪</span><span class="music-text">播放解忧古音</span>';
+            if (cardAudio) {
+                cardAudio.pause();
+                cardAudio = null;
+            }
+            cardAudio = new Audio(selectedMood.music);
+            cardAudio.loop = false;
+            cardAudio.addEventListener('error', function() {
+                musicBtn.innerHTML = '<span class="music-icon">♪</span><span class="music-text">古音暂未提供</span>';
+                musicBtn.style.opacity = '0.5';
+                musicBtn.style.cursor = 'not-allowed';
+            });
+        }
+
+        function toggleCardMusic() {
+            playSound('click');
+            if (!cardAudio) return;
+            const musicBtn = document.getElementById('cardMusicBtn');
+            if (cardAudio.paused) {
+                if (ambientAudio && currentAmbientScene === 'fourth') {
+                    ambientAudio.pause();
+                }
+                cardAudio.play().catch(function(e) {
+                    musicBtn.innerHTML = '<span class="music-icon">♪</span><span class="music-text">古音暂未提供</span>';
+                });
+                musicBtn.classList.add('playing');
+                musicBtn.innerHTML = '<span class="music-icon">♫</span><span class="music-text">暂停古音</span>';
+                playSound('musicStart');
+            } else {
+                cardAudio.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '<span class="music-icon">♪</span><span class="music-text">播放解忧古音</span>';
+                if (currentAmbientScene === 'fourth' && ambientMusic['fourth']) {
+                    ambientAudio = new Audio(ambientMusic['fourth']);
+                    ambientAudio.loop = true;
+                    ambientAudio.volume = 0.3;
+                    ambientAudio.play().catch(() => {});
+                }
+            }
+        }
+
+        function stopCardMusic() {
+            if (cardAudio) {
+                cardAudio.pause();
+                cardAudio = null;
+            }
+        }
+
+        function backToMoodSelection() {
+            playSound('click');
+            stopCardMusic();
+            document.getElementById('reliefCardPage').classList.remove('active');
+            if (currentAmbientScene === 'fourth' && ambientMusic['fourth']) {
+                ambientAudio = new Audio(ambientMusic['fourth']);
+                ambientAudio.loop = true;
+                ambientAudio.volume = 0.3;
+                ambientAudio.play().catch(() => {});
+            }
+            setTimeout(() => {
+                selectedMood = null;
+                document.getElementById('moodSelectionPage').classList.remove('hidden');
+                document.getElementById('fourthFooter').style.display = 'block';
+                renderMoodTags();
+            }, 400);
+        }
+
+        function enterFourthScene() {
+            playSound('click');
+            stopYiMusic();
+            document.getElementById('scene-third').classList.remove('active');
+            document.getElementById('scene-fourth').classList.add('active');
+            initFourthScene();
+        }
+
+        function createFourthParticles() {
+            const container = document.getElementById('fourthParticles');
+            if (!container || container.children.length > 0) return;
+            const particleCount = 50;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                const sizeType = Math.random();
+                if (sizeType < 0.2) particle.className = 'particle large';
+                else if (sizeType < 0.6) particle.className = 'particle';
+                else particle.className = 'particle small';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.bottom = '-10px';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                particle.style.opacity = Math.random() * 0.4 + 0.2;
+                container.appendChild(particle);
+            }
+        }
+
+        // ========== 第五幕功能 ==========
+        const identityNames = {
+            pipa: '琵琶守护人', ruan: '禅音侍者', konghou: '飞天舞使',
+            sheng: '笙歌使者', xiao: '箫音行者', drum: '鼓韵传人'
+        };
+
+        const moodToIdentity = {
+            'anxiety': { instrumentKey: 'pipa', name: '琵琶守护人', instrument: '琵琶' },
+            'confused': { instrumentKey: 'xiao', name: '箫音行者', instrument: '箫' },
+            'obsession': { instrumentKey: 'konghou', name: '飞天舞使', instrument: '箜篌' },
+            'depressed': { instrumentKey: 'sheng', name: '笙歌使者', instrument: '笙' },
+            'regret': { instrumentKey: 'ruan', name: '禅音侍者', instrument: '阮' },
+            'wasted': { instrumentKey: 'drum', name: '鼓韵传人', instrument: '鼓' }
+        };
+
+        function generateIdentity() {
+            const activeMood = selectedMood || lastSelectedMood;
+            const moodKey = activeMood ? activeMood.key : 'anxiety';
+            const mapping = moodToIdentity[moodKey] || moodToIdentity['anxiety'];
+            const instrumentKey = mapping.instrumentKey;
+            const instrumentName = mapping.instrument;
+            const identityName = mapping.name;
+            const moodTitle = activeMood ? activeMood.label : '未知心境';
+            const proverb = activeMood ? activeMood.poem[0] + '，' + activeMood.poem[1] : '千年遗音，守护于心';
+            const number = 'NO.' + String(Math.floor(Math.random() * 9000) + 1000).padStart(4, '0');
+            const year = new Date().getFullYear();
+
+            document.getElementById('identityName').textContent = identityName;
+            document.getElementById('identityInstrument').textContent = instrumentName;
+            document.getElementById('identityMood').textContent = moodTitle;
+            document.getElementById('identityProverb').textContent = proverb;
+            document.getElementById('identityNumber').textContent = number;
+            document.getElementById('identityTime').textContent = `敦煌纪年 公元${year}年`;
+
+            document.getElementById('posterName').textContent = identityName;
+            document.getElementById('posterInstrument').textContent = instrumentName;
+            document.getElementById('posterMood').textContent = moodTitle;
+            document.getElementById('posterProverb').textContent = proverb;
+        }
+
+        function enterFifthScene() {
+            playSound('click');
+            stopCardMusic();
+            playAmbient('fifth');
+            document.getElementById('scene-fourth').classList.remove('active');
+            document.getElementById('scene-fifth').classList.add('active');
+            generateIdentity();
+            createFifthParticles();
+        }
+
+        function togglePoster() {
+            playSound('click');
+            const identityPage = document.getElementById('identityPage');
+            const posterPage = document.getElementById('posterPage');
+            const btn = document.getElementById('togglePosterBtn');
+
+            if (posterPage.classList.contains('active')) {
+                posterPage.classList.remove('active');
+                identityPage.classList.remove('hidden');
+                btn.textContent = '生成分享海报';
+            } else {
+                identityPage.classList.add('hidden');
+                posterPage.classList.add('active');
+                btn.textContent = '查看身份卡';
+            }
+        }
+
+        function reselectMood() {
+            playSound('click');
+            document.getElementById('scene-fifth').classList.remove('active');
+            document.getElementById('scene-fourth').classList.add('active');
+            initFourthScene();
+        }
+
+        function resetPanorama() {
+            currentScene = 0;
+            sceneOffsets = [0, 0, 0, 0];
+            if (panoramaTrack) {
+                panoramaTrack.style.transition = 'none';
+                panoramaTrack.style.transform = 'translateX(0px)';
+            }
+            if (panoramaScenes && panoramaScenes.length) {
+                panoramaScenes.forEach((scene, i) => {
+                    scene.classList.toggle('active', i === 0);
+                });
+            }
+            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === 0);
+            });
+        }
+
+        function restartExperience() {
+            playSound('click');
+            stopAmbient();
+            stopOpeningMusic();
+            resetPanorama();
+
+            document.getElementById('posterPage').classList.remove('active');
+            document.getElementById('identityPage').classList.remove('hidden');
+            document.getElementById('togglePosterBtn').textContent = '生成分享海报';
+
+            document.getElementById('scene-fifth').classList.remove('active');
+            document.getElementById('scene-opening').classList.add('active');
+
+            const video = document.getElementById('openingVideo');
+            const caveEntrance = document.getElementById('openingCaveEntrance');
+            const particles = document.getElementById('openingParticles');
+            const content = document.getElementById('openingContent');
+            const skipBtn = document.getElementById('skipBtn');
+
+            video.classList.remove('fade-out');
+            caveEntrance.classList.remove('show');
+            particles.classList.remove('show');
+            content.classList.remove('show');
+            skipBtn.classList.remove('hidden');
+
+            // 重新体验直接播放动画（跳过封面）
+            const cover = document.getElementById('openingCover');
+            if (cover) cover.classList.add('hide');
+
+            video.currentTime = 0;
+            video.play();
+
+            // 重置音乐状态
+            musicPlayedOnce = false;
+            isMusicPlaying = false;
+            updateMusicBtn();
+        }
+
+        // ========== 封面进入：点击"点击音符进入"后播放开场动画 ==========
+        function startOpening() {
+            playSound('click');
+            const cover = document.getElementById('openingCover');
+            const skipBtn = document.getElementById('skipBtn');
+            const video = document.getElementById('openingVideo');
+            if (cover) cover.classList.add('hide');
+            if (skipBtn) skipBtn.classList.remove('hidden');
+            // 用户未手动操作过音乐时，自动开始循环背景音乐
+            if (openingMusic && !musicPlayedOnce && !isMusicPlaying) {
+                openingMusic.play().catch(function(e) {
+                    console.log('音乐播放失败:', e);
+                });
+                isMusicPlaying = true;
+                musicPlayedOnce = true;
+                updateMusicBtn();
+            }
+            if (video) {
+                video.muted = true;
+                video.play().catch(function(e) {
+                    console.log('视频播放失败:', e);
+                    showOpeningEndScene();
+                });
+            }
+        }
+
+        // ========== 场景切换 ==========
+        function skipOpening() {
+            playSound('click');
+            const video = document.getElementById('openingVideo');
+            if (video) {
+                try { video.pause(); video.currentTime = video.duration || 0; } catch(e) {}
+                video.classList.add('fade-out');
+            }
+            showOpeningEndScene();
+        }
+
+        function showOpeningEndScene() {
+            const video = document.getElementById('openingVideo');
+            const caveEntrance = document.getElementById('openingCaveEntrance');
+            const particles = document.getElementById('openingParticles');
+            const content = document.getElementById('openingContent');
+            const skipBtn = document.getElementById('skipBtn');
+
+            if (video) video.classList.add('fade-out');
+            if (skipBtn) skipBtn.classList.add('hidden');
+
+            setTimeout(() => {
+                if (caveEntrance) caveEntrance.classList.add('show');
+                if (particles) particles.classList.add('show');
+            }, 500);
+
+            setTimeout(() => {
+                if (content) content.classList.add('show');
+            }, 1500);
+        }
+
+        function enterSecondScene() {
+            playSound('click');
+            stopOpeningMusic();
+            document.getElementById('scene-opening').classList.remove('active');
+            document.getElementById('scene-second').classList.add('active');
+            startPrologue();
+            createParticles();
+        }
+
+        function enterThirdScene() {
+            playSound('click');
+            playAmbient('third');
+            document.getElementById('scene-second').classList.remove('active');
+            document.getElementById('scene-third').classList.add('active');
+        }
+
+        // ========== 序幕：循声入窟（原第二幕丝路寻音改写） ==========
+        let xuMusic = null;          // 急胡相问背景音乐
+        let xuMusicPlaying = false;  // 序幕音乐播放状态
+        let prologueToken = 0;       // 序幕流程令牌（防止旧定时器干扰）
+
+        function initPrologue() {
+            xuMusic = new Audio('assets/xu/jihuxiangwen.mp3');
+            xuMusic.loop = true;
+            xuMusic.volume = 0.6;
+            xuMusic.addEventListener('error', function() {
+                console.log('序幕音乐加载失败');
+            });
+        }
+
+        function xuReset() {
+            prologueToken++;
+            if (xuMusic) { xuMusic.pause(); xuMusic.currentTime = 0; }
+            xuMusicPlaying = false;
+            var v1 = document.getElementById('prologueVideo');
+            if (v1) { v1.pause(); v1.currentTime = 0; }
+            var v2 = document.getElementById('ganluVideo');
+            if (v2) { v2.pause(); v2.currentTime = 0; }
+            ['prologueStatic', 'prologueVideoWrap', 'prologueIntro', 'prologueGanlu'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.classList.remove('show');
+            });
+            var black = document.getElementById('prologueBlack');
+            if (black) black.classList.remove('show');
+            document.querySelectorAll('.xu-btn').forEach(function(b) {
+                b.classList.remove('show');
+                b.classList.remove('quick-hide');
+            });
+            updateXuMusicBtn();
+        }
+
+        // 进入序幕：淡入静态演奏画面 + 自动播放背景音乐，1.5秒后淡入两个按钮
+        function startPrologue() {
+            xuReset();
+            var token = prologueToken;
+            var st = document.getElementById('prologueStatic');
+            if (st) st.classList.add('show');
+            if (xuMusic) {
+                xuMusic.currentTime = 0;
+                xuMusic.play().catch(function(e) { console.log('序幕音乐播放失败:', e); });
+                xuMusicPlaying = true;
+            }
+            updateXuMusicBtn();
+            setTimeout(function() {
+                if (token !== prologueToken) return;
+                var r = document.getElementById('xuRestartBtn');
+                var l = document.getElementById('xuListenBtn');
+                if (r) r.classList.add('show');
+                if (l) l.classList.add('show');
+            }, 1500);
+        }
+
+        // 音符开关：暂停/播放序幕背景音乐
+        function toggleXuMusic() {
+            playSound('click');
+            if (!xuMusic) return;
+            if (xuMusicPlaying) {
+                xuMusic.pause();
+                xuMusicPlaying = false;
+            } else {
+                xuMusic.play().catch(function(e) { console.log('序幕音乐播放失败:', e); });
+                xuMusicPlaying = true;
+            }
+            updateXuMusicBtn();
+        }
+
+        function updateXuMusicBtn() {
+            document.querySelectorAll('.xu-music-btn').forEach(function(btn) {
+                btn.classList.toggle('muted', !xuMusicPlaying);
+                var span = btn.querySelector('span');
+                if (span) span.textContent = xuMusicPlaying ? '♫' : '♪';
+            });
+        }
+
+        // 重新进入：跳回开场封面（开场效果图所示部分）
+        function restartToCover() {
+            playSound('click');
+            xuReset();
+            document.getElementById('scene-second').classList.remove('active');
+            document.getElementById('scene-opening').classList.add('active');
+            var cover = document.getElementById('openingCover');
+            if (cover) cover.classList.remove('hide');
+            var cave = document.getElementById('openingCaveEntrance');
+            if (cave) cave.classList.remove('show');
+            var particles = document.getElementById('openingParticles');
+            if (particles) particles.classList.remove('show');
+            var content = document.getElementById('openingContent');
+            if (content) content.classList.remove('show');
+            var skipBtn = document.getElementById('skipBtn');
+            if (skipBtn) skipBtn.classList.add('hidden');
+            var video = document.getElementById('openingVideo');
+            if (video) {
+                video.classList.remove('fade-out');
+                video.pause();
+                video.currentTime = 0;
+            }
+            stopOpeningMusic();
+        }
+
+        // 上前聆听：不再亮黑场、不再播放脚步声，按钮淡出后直接自然淡入演奏视频
+        function xuStepForward() {
+            playSound('click');
+            var token = prologueToken;
+            if (xuMusic) xuMusic.pause();
+            xuMusicPlaying = false;
+            updateXuMusicBtn();
+            document.querySelectorAll('.xu-btn').forEach(function(b) { b.classList.remove('show'); });
+            // 按钮约0.55秒淡出后，淡入演奏视频（视频自身0.8秒淡入）
+            setTimeout(function() {
+                if (token !== prologueToken) return;
+                xuShowVideo(token);
+            }, 1200);
+        }
+
+        // 黑场结束：淡入演奏视频，背景音乐继续循环
+        function xuShowVideo(token) {
+            if (token !== prologueToken) return;
+            var black = document.getElementById('prologueBlack');
+            if (black) black.classList.remove('show');
+            var wrap = document.getElementById('prologueVideoWrap');
+            if (wrap) wrap.classList.add('show');
+            var video = document.getElementById('prologueVideo');
+            if (video) {
+                video.currentTime = 0;
+                video.play().catch(function(e) { console.log('演奏视频播放失败:', e); });
+            }
+            if (xuMusic) {
+                xuMusic.play().catch(function(e) { console.log('序幕音乐恢复失败:', e); });
+                xuMusicPlaying = true;
+            }
+            updateXuMusicBtn();
+            setTimeout(function() {
+                if (token !== prologueToken) return;
+                ['xuInfoBtn', 'xuBackBtn', 'xuNextBtn'].forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (el) el.classList.add('show');
+                });
+            }, 600);
+        }
+
+        // 乐曲简介：下方两按钮快速消失（快且自然），弹出简介面板
+        function xuShowIntro() {
+            playSound('click');
+            var info = document.getElementById('xuInfoBtn');
+            var back = document.getElementById('xuBackBtn');
+            var next = document.getElementById('xuNextBtn');
+            if (info) info.classList.add('quick-hide');
+            if (back) back.classList.add('quick-hide');
+            if (next) next.classList.add('quick-hide');
+            setTimeout(function() {
+                if (info) info.classList.remove('show');
+                if (back) back.classList.remove('show');
+                if (next) next.classList.remove('show');
+                var intro = document.getElementById('prologueIntro');
+                if (intro) intro.classList.add('show');
+            }, 180);
+        }
+
+        function xuCloseIntro() {
+            playSound('click');
+            var intro = document.getElementById('prologueIntro');
+            if (intro) intro.classList.remove('show');
+            setTimeout(function() {
+                var info = document.getElementById('xuInfoBtn');
+                var back = document.getElementById('xuBackBtn');
+                var next = document.getElementById('xuNextBtn');
+                if (info) { info.classList.remove('quick-hide'); info.classList.add('show'); }
+                if (back) { back.classList.remove('quick-hide'); back.classList.add('show'); }
+                if (next) { next.classList.remove('quick-hide'); next.classList.add('show'); }
+            }, 250);
+        }
+
+        // 返回：回到静态演奏画面重新选择
+        function xuBackToStatic() {
+            playSound('click');
+            var wrap = document.getElementById('prologueVideoWrap');
+            if (wrap) wrap.classList.remove('show');
+            var video = document.getElementById('prologueVideo');
+            if (video) { video.pause(); video.currentTime = 0; }
+            document.querySelectorAll('.xu-btn').forEach(function(b) { b.classList.remove('show'); });
+            var st = document.getElementById('prologueStatic');
+            if (st) st.classList.add('show');
+            setTimeout(function() {
+                var r = document.getElementById('xuRestartBtn');
+                var l = document.getElementById('xuListenBtn');
+                if (r) r.classList.add('show');
+                if (l) l.classList.add('show');
+            }, 700);
+        }
+
+        // 继续探索：跳转甘露视频，背景音乐暂停
+        function xuContinue() {
+            playSound('click');
+            if (xuMusic) { xuMusic.pause(); xuMusic.currentTime = 0; }
+            xuMusicPlaying = false;
+            updateXuMusicBtn();
+            var wrap = document.getElementById('prologueVideoWrap');
+            if (wrap) wrap.classList.remove('show');
+            var v = document.getElementById('prologueVideo');
+            if (v) { v.pause(); v.currentTime = 0; }
+            document.querySelectorAll('.xu-btn').forEach(function(b) { b.classList.remove('show'); });
+            var ganlu = document.getElementById('prologueGanlu');
+            if (ganlu) ganlu.classList.add('show');
+            var gv = document.getElementById('ganluVideo');
+            if (gv) {
+                gv.currentTime = 0;
+                gv.play().catch(function(e) { console.log('甘露视频播放失败:', e); });
+            }
+        }
+
+        // 甘露视频播放结束 → 进入下一幕（乐舞敦煌），背景音乐切换为 music.mp3 循环播放
+        function onGanluEnded() {
+            var ganlu = document.getElementById('prologueGanlu');
+            if (ganlu) ganlu.classList.remove('show');
+            stopAmbient();
+            playYiMusic();
+            document.getElementById('scene-second').classList.remove('active');
+            document.getElementById('scene-third').classList.add('active');
+        }
+
+        // ========== 第二幕：全景漫游 ==========
+        // 注意：currentScene/isScrolling/totalScenes 已在全局变量区声明
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragCurrentX = 0;
+        let sceneOffsets = [0, 0, 0, 0]; // 每个场景内图片的偏移量
+        let viewportWidth = 0;
+        let sceneWidths = [];
+        let imgWidths = [];
+        let panoramaTrack = null;
+        let panoramaScenes = [];
+        let bgLayers = [];
+
+        function initPanorama() {
+            panoramaTrack = document.getElementById('panoramaTrack');
+            panoramaScenes = document.querySelectorAll('.panorama-scene');
+            bgLayers = document.querySelectorAll('.scene-bg-layer');
+            viewportWidth = window.innerWidth;
+
+            // 计算每个场景的宽度（以视口宽度为基准，3:1图片则场景宽度 = 图片宽度）
+            panoramaScenes.forEach((scene, index) => {
+                const img = scene.querySelector('.scene-bg-layer img');
+                if (img) {
+                    // 设置场景宽度为图片原始宽度（按比例）
+                    const imgRatio = 3; // 3:1 长图
+                    const sceneWidth = viewportWidth * imgRatio;
+                    scene.style.width = sceneWidth + 'px';
+                    sceneWidths[index] = sceneWidth;
+                    imgWidths[index] = sceneWidth;
+                } else {
+                    scene.style.width = viewportWidth + 'px';
+                    sceneWidths[index] = viewportWidth;
+                    imgWidths[index] = viewportWidth;
+                }
+
+                // 初始化偏移
+                sceneOffsets[index] = 0;
+            });
+
+            // 设置track总宽度
+            updateTrackWidth();
+
+            // 激活第一个场景
+            updateSceneActiveState();
+
+            // 绑定事件
+            const viewport = document.getElementById('panoramaViewport');
+            viewport.addEventListener('touchstart', handlePanoramaTouchStart, { passive: false });
+            viewport.addEventListener('touchmove', handlePanoramaTouchMove, { passive: false });
+            viewport.addEventListener('touchend', handlePanoramaTouchEnd, { passive: true });
+            viewport.addEventListener('mousedown', handlePanoramaMouseDown);
+            window.addEventListener('mousemove', handlePanoramaMouseMove);
+            window.addEventListener('mouseup', handlePanoramaMouseUp);
+            window.addEventListener('wheel', handlePanoramaWheel, { passive: false });
+            window.addEventListener('keydown', handlePanoramaKeydown);
+            window.addEventListener('resize', handlePanoramaResize);
+
+            // 显示第一个场景的拖拽提示
+            showDragHint(0);
+
+            // 将画卷定位到当前场景起点，确保重体验后从第一张重新开始
+            applyTransform();
+        }
+
+        function updateTrackWidth() {
+            let totalWidth = 0;
+            panoramaScenes.forEach((scene, i) => {
+                totalWidth += sceneWidths[i];
+            });
+            panoramaTrack.style.width = totalWidth + 'px';
+        }
+
+        function updateSceneActiveState() {
+            panoramaScenes.forEach((scene, index) => {
+                scene.classList.toggle('active', index === currentScene);
+            });
+        }
+
+        function showDragHint(sceneIndex) {
+            document.querySelectorAll('.scene-drag-hint').forEach((hint, i) => {
+                hint.classList.toggle('show', i === sceneIndex);
+            });
+            // 3秒后自动隐藏
+            setTimeout(() => {
+                const hint = document.getElementById('dragHint' + sceneIndex);
+                if (hint) hint.classList.remove('show');
+            }, 4000);
+        }
+
+        function getTrackOffset() {
+            let offset = 0;
+            for (let i = 0; i < currentScene; i++) {
+                offset += sceneWidths[i];
+            }
+            return offset;
+        }
+
+        function getMaxOffset(sceneIndex) {
+            const imgW = imgWidths[sceneIndex] || viewportWidth;
+            return Math.max(0, imgW - viewportWidth);
+        }
+
+        function applyTransform() {
+            const trackOffset = getTrackOffset();
+            const currentOffset = sceneOffsets[currentScene] || 0;
+            const totalOffset = -(trackOffset + currentOffset);
+            panoramaTrack.style.transform = `translateX(${totalOffset}px)`;
+            panoramaTrack.style.transition = isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }
+
+        // ===== 触摸事件 =====
+        function handlePanoramaTouchStart(e) {
+            if (!document.getElementById('scene-second').classList.contains('active')) return;
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            dragStartX = touchStartX;
+            isDragging = true;
+
+            // 暂停过渡动画，直接跟随手指
+            panoramaTrack.style.transition = 'none';
+        }
+
+        function handlePanoramaTouchMove(e) {
+            if (!document.getElementById('scene-second').classList.contains('active')) return;
+            if (!isDragging) return;
+            e.preventDefault();
+
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - dragStartX;
+            const deltaY = touch.clientY - touchStartY;
+
+            // 判断是水平滑动还是垂直滑动
+            if (Math.abs(deltaX) > Math.abs(deltaY) * 0.5) {
+                e.preventDefault();
+            }
+
+            dragCurrentX = deltaX;
+
+            const currentOffset = sceneOffsets[currentScene] || 0;
+            const newOffset = currentOffset - deltaX; // 手指向左滑，图片向右移（显示右侧）
+            const maxOffset = getMaxOffset(currentScene);
+
+            // 边界限制 + 弹性
+            let boundedOffset = newOffset;
+            if (boundedOffset < 0) boundedOffset = deltaX * 0.3; // 左边界弹性
+            if (boundedOffset > maxOffset) boundedOffset = maxOffset + (newOffset - maxOffset) * 0.3; // 右边界弹性
+
+            // 计算场景切换的阈值判断
+            const trackOffset = getTrackOffset();
+            const totalOffset = -(trackOffset + boundedOffset);
+            panoramaTrack.style.transform = `translateX(${totalOffset}px)`;
+        }
+
+        function handlePanoramaTouchEnd(e) {
+            if (!document.getElementById('scene-second').classList.contains('active')) return;
+            if (!isDragging) return;
+            isDragging = false;
+
+            const touch = e.changedTouches[0];
+            touchEndX = touch.clientX;
+            const totalDeltaX = touchStartX - touchEndX; // 正值表示向左滑
+            const totalDeltaY = touch.clientY - touchStartY;
+
+            // 判断是场景内拖拽还是场景切换
+            const currentOffset = sceneOffsets[currentScene] || 0;
+            const maxOffset = getMaxOffset(currentScene);
+
+            // 如果水平滑动距离大，且图片已经拖到边界，则切换场景
+            if (Math.abs(totalDeltaX) > 80 && Math.abs(totalDeltaX) > Math.abs(totalDeltaY)) {
+                if (totalDeltaX > 0 && currentOffset >= maxOffset - 10) {
+                    // 向左滑，且图片已拖到最右（或接近），切到下一场景
+                    if (currentScene < totalScenes - 1) {
+                        nextScene();
+                        return;
+                    }
+                } else if (totalDeltaX < 0 && currentOffset <= 10) {
+                    // 向右滑，且图片已拖到最左，切到上一场景
+                    if (currentScene > 0) {
+                        prevScene();
+                        return;
+                    }
+                }
+            }
+
+            // 场景内：弹性回弹到有效范围
+            let finalOffset = currentOffset;
+            const dragOffset = currentOffset - totalDeltaX;
+
+            if (dragOffset < 0) finalOffset = 0;
+            else if (dragOffset > maxOffset) finalOffset = maxOffset;
+            else finalOffset = dragOffset;
+
+            sceneOffsets[currentScene] = finalOffset;
+            applyTransform();
+        }
+
+        // ===== 鼠标事件（桌面端） =====
+        let isMouseDown = false;
+        let mouseStartX = 0;
+
+        function handlePanoramaMouseDown(e) {
+            if (!document.getElementById('scene-second').classList.contains('active')) return;
+            isMouseDown = true;
+            mouseStartX = e.clientX;
+            dragStartX = e.clientX;
+            isDragging = true;
+            panoramaTrack.style.transition = 'none';
+            e.preventDefault();
+        }
+
+        function handlePanoramaMouseMove(e) {
+            if (!isMouseDown || !document.getElementById('scene-second').classList.contains('active')) return;
+            const deltaX = e.clientX - dragStartX;
+            dragCurrentX = deltaX;
+
+            const currentOffset = sceneOffsets[currentScene] || 0;
+            const newOffset = currentOffset - deltaX;
+            const maxOffset = getMaxOffset(currentScene);
+
+            let boundedOffset = newOffset;
+            if (boundedOffset < 0) boundedOffset = deltaX * 0.3;
+            if (boundedOffset > maxOffset) boundedOffset = maxOffset + (newOffset - maxOffset) * 0.3;
+
+            const trackOffset = getTrackOffset();
+            const totalOffset = -(trackOffset + boundedOffset);
+            panoramaTrack.style.transform = `translateX(${totalOffset}px)`;
+        }
+
+        function handlePanoramaMouseUp(e) {
+            if (!isMouseDown) return;
+            isMouseDown = false;
+            isDragging = false;
+
+            const totalDeltaX = mouseStartX - e.clientX;
+            const currentOffset = sceneOffsets[currentScene] || 0;
+            const maxOffset = getMaxOffset(currentScene);
+
+            // 场景切换判断
+            if (Math.abs(totalDeltaX) > 80) {
+                if (totalDeltaX > 0 && currentOffset >= maxOffset - 10) {
+                    if (currentScene < totalScenes - 1) {
+                        nextScene();
+                        return;
+                    }
+                } else if (totalDeltaX < 0 && currentOffset <= 10) {
+                    if (currentScene > 0) {
+                        prevScene();
+                        return;
+                    }
+                }
+            }
+
+            let finalOffset = currentOffset;
+            const dragOffset = currentOffset - totalDeltaX;
+            if (dragOffset < 0) finalOffset = 0;
+            else if (dragOffset > maxOffset) finalOffset = maxOffset;
+            else finalOffset = dragOffset;
+
+            sceneOffsets[currentScene] = finalOffset;
+            applyTransform();
+        }
+
+        // ===== 滚轮事件 =====
+        let wheelAccumulated = 0;
+        let wheelTimeout = null;
+
+        function handlePanoramaWheel(e) {
+            if (!document.getElementById('scene-second').classList.contains('active')) return;
+            e.preventDefault();
+
+            const delta = e.deltaX || e.deltaY;
+            wheelAccumulated += delta;
+
+            if (wheelTimeout) clearTimeout(wheelTimeout);
+
+            // 实时滚动效果
+            const currentOffset = sceneOffsets[currentScene] || 0;
+            const maxOffset = getMaxOffset(currentScene);
+            let newOffset = currentOffset + wheelAccumulated * 0.5;
+
+            // 边界检查
+            if (newOffset < 0) {
+                // 已经到左边界，继续向左滚则切到上一场景
+                if (wheelAccumulated < -100 && currentScene > 0) {
+                    wheelAccumulated = 0;
+                    prevScene();
+                    return;
+                }
+                newOffset = 0;
+            } else if (newOffset > maxOffset) {
+                // 已经到右边界，继续向右滚则切到下一场景
+                if (wheelAccumulated > 100 && currentScene < totalScenes - 1) {
+                    wheelAccumulated = 0;
+                    nextScene();
+                    return;
+                }
+                newOffset = maxOffset;
+            }
+
+            sceneOffsets[currentScene] = newOffset;
+            applyTransform();
+
+            wheelTimeout = setTimeout(() => {
+                wheelAccumulated = 0;
+            }, 150);
+        }
+
+        // ===== 键盘事件 =====
+        function handlePanoramaKeydown(e) {
+            if (!document.getElementById('scene-second').classList.contains('active')) return;
+            if (isScrolling) return;
+
+            const currentOffset = sceneOffsets[currentScene] || 0;
+            const maxOffset = getMaxOffset(currentScene);
+            const step = viewportWidth * 0.15;
+
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                if (currentOffset < maxOffset) {
+                    sceneOffsets[currentScene] = Math.min(maxOffset, currentOffset + step);
+                    applyTransform();
+                } else if (currentScene < totalScenes - 1) {
+                    nextScene();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentOffset > 0) {
+                    sceneOffsets[currentScene] = Math.max(0, currentOffset - step);
+                    applyTransform();
+                } else if (currentScene > 0) {
+                    prevScene();
+                }
+            }
+        }
+
+        // ===== 窗口大小变化 =====
+        function handlePanoramaResize() {
+            viewportWidth = window.innerWidth;
+            panoramaScenes.forEach((scene, index) => {
+                const img = scene.querySelector('.scene-bg-layer img');
+                if (img) {
+                    const imgRatio = 3;
+                    const sceneWidth = viewportWidth * imgRatio;
+                    scene.style.width = sceneWidth + 'px';
+                    sceneWidths[index] = sceneWidth;
+                    imgWidths[index] = sceneWidth;
+                }
+            });
+            updateTrackWidth();
+
+            // 重新约束当前偏移
+            const maxOffset = getMaxOffset(currentScene);
+            if (sceneOffsets[currentScene] > maxOffset) {
+                sceneOffsets[currentScene] = maxOffset;
+            }
+            applyTransform();
+        }
+
+        // ===== 场景切换 =====
+        function nextScene() {
+            if (currentScene < totalScenes - 1) {
+                currentScene++;
+                updateScenePosition();
+            }
+        }
+
+        function prevScene() {
+            if (currentScene > 0) {
+                currentScene--;
+                updateScenePosition();
+            }
+        }
+
+        function scrollToScene(sceneIndex) {
+            playSound('click');
+            if (isScrolling) return;
+            currentScene = sceneIndex;
+            updateScenePosition();
+        }
+
+        function updateScenePosition() {
+            isScrolling = true;
+            updateSceneActiveState();
+            applyTransform();
+
+            // 更新进度点
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentScene);
+            });
+
+            // 隐藏/显示滚动提示
+            const scrollHint = document.getElementById('scrollHint');
+            if (scrollHint) scrollHint.style.opacity = currentScene > 0 ? '0' : '';
+
+            // 显示新场景的拖拽提示
+            showDragHint(currentScene);
+
+            setTimeout(() => { isScrolling = false; }, 600);
+        }
+
+        function showHotspotInfo(name) { 
+            playSound('click'); 
+            console.log('点击了热点：', name); 
+        }
+// ========== 第三幕：乐舞敦煌（重制·寻乐器） ==========
+        var yiFound = { bili: false, shukonghou: false, dalagu: false, jiegu: false };
+        var yiPopupOpen = false;
+        var yiAllFound = false;
+
+        // 切换第三幕内部画面（A选择 / C洞窟简介 / D寻找乐器 / E体验演奏）
+        function yiShowScreen(id, noSound) {
+            if (!noSound) playSound('click');
+            document.querySelectorAll('#scene-third .yi-screen').forEach(function(s) {
+                s.classList.remove('active');
+            });
+            var screen = document.getElementById(id);
+            if (screen) screen.classList.add('active');
+            // 背景切换（A/D/E 用米色底，C/F/G/H 用 xuanze-beijing 纹理底）
+            var bgA = document.getElementById('yiBgA');
+            var bgC = document.getElementById('yiBgC');
+            if (id === 'yiScreenC' || id === 'yiScreenF' || id === 'yiScreenG' || id === 'yiScreenH') {
+                if (bgA) bgA.classList.remove('yi-bg-show');
+                if (bgC) bgC.classList.add('yi-bg-show');
+            } else {
+                if (bgC) bgC.classList.remove('yi-bg-show');
+                if (bgA) bgA.classList.add('yi-bg-show');
+            }
+        }
+
+        // 画面A：返回序幕演奏视频画面（重新选择是否继续探索）
+        function yiBackToPrologue() {
+            playSound('click');
+            stopAmbient();
+            stopYiMusic();
+            document.getElementById('scene-third').classList.remove('active');
+            document.getElementById('scene-second').classList.add('active');
+            var ganlu = document.getElementById('prologueGanlu');
+            if (ganlu) ganlu.classList.remove('show');
+            var wrap = document.getElementById('prologueVideoWrap');
+            if (wrap) wrap.classList.add('show');
+            var v = document.getElementById('prologueVideo');
+            if (v) {
+                try { v.currentTime = 2; } catch (e) {}
+                v.pause();
+            }
+            ['xuInfoBtn', 'xuBackBtn', 'xuNextBtn'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.classList.add('show');
+            });
+            if (xuMusic) {
+                xuMusic.play().catch(function(e) { console.log('序幕音乐恢复失败:', e); });
+                xuMusicPlaying = true;
+            }
+            updateXuMusicBtn();
+        }
+
+        // 画面D：初始化寻乐器（重置全部锁定状态）
+        function yiInitHunt() {
+            yiFound = { bili: false, shukonghou: false, dalagu: false, jiegu: false };
+            yiAllFound = false;
+            yiClosePopup(true);
+            document.querySelectorAll('#yiScreenD .yi-lockgone').forEach(function(el) {
+                el.classList.remove('yi-lockgone');
+            });
+            document.querySelectorAll('#yiScreenD .yi-mural-inst.found').forEach(function(el) {
+                el.classList.remove('found');
+            });
+            yiShowScreen('yiScreenD');
+        }
+
+        // 画面D：点击壁画乐器 → 槽位解锁 + 简介弹窗 + 黑白图层
+        function yiFindInstrument(key, el) {
+            if (yiPopupOpen) return;
+            if (yiFound[key]) return;
+            playSound('click');
+            yiFound[key] = true;
+            if (el) el.classList.add('found');
+            document.querySelectorAll('[data-lock="' + key + '"]').forEach(function(x) {
+                x.classList.add('yi-lockgone');
+            });
+            // 显示对应乐器的简介文本框
+            document.querySelectorAll('#yiPopup .yi-popup-img').forEach(function(im) {
+                im.classList.toggle('yi-popup-show', im.getAttribute('data-pi') === key);
+            });
+            document.getElementById('yiPopup').classList.add('show');
+            document.getElementById('yiContent').classList.add('bw');
+            yiPopupOpen = true;
+            if (yiFound.bili && yiFound.shukonghou && yiFound.dalagu && yiFound.jiegu) {
+                yiAllFound = true;
+            }
+        }
+
+        // 关闭简介弹窗，恢复彩色画面；全部找到则进入画面E
+        function yiClosePopup(silent) {
+            if (!silent) playSound('click');
+            var p = document.getElementById('yiPopup');
+            if (p) p.classList.remove('show');
+            var c = document.getElementById('yiContent');
+            if (c) c.classList.remove('bw');
+            yiPopupOpen = false;
+            if (yiAllFound) {
+                yiAllFound = false;
+                setTimeout(function() { yiShowScreen('yiScreenE', true); }, 280);
+            }
+        }
+
+        // 画面E：再来一次
+        function yiRestartHunt() {
+            yiInitHunt();
+        }
+
+        // ========== 画面F/G/H：选择乐器与体验演奏 ==========
+        var yiSelKeys = ['bili', 'shukonghou', 'dalagu', 'jiegu'];
+        var yiSelIndex = 0;
+        var yiPlayAudio = null;
+
+        // 画面E 乐器演奏 → 画面F（选择乐器），恢复背景音乐
+        function yiGoSelect() {
+            playSound('click');
+            yiSelShow();
+            yiShowScreen('yiScreenF', true);
+            playYiMusic();
+        }
+        // 画面F 逐乐器尺寸（对齐 选择乐器-筚篥/竖箜篌/答腊鼓/羯鼓.jpg，中心均 (50%,53%)）
+        var yiFInstConf = { bili: 25, shukonghou: 21.9, dalagu: 36.7, jiegu: 51.5 };
+        // 刷新选择框内乐器与名字（按 yiSelIndex）
+        function yiSelShow() {
+            var key = yiSelKeys[yiSelIndex];
+            var inst = document.getElementById('yiSelInst');
+            var mz = document.getElementById('yiSelMingzi');
+            if (inst) {
+                inst.src = 'assets/yi/xuanze-' + key + '.png';
+                inst.style.width = (yiFInstConf[key] || 13) + '%';
+            }
+            if (mz) mz.src = 'assets/yi/mingzi-' + key + '.png';
+        }
+        // 上一个：筚篥→羯鼓→答腊鼓→竖箜篌→筚篥
+        function yiSelPrev() {
+            playSound('click');
+            yiSelIndex = (yiSelIndex + yiSelKeys.length - 1) % yiSelKeys.length;
+            yiSelShow();
+        }
+        // 下一个：筚篥→竖箜篌→答腊鼓→羯鼓→筚篥
+        function yiSelNext() {
+            playSound('click');
+            yiSelIndex = (yiSelIndex + 1) % yiSelKeys.length;
+            yiSelShow();
+        }
+        // 画面G 逐乐器布局（对齐 体验乐器-筚篥/竖箜篌/答腊鼓/羯鼓.jpg）
+        var yiGConf = {
+            bili:        { inst: { l: 50,  t: 43.4, w: 35.7 }, finger: { l: 30.2, t: 32.8, w: 9.8 }, tip: { l: 33.4, t: 49.8, w: 5 } },
+            shukonghou:  { inst: { l: 50,  t: 43.4, w: 34.2 }, finger: { l: 27.8, t: 30.9, w: 9.8 }, tip: { l: 27.8, t: 47.4, w: 5 } },
+            dalagu:      { inst: { l: 50,  t: 43.4, w: 48.7 }, finger: { l: 24.7, t: 23.2, w: 9.8 }, tip: { l: 19.5, t: 49.8, w: 5 } },
+            jiegu:       { inst: { l: 50,  t: 43.4, w: 66.7 }, finger: { l: 27.5, t: 26.6, w: 9.8 }, tip: { l: 19.5, t: 49.8, w: 5 } }
+        };
+        // 立即体验 → 画面G（体验演奏），背景音乐停止，手指恢复滑动
+        function yiGoExperience() {
+            playSound('click');
+            stopYiMusic();
+            var key = yiSelKeys[yiSelIndex];
+            var t = document.getElementById('yiTiyanInst');
+            if (t) t.src = 'assets/yi/tiyan-' + key + '.png';
+            var conf = yiGConf[key] || yiGConf.bili;
+            if (t) {
+                t.style.left = conf.inst.l + '%';
+                t.style.top = conf.inst.t + '%';
+                t.style.width = conf.inst.w + '%';
+            }
+            var f = document.getElementById('yiFinger');
+            if (f) {
+                f.style.left = conf.finger.l + '%';
+                f.style.top = conf.finger.t + '%';
+                f.style.width = conf.finger.w + '%';
+            }
+            var tip = document.getElementById('yiGTip');
+            if (tip) {
+                tip.style.left = conf.tip.l + '%';
+                tip.style.top = conf.tip.t + '%';
+                tip.style.width = conf.tip.w + '%';
+            }
+            yiShowScreen('yiScreenG', true);
+            if (f) f.classList.remove('paused');
+        }
+        // 画面G：点击乐器 → 播放对应音频（单次），播放期间手指暂停
+        function yiPlayInstrument() {
+            if (yiPlayAudio) return; // 音频播放中，不重复触发
+            playSound('click');
+            var key = yiSelKeys[yiSelIndex];
+            var f = document.getElementById('yiFinger');
+            if (f) f.classList.add('paused');
+            var a = new Audio('assets/yi/' + key + '.mp3');
+            a.volume = 1;
+            a.play().catch(function(e) { console.log('乐器音频播放失败:', e); });
+            a.addEventListener('ended', function() {
+                if (yiPlayAudio === a) yiPlayAudio = null;
+                if (f) f.classList.remove('paused');
+            });
+            yiPlayAudio = a;
+        }
+        // 停止正在播放的乐器音频并复位手指（离开画面G 时调用）
+        function yiStopPlayAudio() {
+            if (yiPlayAudio) {
+                try { yiPlayAudio.pause(); yiPlayAudio.currentTime = 0; } catch (e) {}
+                yiPlayAudio = null;
+            }
+            var f = document.getElementById('yiFinger');
+            if (f) f.classList.remove('paused');
+        }
+        // 画面G：重新选择 → 回画面F（保留刚才体验的乐器），背景音乐自动恢复
+        function yiReselect() {
+            yiStopPlayAudio();
+            playSound('click');
+            yiShowScreen('yiScreenF', true);
+            playYiMusic();
+        }
+        // 画面G：继续探索 → 画面H（一二幕转场）
+        function yiContinueExplore() {
+            yiStopPlayAudio();
+            playSound('click');
+            yiShowScreen('yiScreenH', true);
+        }
+        // 画面H：返回 → 画面F（默认从筚篥开始），背景音乐自动恢复
+        function yiHBackToSelect() {
+            playSound('click');
+            yiSelIndex = 0;
+            yiSelShow();
+            yiShowScreen('yiScreenF', true);
+            playYiMusic();
+        }
+        // 画面H：循声千年 → 返回序幕演奏画面，重新开始
+        function yiXunshengQiannian() {
+            playSound('click');
+            stopYiMusic();
+            stopAmbient();
+            document.getElementById('scene-third').classList.remove('active');
+            // 进入第二幕：遗音不绝
+            document.getElementById('scene-er').classList.add('active');
+            erShowScreen('erScreen1', true);
+            erStartBgMusic();
+        }
+
+        /* ========== 第二幕：遗音不绝 ========== */
+        var erBgMusic = null;
+        var erBgMusicPlaying = false;
+        var erTingAudio = null;
+        var erYicaiState = 0; // 0=舞剧 1=影像 2=乐团
+
+        function erStartBgMusic() {
+            if (!erBgMusic) {
+                erBgMusic = new Audio('assets/xu/jihuxiangwen.mp3');
+                erBgMusic.loop = true;
+                erBgMusic.volume = 0.5;
+            }
+            erBgMusic.currentTime = 0;
+            erBgMusic.play().catch(function(e) { console.log('第二幕音乐启动:', e); });
+            erBgMusicPlaying = true;
+            updateErMusicBtn();
+        }
+        function erStopBgMusic() {
+            if (erBgMusic) erBgMusic.pause();
+            erBgMusicPlaying = false;
+            updateErMusicBtn();
+        }
+        function toggleErMusic() {
+            if (!erBgMusic) return;
+            if (erBgMusicPlaying) { erBgMusic.pause(); erBgMusicPlaying = false; }
+            else { erBgMusic.play().catch(function(){}); erBgMusicPlaying = true; }
+            updateErMusicBtn();
+        }
+        function updateErMusicBtn() {
+            var btn = document.getElementById('erMusicBtn');
+            if (!btn) return;
+            if (erBgMusicPlaying) btn.classList.remove('off');
+            else btn.classList.add('off');
+        }
+
+        function erShowScreen(id, noSound) {
+            if (!noSound) playSound('click');
+            document.querySelectorAll('#scene-er .er-screen').forEach(function(s) {
+                s.classList.remove('active');
+            });
+            var screen = document.getElementById(id);
+            if (screen) screen.classList.add('active');
+        }
+
+        // 返回按钮：转场 → 回到第三幕画面H
+        function erBackToH() {
+            playSound('click');
+            erStopBgMusic();
+            document.getElementById('scene-er').classList.remove('active');
+            document.getElementById('scene-third').classList.add('active');
+            yiShowScreen('yiScreenH', true);
+            // 恢复第三幕音乐
+            playYiMusic();
+        }
+
+        // 古音新编
+        function erGoGuyin() {
+            playSound('click');
+            erStopBgMusic(); // 进入详情页停止背景音乐
+            erShowScreen('erScreen3a');
+        }
+        // 一脉西传
+        function erGoYimai() {
+            playSound('click');
+            erStopBgMusic();
+            erShowScreen('erScreen3b');
+        }
+        // 异彩纷呈
+        function erGoYicai(idx) {
+            playSound('click');
+            erStopBgMusic();
+            erYicaiState = idx || 0;
+            erUpdateYicaiState();
+            erShowScreen('erScreen3c');
+        }
+        function erSwitchYicai(dir) {
+            playSound('click');
+            erYicaiState = (erYicaiState + dir + 3) % 3;
+            erUpdateYicaiState();
+        }
+        function erUpdateYicaiState() {
+            var imgs = ['erImgWuju','erImgYingxiang','erImgYuetuan'];
+            var texts = ['erTextWuju','erTextYingxiang','erTextYuetuan'];
+            var forms = ['erFormWuju','erFormYingxiang','erFormYuetuan'];
+            imgs.forEach(function(id,i){ document.getElementById(id).style.display = i===erYicaiState?'':'none'; });
+            texts.forEach(function(id,i){ document.getElementById(id).style.display = i===erYicaiState?'':'none'; });
+            forms.forEach(function(id,i){ document.getElementById(id).style.display = i===erYicaiState?'':'none'; });
+            // 乐团态显示"重新体验"按钮
+            document.getElementById('erChongxinBtn').style.display = erYicaiState===2?'':'none';
+            // 乐团态返回按钮位置微调（左移）
+            document.getElementById('erBackBtn').style.left = erYicaiState===2?'26%':'50%';
+        }
+
+        // 返回三站选择
+        function erBackToStations() {
+            playSound('click');
+            if (erTingAudio) { erTingAudio.pause(); erTingAudio = null; }
+            erShowScreen('erScreen2');
+            erStartBgMusic();
+        }
+
+        // 试听音频
+        function erPlayAudio(type) {
+            playSound('click');
+            if (erTingAudio) erTingAudio.pause();
+            erTingAudio = new Audio(type === 'mukamu' ? 'assets/er/mukamu.mp3' : 'assets/er/xinbian.mp3');
+            erTingAudio.play().catch(function(e){ console.log('试听播放失败:', e); });
+        }
+
+        // 重新体验：回到开场画面
+        function erRestart() {
+            playSound('click');
+            // 停止所有第二幕音频
+            if (erBgMusic) erBgMusic.pause();
+            erBgMusicPlaying = false;
+            if (erTingAudio) { erTingAudio.pause(); erTingAudio = null; }
+            // 停止第三幕音乐
+            try { stopYiMusic(); } catch(e) {}
+            try { stopAmbient(); } catch(e) {}
+            // 停止序幕音乐
+            try { if (xuMusic) xuMusic.pause(); xuMusicPlaying = false; } catch(e) {}
+            // 隐藏所有 scene
+            document.querySelectorAll('.scene').forEach(function(s){ s.classList.remove('active'); });
+            // 显示开场
+            document.getElementById('scene-opening').classList.add('active');
+            // 重置开场状态：显示封面、隐藏洞窟入口
+            var cover = document.getElementById('openingCover');
+            if (cover) cover.style.display = '';
+            var cave = document.getElementById('openingCaveEntrance');
+            if (cave) cave.style.display = '';
+            // 重置开场视频
+            var ov = document.getElementById('openingVideo');
+            if (ov) { try { ov.pause(); ov.currentTime = 0; } catch(e) {} }
+            // 重置序幕状态（回到静态封面）
+            var pvWrap = document.getElementById('prologueVideoWrap');
+            if (pvWrap) pvWrap.classList.remove('show');
+            var ganlu = document.getElementById('prologueGanlu');
+            if (ganlu) ganlu.classList.remove('show');
+            var pv = document.getElementById('prologueVideo');
+            if (pv) { try { pv.pause(); pv.currentTime = 0; } catch(e) {} }
+            // 重置第三幕到画面A
+            try { yiShowScreen('yiScreenA', true); } catch(e) {}
+            // 重置音符按钮
+            updateErMusicBtn();
+        }
+
+        // 简介弹窗打开时，点击画面任意处关闭
+        document.getElementById('scene-third').addEventListener('click', function(e) {
+            if (!yiPopupOpen) return;
+            if (e.target && e.target.closest && (e.target.closest('.yi-mural-inst') || e.target.closest('.yi-btn'))) return;
+            yiClosePopup();
+        });
+
+        // ========== 粒子效果 ==========
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container || container.children.length > 0) return;
+            const particleCount = 40;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                const sizeType = Math.random();
+                if (sizeType < 0.2) particle.className = 'particle large';
+                else if (sizeType < 0.6) particle.className = 'particle';
+                else particle.className = 'particle small';
+
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.bottom = '-10px';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(particle);
+            }
+        }
+
+        function createFifthParticles() {
+            const container = document.getElementById('fifthParticles');
+            if (!container || container.children.length > 0) return;
+            const particleCount = 60;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                const sizeType = Math.random();
+                if (sizeType < 0.2) particle.className = 'particle large';
+                else if (sizeType < 0.6) particle.className = 'particle';
+                else particle.className = 'particle small';
+
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.bottom = '-10px';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(particle);
+            }
+        }
+
+        function createOpeningParticles() {
+            const container = document.getElementById('openingParticles');
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'opening-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.bottom = '-10px';
+                const size = Math.random() * 2 + 1;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(particle);
+            }
+        }
+
+        // ========== 开场音乐控制 ==========
+        function initOpeningMusic() {
+            openingMusic = new Audio('assets/begin.mp3');
+            openingMusic.loop = true;
+            openingMusic.volume = 0.6;
+
+            openingMusic.addEventListener('ended', function() {
+                isMusicPlaying = false;
+                updateMusicBtn();
+            });
+
+            openingMusic.addEventListener('error', function() {
+                console.log('开场音乐加载失败');
+                document.getElementById('musicToggleBtn').style.display = 'none';
+            });
+        }
+
+        function toggleOpeningMusic() {
+            playSound('click');
+            if (!openingMusic) return;
+
+            if (isMusicPlaying) {
+                openingMusic.pause();
+                isMusicPlaying = false;
+            } else {
+                // 如果已经播放过一次且结束了，重新加载
+                if (openingMusic.ended) {
+                    openingMusic.currentTime = 0;
+                }
+                openingMusic.play().catch(function(e) {
+                    console.log('音乐播放失败:', e);
+                });
+                isMusicPlaying = true;
+                musicPlayedOnce = true;
+            }
+            updateMusicBtn();
+        }
+
+        function updateMusicBtn() {
+            const btn = document.getElementById('musicToggleBtn');
+            const icon = document.getElementById('musicIcon');
+            if (isMusicPlaying) {
+                btn.classList.add('playing');
+                btn.classList.remove('muted');
+                icon.textContent = '♫';
+            } else {
+                btn.classList.remove('playing');
+                btn.classList.add('muted');
+                icon.textContent = '♪';
+            }
+        }
+
+        function stopOpeningMusic() {
+            if (openingMusic) {
+                openingMusic.pause();
+                openingMusic.currentTime = 0;
+                isMusicPlaying = false;
+                updateMusicBtn();
+            }
+        }
+
+        // ========== 视频播放结束处理 ==========
+        document.getElementById('openingVideo').addEventListener('ended', function() {
+            showOpeningEndScene();
+        });
+
+        // 视频加载超时保护：如果3秒后视频仍未播放，直接显示结束画面
+        setTimeout(function() {
+            const video = document.getElementById('openingVideo');
+            const cover = document.getElementById('openingCover');
+            const content = document.getElementById('openingContent');
+            // 仅当封面已隐藏（用户已点击进入）时才做超时兜底
+            if (cover && !cover.classList.contains('hide')) return;
+            if (video && content && !content.classList.contains('show')) {
+                if (video.readyState < 2 || video.paused || video.ended) {
+                    console.log('视频未正常播放，切换到静态开场');
+                    showOpeningEndScene();
+                }
+            }
+        }, 3500);
+
+        document.getElementById('openingVideo').addEventListener('error', function() {
+            console.log('视频加载失败，使用静态开场');
+            const cover = document.getElementById('openingCover');
+            // 封面阶段不抢显示，等用户点击进入时由 play() 兜底
+            if (cover && !cover.classList.contains('hide')) return;
+            showOpeningEndScene();
+        });
+
+        // ========== 预加载 ==========
+        function preloadImages() {
+            const images = [
+                'assets/第二幕/scene_desert.png', 'assets/第二幕/scene_sanwei.png', 'assets/第二幕/scene_mogao.png', 'assets/第二幕/scene_corridor.png',
+                'assets/yi/beijingtu.png', 'assets/yi/juanzhou1.png', 'assets/yi/huhan.png', 'assets/yi/xunzhaowz.png',
+                'assets/yi/juanzhou.png', 'assets/yi/beibi.jpg', 'assets/yi/wenzi.png', 'assets/yi/ju1.png',
+                'assets/yi/bili1.png', 'assets/yi/shukonghou1.png', 'assets/yi/dalagu1.png', 'assets/yi/jiegu1.png',
+                'assets/yi/bili2.png', 'assets/yi/shukonghou2.png', 'assets/yi/dalagu2.png', 'assets/yi/jiegu2.png',
+                'assets/yi/suo.png', 'assets/yi/bilijs.png', 'assets/yi/shukonghoujs.png', 'assets/yi/dalagujs.png', 'assets/yi/jiegujs.png',
+                'assets/yi/jianjie-juanzhou.png', 'assets/yi/220chatu.png', 'assets/yi/220jianjie.png', 'assets/yi/xuanze-beijing.png',
+                'assets/yi/gongxiw.png', 'assets/yi/yueqiyanzou.png', 'assets/yi/zailaiyici.png'
+            ];
+            images.forEach(src => { const img = new Image(); img.src = src; });
+        }
+
+        window.addEventListener('load', function() {
+            preloadImages();
+            createOpeningParticles();
+            initOpeningMusic();
+            initSounds();
+            initPrologue();
+            // 显示音频解锁提示（移动端需要用户交互才能播放音频）
+            setTimeout(function() {
+                const hint = document.getElementById('audioUnlockHint');
+                if (hint) hint.style.opacity = '1';
+            }, 2000);
+        });
+
+        // 首次点击页面任意位置解锁音频上下文
+        let audioContextUnlocked = false;
+        document.addEventListener('click', function unlockAudio() {
+            if (audioContextUnlocked) return;
+            audioContextUnlocked = true;
+
+            // 播放一次静音 click 来解锁音频
+            if (soundEffects['click']) {
+                soundEffects['click'].volume = 0.01;
+                soundEffects['click'].play().then(() => {
+                    soundEffects['click'].pause();
+                    soundEffects['click'].volume = 1;
+                }).catch(() => {});
+            }
+
+            // 隐藏提示
+            const hint = document.getElementById('audioUnlockHint');
+            if (hint) hint.style.opacity = '0';
+
+            document.removeEventListener('click', unlockAudio);
+        }, { once: false });
+    </script>
+</body>
+</html>
