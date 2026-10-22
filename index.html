@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%23302617%27/%3E%3Ctext x=%2732%27 y=%2746%27 font-size=%2738%27 font-family=%27serif%27 text-anchor=%27middle%27 fill=%27%23D4A94E%27%3E%E6%95%A6%3C/text%3E%3C/svg%3E">
-    <title>敦煌遗音</title>
+    <title>敦煌遗音 - 千年丝路的音乐回响</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body {
@@ -62,9 +62,10 @@
         }
         .opening-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; opacity: 0; visibility: hidden; transition: opacity 1.5s ease, visibility 1.5s ease; overflow: hidden; }
         .opening-content.show { opacity: 1; visibility: visible; }
-        .opening-title-img { position: absolute; top: 5vh; left: 50%; transform: translateX(-50%); height: 80vh; max-width: 100vw; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
-        .opening-logo-img { position: absolute; top: 46vh; left: 50%; transform: translateX(-50%); height: 18vh; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
-        .opening-explore-btn { position: absolute; top: 65vh; left: 50%; transform: translateX(-50%); width: 55%; max-width: 30vh; height: auto; object-fit: contain; cursor: pointer; transition: transform 0.3s ease; animation: yiBreath 2.6s ease-in-out infinite; }
+        .opening-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .opening-title-img { position: absolute; top: 8vh; left: 50%; transform: translateX(-50%); height: 22vh; max-width: 85vw; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
+        .opening-logo-img { position: absolute; top: 32vh; left: 50%; transform: translateX(-50%); height: 22vh; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; animation: coverFloat 2.4s ease-in-out infinite; }
+        .opening-explore-btn { position: absolute; top: 56vh; left: 50%; transform: translateX(-50%); width: 38%; max-width: 22vh; height: auto; object-fit: contain; cursor: pointer; transition: transform 0.3s ease; animation: yiBreath 2.6s ease-in-out infinite; }
         .opening-explore-btn:hover { transform: translateX(-50%) scale(1.05); }
         @keyframes yiBreath { 0%,100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } }
 
@@ -72,10 +73,12 @@
         .opening-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 6; opacity: 1; visibility: visible; transition: opacity 1s ease, visibility 1s ease; overflow: hidden; }
         .opening-cover.hide { opacity: 0; visibility: hidden; }
         .opening-cover .cover-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .opening-cover .cover-title { position: absolute; top: 5vh; left: 50%; transform: translateX(-50%); height: 80vh; max-width: 100vw; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
-        .opening-cover .cover-logo { position: absolute; top: 46vh; left: 50%; height: 18vh; width: auto; object-fit: contain; animation: coverFloat 2.4s ease-in-out infinite; mix-blend-mode: multiply; cursor: pointer; }
-        .opening-cover .cover-enter { position: absolute; top: 65vh; left: 50%; transform: translateX(-50%); height: 13.5vh; width: auto; max-width: 92%; object-fit: contain; }
+        .opening-cover .cover-title { position: absolute; top: 8vh; left: 50%; transform: translateX(-50%); height: 22vh; max-width: 85vw; width: auto; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
+        .opening-cover .cover-logo { position: absolute; top: 32vh; left: 50%; transform: translateX(-50%); height: 22vh; width: auto; object-fit: contain; animation: coverFloat 2.4s ease-in-out infinite; mix-blend-mode: multiply; cursor: pointer; }
+        .opening-cover .cover-hand { position: absolute; top: 51vh; left: 56%; height: 4vh; width: auto; object-fit: contain; animation: handPoint 1.6s ease-in-out infinite; }
+        .opening-cover .cover-tip { position: absolute; top: 58vh; left: 52%; height: 2.5vh; width: auto; object-fit: contain; }
         @keyframes coverFloat { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+        @keyframes handPoint { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-10px,-8px) scale(1.08); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateX(-50%) translateY(30px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
         @keyframes breathe { 0%,100% { box-shadow: 0 0 20px rgba(255,200,80,0.3); } 50% { box-shadow: 0 0 40px rgba(255,200,80,0.6); } }
         .skip-btn { position: absolute; top: 30px; right: 30px; z-index: 20; padding: 8px 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,200,80,0.3); border-radius: 20px; color: rgba(255,232,176,0.7); font-size: 14px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; backdrop-filter: blur(4px); }
@@ -97,56 +100,6 @@
 
         /* ========== 第二幕 ========== */
         #scene-second { background: #1a1008; overflow: hidden; }
-        .second-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(180deg, rgba(10,5,2,0.9) 0%, rgba(10,5,2,0.5) 50%, transparent 100%); }
-        .second-header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.4), transparent); }
-        .second-title { font-size: 1.2rem; letter-spacing: 0.3em; position: relative; }
-        .second-title::before, .second-title::after { content: '❋'; font-size: 0.8rem; color: rgba(200,150,50,0.6); margin: 0 12px; vertical-align: middle; }
-        .progress-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; gap: 12px; }
-        .progress-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,200,80,0.3); border: 1px solid rgba(255,200,80,0.5); cursor: pointer; transition: all 0.3s ease; }
-        .progress-dot.active { background: rgba(255,200,80,0.8); box-shadow: 0 0 10px rgba(255,200,80,0.6); transform: scale(1.2); }
-
-        /* 全景漫游容器 */
-        .panorama-viewport { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; touch-action: none; overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
-        .panorama-track { position: absolute; top: 0; left: 0; height: 100%; display: flex; will-change: transform; }
-        .panorama-scene { position: relative; height: 100%; flex-shrink: 0; overflow: hidden; }
-        .panorama-scene .scene-bg-layer { position: absolute; top: 0; left: 0; height: 100%; will-change: transform; }
-        .panorama-scene .scene-bg-layer img { height: 100%; width: auto; max-width: none; display: block; filter: saturate(0.9) contrast(1.05); }
-
-        /* 视差层 */
-        .parallax-far { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #1a1008 0%, #2a1a0c 30%, #25160a 60%, #1a1008 100%); z-index: 1; }
-        .parallax-far::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background-image: radial-gradient(1px 1px at 20% 30%, rgba(255,200,80,0.4), transparent), radial-gradient(1px 1px at 60% 20%, rgba(255,200,80,0.3), transparent), radial-gradient(1px 1px at 80% 40%, rgba(255,200,80,0.5), transparent), radial-gradient(1px 1px at 40% 50%, rgba(255,200,80,0.3), transparent), radial-gradient(1px 1px at 90% 15%, rgba(255,200,80,0.4), transparent); background-size: 200px 200px; animation: twinkle 4s ease-in-out infinite; }
-        @keyframes twinkle { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
-        .parallax-mid { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
-
-        .scene-vignette { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at center, transparent 35%, rgba(8,4,2,0.45) 70%, rgba(4,2,1,0.8) 100%); pointer-events: none; z-index: 5; }
-        .scene-foreground { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
-        .scene-foreground > * { pointer-events: auto; }
-        .scene-text { position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); text-align: center; z-index: 15; }
-        .scene-name { font-size: clamp(1.5rem,4vw,2.5rem); letter-spacing: 0.25em; margin-bottom: 8px; font-weight: normal; }
-        .scene-desc { font-size: clamp(0.8rem,1.5vw,1rem); letter-spacing: 0.2em; color: rgba(220,190,140,0.8); }
-        .scene-hotspot { position: absolute; cursor: pointer; z-index: 20; }
-        .hotspot-pulse { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,200,80,0.5); background: radial-gradient(circle, rgba(255,200,80,0.15) 0%, transparent 60%); animation: hotspotPulse 2s ease-in-out infinite; }
-        .hotspot-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: rgba(255,215,0,0.9); box-shadow: 0 0 12px rgba(255,200,50,0.6), 0 0 24px rgba(255,180,30,0.3); }
-        @keyframes hotspotPulse { 0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 1; } 50% { transform: translate(-50%,-50%) scale(1.5); opacity: 0.5; } }
-        .scene-bottom-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 30%; background: linear-gradient(0deg, rgba(15,8,3,0.65) 0%, transparent 100%); pointer-events: none; z-index: 8; }
-        .scroll-hint { position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 8px; color: rgba(220,190,140,0.6); font-size: 14px; letter-spacing: 0.1em; animation: scrollHint 2s ease-in-out infinite; }
-        .scroll-hint-arrow { width: 20px; height: 2px; background: rgba(255,200,80,0.5); position: relative; }
-        .scroll-hint-arrow::after { content: ''; position: absolute; right: 0; top: -3px; width: 8px; height: 8px; border-top: 2px solid rgba(255,200,80,0.5); border-right: 2px solid rgba(255,200,80,0.5); transform: rotate(45deg); }
-        @keyframes scrollHint { 0%,100% { opacity: 0.6; transform: translateX(-50%) translateX(0); } 50% { opacity: 1; transform: translateX(-50%) translateX(5px); } }
-        .enter-third-btn { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); z-index: 30; display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; opacity: 0; animation: fadeInRight 1s ease 0.5s forwards; }
-        .enter-third-btn-text { font-size: 1rem; letter-spacing: 0.3em; writing-mode: vertical-rl; text-orientation: mixed; }
-        .enter-third-btn-line { width: 2px; height: 60px; background: linear-gradient(180deg, rgba(255,200,80,0.8), transparent); animation: lineGrow 2s ease-in-out infinite; }
-        @keyframes fadeInRight { from { opacity: 0; transform: translateY(-50%) translateX(20px); } to { opacity: 1; transform: translateY(-50%) translateX(0); } }
-        @keyframes lineGrow { 0%,100% { height: 60px; opacity: 0.8; } 50% { height: 80px; opacity: 1; } }
-
-        /* 场景切换过渡 */
-        .panorama-scene { transition: opacity 0.6s ease; }
-        .panorama-scene.active { opacity: 1; }
-        .panorama-scene:not(.active) { opacity: 1; }
-
-        /* 场景内文字提示 */
-        .scene-drag-hint { position: absolute; bottom: 22%; left: 50%; transform: translateX(-50%); font-size: 13px; color: rgba(220,190,140,0.5); letter-spacing: 0.15em; z-index: 15; animation: breathe 2s ease-in-out infinite; opacity: 0; transition: opacity 0.5s ease; }
-        .scene-drag-hint.show { opacity: 1; }
 /* ========== 第三幕：乐舞敦煌（重制·寻乐器） ========== */
         #scene-third { background: #0a0502; overflow: hidden; }
         .yi-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; display: none; }
@@ -243,9 +196,10 @@
         .yi-f-kuang { left: 50%; top: 57.5%; width: 82%; }
         .yi-f-inst { left: 49%; top: 54%; width: 25%; }
         .yi-f-mingzi { left: 50%; top: 73.2%; width: 39.6%; }
-        .yi-f-btn1 { left: 18%; top: 88.7%; width: 27.4%; }
-        .yi-f-btn2 { left: 50%; top: 88.7%; width: 27.4%; }
-        .yi-f-btn3 { left: 83%; top: 88.7%; width: 27.4%; }
+        .yi-f-btn-left { left: 22%; top: 58%; width: 10%; }
+        .yi-f-btn-right { left: 78%; top: 58%; width: 10%; }
+        .yi-f-btn-back { left: 28%; top: 88%; width: 28%; }
+        .yi-f-btn-experience { left: 72%; top: 88%; width: 28%; }
         @keyframes yiScale { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.05); } }
         .yi-f-title-anim { animation: yiScale 2.4s ease-in-out infinite; }
         /* 画面G：体验演奏（对照 体验乐器-筚篥.jpg：卷轴等比全幅、乐器素材原尺寸、手指左上、文字/按钮按参考图） */
@@ -294,493 +248,6 @@
         .particle.large { width: 5px; height: 5px; box-shadow: 0 0 10px rgba(255,200,80,0.5); }
         .particle.small { width: 2px; height: 2px; box-shadow: 0 0 4px rgba(255,200,80,0.3); }
 
-        /* ========== 第四幕：心境·古音答心 ========== */
-        #scene-fourth { background: #0a0602; overflow: hidden; }
-        .fourth-bg { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: url("assets/第四幕/bg_dunhuang.png") center/cover no-repeat;
-            filter: brightness(0.35) saturate(0.8);
-        }
-        .fourth-bg-overlay { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, rgba(10,6,2,0.7) 0%, rgba(15,8,3,0.5) 40%, rgba(10,6,2,0.8) 100%);
-        }
-        .fourth-bg::before { 
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            opacity: 0.4; pointer-events: none;
-        }
-        .fourth-bg::after { 
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(255,200,80,0.04) 0%, transparent 40%), 
-                        radial-gradient(circle at 80% 70%, rgba(255,200,80,0.02) 0%, transparent 30%);
-            pointer-events: none;
-        }
-        .fourth-header { 
-            position: absolute; top: 40px; left: 0; right: 0; text-align: center; z-index: 50; 
-            opacity: 0; transform: translateY(-20px); transition: all 0.8s ease;
-        }
-        .fourth-header.show { opacity: 1; transform: translateY(0); }
-        .fourth-title { 
-            font-size: clamp(1.5rem,4vw,2.5rem); letter-spacing: 0.3em; margin-bottom: 8px; 
-            font-weight: normal; position: relative; display: inline-block;
-        }
-        .fourth-title::before, .fourth-title::after { 
-            content: ''; position: absolute; top: 50%; width: 80px; height: 1px; transform: translateY(-50%);
-        }
-        .fourth-title::before { right: 100%; margin-right: 20px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.5)); }
-        .fourth-title::after { left: 100%; margin-left: 20px; background: linear-gradient(90deg, rgba(200,150,50,0.5), transparent); }
-        .fourth-subtitle { font-size: clamp(0.8rem,1.5vw,1rem); letter-spacing: 0.3em; color: rgba(220,190,140,0.7); }
-
-        /* 心境选择页 - 圆形环绕布局 */
-        .mood-selection-page { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: 20; transition: all 0.6s ease;
-        }
-        .mood-selection-page.hidden { opacity: 0; visibility: hidden; transform: scale(0.95); }
-
-        .mood-orbit-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .mood-center-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 25;
-            pointer-events: none;
-        }
-        .mood-center-text .mood-main-title {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            letter-spacing: 0.25em;
-            color: rgba(220,190,140,0.9);
-            margin-bottom: 8px;
-            animation: fadeInDown 0.8s ease;
-        }
-        .mood-center-text .mood-sub-hint {
-            font-size: clamp(0.75rem, 1.8vw, 0.9rem);
-            letter-spacing: 0.15em;
-            color: rgba(200,150,50,0.6);
-            animation: fadeInDown 0.8s ease 0.2s both;
-        }
-        @keyframes fadeInDown { 
-            from { opacity: 0; transform: translateY(-20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        .mood-orbit-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(80vw, 500px);
-            height: min(80vw, 500px);
-            max-width: 500px;
-            max-height: 500px;
-        }
-
-        .mood-orbit-item {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(212,196,160,0.2) 0%, rgba(180,160,120,0.15) 100%);
-            border: 1px solid rgba(200,170,100,0.4);
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(4px);
-            opacity: 0;
-            animation: orbitAppear 0.6s ease forwards;
-            z-index: 30;
-        }
-
-        @keyframes orbitAppear {
-            from { opacity: 0; transform: scale(0.5); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .mood-orbit-item:hover {
-            background: linear-gradient(135deg, rgba(212,196,160,0.35) 0%, rgba(180,160,120,0.3) 100%);
-            border-color: rgba(255,200,80,0.7);
-            box-shadow: 0 0 30px rgba(255,200,80,0.2), 0 4px 20px rgba(0,0,0,0.3);
-            transform: scale(1.15);
-            z-index: 35;
-        }
-
-        .mood-orbit-item .orbit-label {
-            font-size: 16px;
-            letter-spacing: 0.2em;
-            color: #e8d5b0;
-            font-family: "STKaiti","KaiTi",serif;
-            font-weight: bold;
-        }
-
-        .mood-orbit-item .orbit-desc {
-            font-size: 10px;
-            letter-spacing: 0.05em;
-            color: rgba(200,170,100,0.6);
-            margin-top: 2px;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        /* 6个位置 - 均匀分布在圆周上 */
-        .mood-orbit-item:nth-child(1) { top: 0; left: 50%; transform: translate(-50%, -50%); animation-delay: 0.1s; }
-        .mood-orbit-item:nth-child(2) { top: 25%; right: 0; transform: translate(50%, -50%); animation-delay: 0.2s; }
-        .mood-orbit-item:nth-child(3) { bottom: 25%; right: 0; transform: translate(50%, 50%); animation-delay: 0.3s; }
-        .mood-orbit-item:nth-child(4) { bottom: 0; left: 50%; transform: translate(-50%, 50%); animation-delay: 0.4s; }
-        .mood-orbit-item:nth-child(5) { bottom: 25%; left: 0; transform: translate(-50%, 50%); animation-delay: 0.5s; }
-        .mood-orbit-item:nth-child(6) { top: 25%; left: 0; transform: translate(-50%, -50%); animation-delay: 0.6s; }
-
-        .mood-orbit-item:nth-child(1):hover { transform: translate(-50%, -50%) scale(1.15); }
-        .mood-orbit-item:nth-child(2):hover { transform: translate(50%, -50%) scale(1.15); }
-        .mood-orbit-item:nth-child(3):hover { transform: translate(50%, 50%) scale(1.15); }
-        .mood-orbit-item:nth-child(4):hover { transform: translate(-50%, 50%) scale(1.15); }
-        .mood-orbit-item:nth-child(5):hover { transform: translate(-50%, 50%) scale(1.15); }
-        .mood-orbit-item:nth-child(6):hover { transform: translate(-50%, -50%) scale(1.15); }
-
-        /* 连接线 */
-        .mood-orbit-ring::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70%;
-            height: 70%;
-            border: 1px dashed rgba(200,150,50,0.15);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .mood-footer-hint {
-            position: absolute;
-            bottom: 100px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 14px;
-            letter-spacing: 0.2em;
-            color: rgba(220,190,140,0.5);
-            animation: breathe 2s ease-in-out infinite;
-            z-index: 25;
-        }
-        .mood-footer-hint::before, .mood-footer-hint::after { 
-            content: '◆'; font-size: 0.5rem; color: rgba(200,150,50,0.4); margin: 0 10px; vertical-align: middle;
-        }
-
-        /* 解忧卡片页 */
-        .relief-card-page { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: 30; display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: all 0.6s ease;
-            overflow-y: auto;
-        }
-        .relief-card-page.active { opacity: 1; visibility: visible; }
-        .relief-card-wrapper { 
-            display: flex; flex-direction: column; align-items: center;
-            gap: 20px; padding: 40px 20px;
-        }
-        .card-back-btn { 
-            position: absolute; top: 20px; left: 20px; z-index: 50;
-            padding: 8px 18px; background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,200,80,0.3); border-radius: 20px;
-            color: rgba(255,232,176,0.7); font-size: 13px; cursor: pointer;
-            transition: all 0.3s ease; font-family: inherit; letter-spacing: 0.1em;
-            backdrop-filter: blur(4px);
-        }
-        .card-back-btn:hover { 
-            background: rgba(255,200,80,0.1); color: #ffe8b0; 
-            border-color: rgba(255,200,80,0.5);
-        }
-
-        .relief-card { 
-            width: 90%; max-width: 380px;
-            background: linear-gradient(180deg, #f5f0e6 0%, #ebe4d4 100%);
-            border-radius: 6px; overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4); position: relative;
-            animation: cardAppear 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
-        }
-        @keyframes cardAppear { 
-            from { opacity: 0; transform: translateY(30px) scale(0.95); } 
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .relief-card::before { 
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 1;
-        }
-        .relief-card::after { 
-            content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid rgba(160,128,48,0.2); border-radius: 3px; pointer-events: none; z-index: 2;
-        }
-
-        .card-art-area { 
-            width: 100%; height: 220px; position: relative; z-index: 3;
-            background: linear-gradient(180deg, rgba(200,220,230,0.2) 0%, rgba(180,200,210,0.15) 100%);
-            overflow: hidden;
-        }
-        .card-art-area img { 
-            width: 100%; height: 100%; object-fit: cover; 
-            filter: sepia(0.1) contrast(0.95) brightness(0.95);
-        }
-        .card-art-placeholder { 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-            font-size: 0.85rem; color: rgba(139,105,20,0.4); letter-spacing: 0.1em;
-        }
-
-        .card-poem-area { 
-            padding: 20px 25px 15px; text-align: center; position: relative; z-index: 3;
-        }
-        .card-poem-lines { 
-            font-size: 1.3rem; color: #5c3a1e; letter-spacing: 0.15em; 
-            line-height: 2.2; font-family: "STKaiti","KaiTi",serif;
-            min-height: 60px;
-        }
-        .card-poem-lines .poem-line { 
-            opacity: 0; transform: translateY(10px); 
-            animation: poemLineReveal 0.6s ease forwards;
-        }
-        .card-poem-lines .poem-line:nth-child(1) { animation-delay: 0.3s; }
-        .card-poem-lines .poem-line:nth-child(2) { animation-delay: 0.6s; }
-        .card-poem-lines .poem-line:nth-child(3) { animation-delay: 0.9s; }
-        @keyframes poemLineReveal { 
-            from { opacity: 0; transform: translateY(10px); } 
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .card-poem-source { 
-            font-size: 0.8rem; color: #8b6914; margin-top: 10px; 
-            letter-spacing: 0.1em; opacity: 0; animation: fadeIn 0.6s ease 1s forwards;
-        }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .card-mood-transition { 
-            display: flex; align-items: center; justify-content: center; 
-            gap: 12px; padding: 0 25px; position: relative; z-index: 3;
-            opacity: 0; animation: fadeIn 0.6s ease 1.2s forwards;
-        }
-        .card-old-mood { 
-            font-size: 1rem; color: #b03020; text-decoration: line-through; 
-            opacity: 0.6; font-family: "STKaiti","KaiTi",serif;
-        }
-        .card-arrow { font-size: 0.9rem; color: #8b6914; }
-        .card-new-mood { 
-            font-size: 1.2rem; color: #2d7a5e; font-weight: bold; 
-            font-family: "STKaiti","KaiTi",serif;
-        }
-
-        .card-advice { 
-            padding: 15px 25px; font-size: 0.85rem; 
-            color: rgba(90,60,30,0.85); letter-spacing: 0.05em; 
-            line-height: 1.8; text-align: center; position: relative; z-index: 3;
-            opacity: 0; animation: fadeIn 0.6s ease 1.4s forwards;
-        }
-
-        .card-music-control { 
-            padding: 0 25px 20px; text-align: center; position: relative; z-index: 3;
-            opacity: 0; animation: fadeIn 0.6s ease 1.6s forwards;
-        }
-        .card-music-btn { 
-            padding: 10px 28px; 
-            background: linear-gradient(135deg, rgba(160,128,48,0.2) 0%, rgba(139,105,20,0.3) 100%);
-            border: 1px solid rgba(160,128,48,0.5); border-radius: 25px;
-            color: #5c3a1e; font-size: 14px; letter-spacing: 0.15em;
-            cursor: pointer; transition: all 0.3s ease; font-family: inherit;
-            display: inline-flex; align-items: center; gap: 8px;
-        }
-        .card-music-btn:hover { 
-            background: linear-gradient(135deg, rgba(160,128,48,0.35) 0%, rgba(139,105,20,0.45) 100%);
-            box-shadow: 0 0 15px rgba(160,128,48,0.3); transform: translateY(-2px);
-        }
-        .card-music-btn.playing { 
-            background: linear-gradient(135deg, rgba(160,128,48,0.4) 0%, rgba(139,105,20,0.5) 100%);
-            box-shadow: 0 0 20px rgba(160,128,48,0.4);
-        }
-        .card-music-btn .music-icon { font-size: 16px; }
-        .card-music-btn.playing .music-icon { animation: notePulse 1s ease-in-out infinite; }
-        @keyframes notePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
-        .card-music-hint { 
-            margin-top: 8px; font-size: 12px; color: rgba(139,105,20,0.5); 
-            letter-spacing: 0.1em;
-        }
-
-        .card-seal { 
-            position: absolute; bottom: 15px; right: 15px; width: 50px; height: 50px;
-            border: 2px solid rgba(180,50,30,0.8); border-radius: 3px;
-            display: flex; align-items: center; justify-content: center;
-            color: rgba(180,50,30,0.85); font-size: 0.65rem; letter-spacing: 0.05em;
-            line-height: 1.3; transform: rotate(-8deg);
-            box-shadow: 0 0 8px rgba(180,50,30,0.15);
-            font-family: "STKaiti","KaiTi",serif; background: rgba(180,50,30,0.05);
-            z-index: 10;
-        }
-
-        /* 卡片下方按钮 */
-        .card-buttons { 
-            display: flex; justify-content: center; gap: 15px; 
-            position: relative; z-index: 30;
-            opacity: 0; animation: fadeIn 0.6s ease 1.8s forwards;
-        }
-        .card-btn { 
-            padding: 10px 28px;
-            background: linear-gradient(135deg, rgba(255,200,80,0.15) 0%, rgba(200,150,50,0.25) 100%);
-            border: 1px solid rgba(255,200,80,0.5); border-radius: 4px;
-            color: #ffe8b0; font-size: 14px; letter-spacing: 0.2em;
-            cursor: pointer; transition: all 0.3s ease; font-family: inherit;
-        }
-        .card-btn:hover { 
-            background: linear-gradient(135deg, rgba(255,200,80,0.25) 0%, rgba(200,150,50,0.35) 100%);
-            box-shadow: 0 0 15px rgba(255,200,80,0.3); transform: translateY(-2px);
-        }
-        .card-btn-primary { 
-            background: linear-gradient(135deg, rgba(255,200,80,0.25) 0%, rgba(200,150,50,0.35) 100%);
-        }
-
-        /* 底部按钮 */
-        .fourth-footer { 
-            position: absolute; bottom: 30px; left: 0; right: 0; 
-            text-align: center; z-index: 50;
-        }
-        .fourth-hint { 
-            font-size: 14px; letter-spacing: 0.2em; color: rgba(220,190,140,0.6);
-            animation: breathe 2s ease-in-out infinite; position: relative; display: inline-block;
-            margin-bottom: 20px;
-        }
-        .fourth-hint::before, .fourth-hint::after { 
-            content: '✦'; font-size: 0.6rem; color: rgba(200,150,50,0.5); 
-            margin: 0 10px; vertical-align: middle;
-        }
-
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .mood-orbit-ring {
-                width: 90vw;
-                height: 90vw;
-            }
-            .mood-orbit-item {
-                width: 65px;
-                height: 65px;
-            }
-            .mood-orbit-item .orbit-label {
-                font-size: 14px;
-            }
-            .mood-orbit-item .orbit-desc {
-                font-size: 9px;
-            }
-        }/* ========== 第五幕 ========== */
-        #scene-fifth { background: #050301; overflow: hidden; }
-        .fifth-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url("assets/第五幕/bg_starry_desert.png") center/cover no-repeat, linear-gradient(180deg, rgba(5,3,1,0.65) 0%, rgba(8,5,2,0.45) 50%, rgba(5,3,1,0.7) 100%); }
-        .fifth-bg::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); opacity: 0.3; pointer-events: none; }
-        .fifth-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,200,80,0.06) 0%, rgba(255,180,60,0.02) 40%, transparent 70%); border-radius: 50%; animation: glowPulse 4s ease-in-out infinite; pointer-events: none; }
-        @keyframes glowPulse { 0%,100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.1); } }
-        .identity-page { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 20; 
-            transition: all 0.6s ease;
-            padding-bottom: 80px;
-            box-sizing: border-box;
-        }
-        .identity-page.hidden { opacity: 0; visibility: hidden; }
-        .scroll-card { 
-            width: 90%; 
-            max-width: 500px; 
-            max-height: 70vh;
-            overflow-y: auto;
-            background: linear-gradient(180deg, #e8d5b5 0%, #d4c4a0 20%, #c9b896 50%, #d4c4a0 80%, #e8d5b5 100%); 
-            border-radius: 4px; 
-            padding: 50px 40px; 
-            position: relative; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.1); 
-            color: #3a2510; 
-            font-family: "STKaiti","KaiTi","FangSong",serif; 
-            -webkit-overflow-scrolling: touch;
-        }
-        .scroll-card::before { content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; background: linear-gradient(90deg, #8b7355 0%, #a08b6d 5%, transparent 5%, transparent 95%, #a08b6d 95%, #8b7355 100%), linear-gradient(0deg, #8b7355 0%, #a08b6d 5%, transparent 5%, transparent 95%, #a08b6d 95%, #8b7355 100%); border-radius: 8px; z-index: -1; opacity: 0.6; }
-        .scroll-card::after { content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 110%; height: 20px; background: linear-gradient(90deg, #5c4033 0%, #8b6914 20%, #a08030 50%, #8b6914 80%, #5c4033 100%); border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-        .scroll-bottom-rod { position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 110%; height: 20px; background: linear-gradient(90deg, #5c4033 0%, #8b6914 20%, #a08030 50%, #8b6914 80%, #5c4033 100%); border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-        .scroll-texture { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fiber'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23fiber)' opacity='0.08'/%3E%3C/svg%3E"); opacity: 0.5; pointer-events: none; border-radius: 4px; }
-        .scroll-aging { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at 30% 20%, rgba(160,130,80,0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(140,110,70,0.1) 0%, transparent 50%); pointer-events: none; border-radius: 4px; }
-        .scroll-wear { position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-shadow: inset 0 0 30px rgba(100,80,50,0.2); border-radius: 4px; pointer-events: none; }
-        .scroll-header { text-align: center; margin-bottom: 30px; position: relative; z-index: 2; }
-        .scroll-header-title { font-size: 1.6rem; letter-spacing: 0.4em; color: #5c3a1e; margin-bottom: 8px; font-weight: bold; }
-        .scroll-header-sub { font-size: 0.85rem; letter-spacing: 0.2em; color: #8b6914; }
-        .scroll-divider { width: 60%; height: 1px; background: linear-gradient(90deg, transparent, #a08030, transparent); margin: 20px auto; position: relative; }
-        .scroll-divider::before, .scroll-divider::after { content: '◆'; position: absolute; top: 50%; transform: translateY(-50%); color: #a08030; font-size: 0.6rem; }
-        .scroll-divider::before { left: -15px; } .scroll-divider::after { right: -15px; }
-        .scroll-content { position: relative; z-index: 2; padding: 0 10px; }
-        .scroll-item-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px dashed rgba(160,128,48,0.3); }
-        .scroll-item-label { font-size: 0.95rem; color: #6b4e2e; letter-spacing: 0.15em; white-space: nowrap; }
-        .scroll-item-value { font-size: 1.1rem; color: #3a2510; letter-spacing: 0.1em; text-align: right; flex: 1; margin-left: 20px; }
-        .scroll-proverb { margin: 25px 0; padding: 20px; background: rgba(160,128,48,0.08); border-left: 3px solid #a08030; font-size: 1.2rem; line-height: 1.8; color: #4a3018; letter-spacing: 0.1em; text-align: center; font-style: italic; }
-        .scroll-footer { margin-top: 30px; text-align: center; position: relative; z-index: 2; }
-        .scroll-time { font-size: 0.85rem; color: #8b6914; letter-spacing: 0.15em; margin-bottom: 15px; }
-        .scroll-number { font-size: 1.3rem; color: #5c3a1e; letter-spacing: 0.2em; font-family: "Courier New",monospace; font-weight: bold; }
-        .identity-seal { position: absolute; bottom: 30px; right: 30px; width: 70px; height: 70px; border: 3px solid rgba(180,50,30,0.85); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: rgba(180,50,30,0.9); font-size: 0.8rem; letter-spacing: 0.08em; line-height: 1.3; transform: rotate(-8deg); box-shadow: 0 0 8px rgba(180,50,30,0.15); font-family: "STKaiti","KaiTi",serif; background: rgba(180,50,30,0.05); z-index: 10; }
-        .poster-page { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 20; 
-            opacity: 0; 
-            visibility: hidden; 
-            transition: all 0.6s ease;
-            padding-bottom: 80px;
-            box-sizing: border-box;
-        }
-        .poster-page.active { opacity: 1; visibility: visible; }
-        .poster-card { width: 360px; max-height: calc(100vh - 150px); height: auto; min-height: 380px; background: linear-gradient(180deg, #2a1a0c 0%, #1a0f08 100%); border: 2px solid rgba(200,150,50,0.5); border-radius: 8px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
-        .poster-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E"); pointer-events: none; }
-        .poster-border-inner { position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px; border: 1px solid rgba(200,150,50,0.3); border-radius: 4px; pointer-events: none; }
-        .poster-header { text-align: center; margin-bottom: 20px; position: relative; z-index: 2; }
-        .poster-title { font-size: 1.4rem; letter-spacing: 0.3em; color: #ffe8b0; margin-bottom: 6px; }
-        .poster-subtitle { font-size: 0.75rem; letter-spacing: 0.2em; color: rgba(220,190,140,0.7); }
-        .poster-mural { width: 100%; height: 18vh; min-height: 100px; max-height: 160px; flex-shrink: 0; background: rgba(0,0,0,0.2); border-radius: 4px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; overflow: hidden; }
-        .poster-mural img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; filter: sepia(0.2) brightness(0.85); }
-        .poster-mural-placeholder { font-size: 0.9rem; color: rgba(200,150,50,0.5); letter-spacing: 0.1em; }
-        .poster-info { flex: 1; position: relative; z-index: 2; padding: 0 10px; overflow-y: auto; min-height: 0; }
-        .poster-info-row { display: flex; justify-content: space-between; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(200,150,50,0.15); }
-        .poster-info-label { font-size: 0.8rem; color: rgba(220,190,140,0.7); letter-spacing: 0.1em; }
-        .poster-info-value { font-size: 0.95rem; color: #ffe8b0; letter-spacing: 0.1em; text-align: right; }
-        .poster-proverb { margin: 15px 0; padding: 15px; background: rgba(255,200,80,0.05); border: 1px solid rgba(200,150,50,0.2); border-radius: 4px; font-size: 1rem; line-height: 1.6; color: rgba(255,232,176,0.9); text-align: center; letter-spacing: 0.05em; }
-        .poster-footer { text-align: center; position: relative; z-index: 2; margin-top: auto; padding-top: 15px; }
-        .poster-slogan { font-size: 0.8rem; letter-spacing: 0.15em; color: rgba(220,190,140,0.8); margin-bottom: 10px; }
-
-        .fifth-buttons { 
-            position: absolute; 
-            bottom: 20px; 
-            left: 0; 
-            right: 0; 
-            text-align: center; 
-            z-index: 50; 
-            display: flex; 
-            justify-content: center; 
-            gap: 15px; 
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-        .page-toggle-btn { padding: 10px 24px; background: linear-gradient(135deg, rgba(255,200,80,0.15) 0%, rgba(200,150,50,0.25) 100%); border: 1px solid rgba(255,200,80,0.5); border-radius: 4px; color: #ffe8b0; font-size: 14px; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
-        .page-toggle-btn:hover { background: linear-gradient(135deg, rgba(255,200,80,0.25) 0%, rgba(200,150,50,0.35) 100%); box-shadow: 0 0 15px rgba(255,200,80,0.3); transform: translateY(-2px); }
-
         /* 乐器弹窗 */
         .instrument-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
         .instrument-modal.active { opacity: 1; visibility: visible; }
@@ -819,15 +286,6 @@
             .opening-title { font-size: 2.2rem; letter-spacing: 0.2em; }
             .opening-subtitle { font-size: 0.8rem; letter-spacing: 0.3em; }
 
-            /* 第二幕 */
-            .second-header { padding: 12px 16px; }
-            .second-title { font-size: 0.9rem; }
-            .second-title::before, .second-title::after { display: none; }
-            .scene-name { font-size: 1.1rem; letter-spacing: 0.15em; }
-            .scene-desc { font-size: 0.65rem; }
-            .scroll-hint { bottom: 50px; font-size: 12px; }
-            .progress-bar { bottom: 20px; gap: 8px; }
-            .progress-dot { width: 8px; height: 8px; }
 
             /* 第三幕（重制）：画布等比缩放，无需额外适配 */
 
@@ -839,85 +297,6 @@
             .modal-image { width: 80px; height: 80px; }
             .modal-audio-btn { padding: 8px 20px; font-size: 13px; }
 
-            /* 第四幕 - 圆形环绕 */
-            .fourth-title { font-size: 1.4rem; }
-            .fourth-title::before, .fourth-title::after { width: 40px; }
-            .mood-orbit-ring {
-                width: 85vw;
-                height: 85vw;
-            }
-            .mood-orbit-item {
-                width: 60px;
-                height: 60px;
-            }
-            .mood-orbit-item .orbit-label {
-                font-size: 13px;
-            }
-            .mood-orbit-item .orbit-desc {
-                font-size: 9px;
-            }
-            .mood-center-text .mood-main-title {
-                font-size: 1rem;
-            }
-            .mood-center-text .mood-sub-hint {
-                font-size: 0.7rem;
-            }
-            .mood-footer-hint {
-                font-size: 12px;
-                bottom: 80px;
-            }
-
-            /* 解忧卡片 */
-            .relief-card { width: 92%; }
-            .card-art-area { height: 160px; }
-            .card-poem-lines { font-size: 1rem; }
-            .card-old-mood, .card-new-mood { font-size: 0.9rem; }
-            .card-advice { font-size: 0.8rem; padding: 12px 20px; }
-            .card-music-btn { padding: 8px 20px; font-size: 13px; }
-            .card-buttons { gap: 10px; }
-            .card-btn { padding: 8px 18px; font-size: 12px; }
-            .card-back-btn { top: 10px; left: 10px; padding: 6px 14px; font-size: 12px; }
-
-            /* 第五幕 */
-            .scroll-card { width: 88%; padding: 35px 20px; }
-            .scroll-header-title { font-size: 1.3rem; }
-            .scroll-item-label { font-size: 0.85rem; }
-            .scroll-item-value { font-size: 1rem; }
-            .scroll-proverb { font-size: 1rem; padding: 15px; }
-            .identity-seal { width: 55px; height: 55px; font-size: 0.7rem; }
-
-            /* 海报 */
-            .poster-card { width: 90%; max-width: 320px; padding: 20px; }
-            .poster-title { font-size: 1.2rem; }
-            .poster-mural { height: 140px; }
-            .poster-info-label { font-size: 0.75rem; }
-            .poster-info-value { font-size: 0.85rem; }
-            .poster-proverb { font-size: 0.9rem; padding: 12px; }
-
-            /* 底部按钮 */
-            .fifth-buttons {
-                flex-direction: column;
-                align-items: center;
-                gap: 8px;
-                bottom: 20px;
-                padding: 0 20px;
-            }
-            .fifth-buttons .btn-gold,
-            .fifth-buttons .page-toggle-btn {
-                width: 100%;
-                max-width: 280px;
-                padding: 10px 20px;
-                font-size: 13px;
-            }
-
-            /* 第四幕底部 */
-            .fourth-footer {
-                bottom: 15px;
-            }
-            .fourth-footer .btn-gold {
-                padding: 10px 24px;
-                font-size: 14px;
-            }
 
             /* 通用按钮 */
             .btn-gold {
@@ -946,24 +325,8 @@
         /* 超小屏幕 */
         @media (max-width: 375px) {
             .opening-title { font-size: 1.8rem; }
-            .mood-orbit-item {
-                width: 52px;
-                height: 52px;
-            }
-            .mood-orbit-item .orbit-label {
-                font-size: 11px;
-            }
-            .mood-orbit-item .orbit-desc {
-                font-size: 8px;
-            }
-            .scroll-card { padding: 30px 16px; }
-            .poster-card { width: 92%; padding: 16px; }
         }
         /* ========== 序幕：循声入窟（原第二幕丝路寻音改写） ========== */
-        #scene-second .second-header,
-        #scene-second .panorama-viewport,
-        #scene-second .progress-bar,
-        #scene-second .scroll-hint { display: none; }
 
         .prologue-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; }
         .prologue-static { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.9s ease; }
@@ -984,17 +347,26 @@
         .prologue-ganlu.show { opacity: 1; pointer-events: auto; }
         .prologue-ganlu .prologue-ganlu-el { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+        /* 奏音视频层 */
+        .zouyin-video-wrap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease; pointer-events: none; z-index: 21; background: #000; }
+        .zouyin-video-wrap.show { opacity: 1; pointer-events: auto; }
+        .zouyin-video-wrap.hide { opacity: 0; }
+        .zouyin-video-wrap .zouyin-video-el { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* 传音视频层 */
+        .chuanyin-video-wrap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; z-index: 21; background: #000; }
+        .chuanyin-video-wrap.show { opacity: 1; pointer-events: auto; }
+        .chuanyin-video-wrap .chuanyin-video-el { width: 100%; height: 100%; object-fit: cover; display: block; }
+
         /* 序幕按钮（位置/大小严格对照三张参考图） */
         .xu-btn { position: absolute; cursor: pointer; opacity: 0; transition: opacity 0.55s ease; z-index: 6; -webkit-tap-highlight-color: transparent; pointer-events: none; }
         .xu-btn.show { opacity: 1; pointer-events: auto; }
         .xu-btn.quick-hide { transition: opacity 0.15s ease; opacity: 0; }
 
-        .xu-restart { left: 22%; top: 87.8%; transform: translate(-50%, -50%); height: 8%; }        /* 参考图1 重新进入 框50,838,390,918 中心22%,87.8% */
-        .xu-listen { left: 75%; top: 87.8%; transform: translate(-50%, -50%); height: 8%; animation: xuListenBreath 2.6s ease-in-out infinite; }         /* 参考图1 上前聆听 框580,838,920,918 中心75%,87.8% */
+        .xu-listen { left: 50%; top: 88%; transform: translate(-50%, -50%); height: 8%; animation: xuListenBreath 2.6s ease-in-out infinite; }         /* 序幕参考图 上前聆听 底部居中 */
         @keyframes xuListenBreath { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.06); } }
-        .xu-info { left: 22.8%; top: 11.3%; transform: translate(-50%, -50%); height: 9.8%; }         /* 参考图2 乐曲简介 框42,64,414,162 中心22.8%,11.3% */
-        .xu-back { left: 21.9%; top: 87.9%; transform: translate(-50%, -50%); height: 9.4%; }        /* 参考图2 返回 框42,832,396,926 中心21.9%,87.9% */
-        .xu-next { left: 78.35%; top: 87.9%; transform: translate(-50%, -50%); height: 9.4%; }         /* 参考图2 继续探索 框607,832,960,926 中心78.35%,87.9% */
+        .xu-info { left: 22%; top: 88%; transform: translate(-50%, -50%); height: 9%; }         /* 序幕参考图2 乐曲简介 左下角 */
+        .xu-next { left: 78%; top: 88%; transform: translate(-50%, -50%); height: 9%; animation: xuListenBreath 2.6s ease-in-out infinite; }         /* 序幕参考图2 继续探索 右下角，呼吸动画 */
         .xu-intro-title { position: absolute; left: 23%; top: 11.35%; transform: translate(-50%, -50%); height: 8.5%; }  /* 参考图3 乐曲简介标题 框57,71,403,156 中心23%,11.35% */
         .xu-intro-panel { position: absolute; left: 50%; top: 24%; transform: translateX(-50%); width: min(94%, 47.5vh); }        /* 参考图3 文字简介面板：横贯画面，文字区对齐 y27.8%-60.2%，返回按钮位于框内底部 */
         .xu-intro-back { position: absolute; left: 48%; top: 68.2%; transform: translate(-50%, -50%); height: 5%; cursor: pointer; } /* 参考图3 返回 框414,664,546,700 中心48%,68.2%，位于简介框内底部 */
@@ -1016,13 +388,13 @@
         }
         .guide-arrow { position: absolute; transform: translate(-50%, -50%); pointer-events: none; }
         /* 布局（对照 引导页.jpg 941×1672） */
-        .guide-tingyin { left: 29%; top: 16%; width: 30%; }
-        .guide-jiantou1 { left: 55%; top: 24%; width: 26%; }
-        .guide-xunyin { left: 71%; top: 41%; width: 30%; }
-        .guide-jiantou2 { left: 33%; top: 48%; width: 26%; }
-        .guide-zouyin { left: 29%; top: 63%; width: 30%; }
-        .guide-jiantou3 { left: 50%; top: 76%; width: 26%; }
-        .guide-chuanyin { left: 72%; top: 86%; width: 30%; }
+        .guide-tingyin { left: 28%; top: 16%; width: 25%; }
+        .guide-jiantou1 { left: 48%; top: 27.5%; width: 24%; }
+        .guide-xunyin { left: 68%; top: 39%; width: 25%; }
+        .guide-jiantou2 { left: 48%; top: 50%; width: 24%; }
+        .guide-zouyin { left: 28%; top: 61%; width: 25%; }
+        .guide-jiantou3 { left: 48%; top: 72.5%; width: 24%; }
+        .guide-chuanyin { left: 68%; top: 84%; width: 25%; }
     </style>
 </head>
 <body>
@@ -1037,7 +409,8 @@
             <img class="cover-bg" src="assets/kaichangbg.png" alt="">
             <img class="cover-title" src="assets/biaoti.png" alt="敦煌遗音">
             <img class="cover-logo" src="assets/logo.png" alt="敦煌遗音" onclick="startOpening()">
-            <img class="cover-enter" src="assets/fmwenzi.png" alt="点击音符进入">
+            <img class="cover-hand" src="assets/shouzhi.png" alt="手指">
+            <img class="cover-tip" src="assets/dianjijinru.png" alt="点击进入">
         </div>
         <div class="opening-cave-entrance" id="openingCaveEntrance">
             <img src="assets/cave-entrance.png" alt="洞窟入口">
@@ -1053,13 +426,14 @@
 
         <button class="skip-btn hidden" id="skipBtn" onclick="skipOpening()">跳过</button>
         <div class="opening-content" id="openingContent">
+            <img class="opening-bg" src="assets/kaichangbg.png" alt="">
             <img class="opening-title-img" src="assets/biaoti.png" alt="敦煌遗音">
             <img class="opening-logo-img" src="assets/logo.png" alt="敦煌遗音">
             <img class="opening-explore-btn" src="assets/kaishitansuo.png" alt="开始探索" onclick="enterSecondScene()">
         </div>
     </div>
 
-    <!-- ========== 第二幕：丝路寻音 ========== -->
+    <!-- ========== 第二幕：序幕循声入窟（丝路寻音全景已移除） ========== -->
     <div id="scene-second" class="scene">
         <!-- 序幕：循声入窟（原第二幕丝路寻音改写） -->
         <div class="prologue-layer" id="prologueLayer">
@@ -1067,7 +441,6 @@
             <div class="prologue-static" id="prologueStatic">
                 <video class="prologue-bg" src="assets/xu/yanzou-yuanjing.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/xu/yanzou.png" onerror="this.outerHTML='<img class=\\'prologue-bg\\' src=\\'assets/xu/yanzou.png\\'>'"></video>
                 <button class="xu-music-btn" id="xuMusicBtn1" onclick="toggleXuMusic()" title="开关音乐"><span>♫</span></button>
-                <img class="xu-btn xu-restart" id="xuRestartBtn" src="assets/xu/chongjin.png" alt="重新进入" onclick="restartToCover()">
                 <img class="xu-btn xu-listen" id="xuListenBtn" src="assets/xu/shangqian.png" alt="上前聆听" onclick="xuStepForward()">
             </div>
             <!-- 黑场 -->
@@ -1079,7 +452,6 @@
                 </video>
                 <button class="xu-music-btn" id="xuMusicBtn2" onclick="toggleXuMusic()" title="开关音乐"><span>♫</span></button>
                 <img class="xu-btn xu-info" id="xuInfoBtn" src="assets/xu/jianjie.png" alt="乐曲简介" onclick="xuShowIntro()">
-                <img class="xu-btn xu-back" id="xuBackBtn" src="assets/xu/fanhui.png" alt="返回" onclick="xuBackToStatic()">
                 <img class="xu-btn xu-next" id="xuNextBtn" src="assets/xu/jixutansuo.png" alt="继续探索" onclick="xuContinue()">
             </div>
             <!-- 乐曲简介弹层 -->
@@ -1095,122 +467,15 @@
                 </video>
             </div>
         </div>
-        <div class="second-header">
-            <div class="second-title text-gradient-gold">丝路寻音</div>
-            <div style="font-size:14px;color:rgba(220,190,140,0.6);">第二幕</div>
-        </div>
-
-        <!-- 全景漫游视口 -->
-        <div class="panorama-viewport" id="panoramaViewport">
-            <div class="panorama-track" id="panoramaTrack">
-
-                <!-- 场景1：大漠黄沙 -->
-                <div class="panorama-scene" data-scene="0">
-                    <div class="parallax-far"></div>
-                    <div class="parallax-mid">
-                        <div class="scene-bg-layer" data-parallax="0.3">
-                            <img src="assets/第二幕/scene_desert.png" alt="大漠黄沙" draggable="false">
-                        </div>
-                    </div>
-                    <div class="scene-vignette"></div>
-                    <div class="scene-bottom-gradient"></div>
-                    <div class="scene-foreground">
-                        <div class="scene-text">
-                            <h2 class="scene-name text-gradient-gold">大漠黄沙</h2>
-                            <p class="scene-desc">丝绸之路起点</p>
-                        </div>
-                        <div class="scene-drag-hint" id="dragHint0">← 左右滑动探索全景 →</div>
-                        <div class="scene-hotspot" style="left:35%;top:55%;width:30%;height:25%;" onclick="showHotspotInfo('驼铃声声')">
-                            <div class="hotspot-pulse"></div><div class="hotspot-dot"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 场景2：三危金光 -->
-                <div class="panorama-scene" data-scene="1">
-                    <div class="parallax-far"></div>
-                    <div class="parallax-mid">
-                        <div class="scene-bg-layer" data-parallax="0.3">
-                            <img src="assets/第二幕/scene_sanwei.png" alt="三危金光" draggable="false">
-                        </div>
-                    </div>
-                    <div class="scene-vignette"></div>
-                    <div class="scene-bottom-gradient"></div>
-                    <div class="scene-foreground">
-                        <div class="scene-text">
-                            <h2 class="scene-name text-gradient-gold">三危金光</h2>
-                            <p class="scene-desc">莫高窟起源传说</p>
-                        </div>
-                        <div class="scene-drag-hint" id="dragHint1">← 左右滑动探索全景 →</div>
-                        <div class="scene-hotspot" style="left:45%;top:30%;width:25%;height:35%;" onclick="showHotspotInfo('三危山')">
-                            <div class="hotspot-pulse"></div><div class="hotspot-dot"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 场景3：莫高窟外景 -->
-                <div class="panorama-scene" data-scene="2">
-                    <div class="parallax-far"></div>
-                    <div class="parallax-mid">
-                        <div class="scene-bg-layer" data-parallax="0.3">
-                            <img src="assets/第二幕/scene_mogao.png" alt="莫高窟外景" draggable="false">
-                        </div>
-                    </div>
-                    <div class="scene-vignette"></div>
-                    <div class="scene-bottom-gradient"></div>
-                    <div class="scene-foreground">
-                        <div class="scene-text">
-                            <h2 class="scene-name text-gradient-gold">莫高窟外景</h2>
-                            <p class="scene-desc">崖壁上的千年艺术宝库</p>
-                        </div>
-                        <div class="scene-drag-hint" id="dragHint2">← 左右滑动探索全景 →</div>
-                        <div class="scene-hotspot" style="left:42%;top:20%;width:16%;height:50%;" onclick="showHotspotInfo('九层楼')">
-                            <div class="hotspot-pulse"></div><div class="hotspot-dot"></div>
-                        </div>
-                        <div class="scene-hotspot" style="left:12%;top:25%;width:20%;height:40%;" onclick="showHotspotInfo('北区石窟群')">
-                            <div class="hotspot-pulse"></div><div class="hotspot-dot"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 场景4：洞窟廊道 -->
-                <div class="panorama-scene" data-scene="3">
-                    <div class="parallax-far"></div>
-                    <div class="parallax-mid">
-                        <div class="scene-bg-layer" data-parallax="0.3">
-                            <img src="assets/第二幕/scene_corridor.png" alt="洞窟廊道" draggable="false">
-                        </div>
-                    </div>
-                    <div class="scene-vignette"></div>
-                    <div class="scene-bottom-gradient"></div>
-                    <div class="scene-foreground">
-                        <div class="scene-text">
-                            <h2 class="scene-name text-gradient-gold">洞窟廊道</h2>
-                            <p class="scene-desc">穿越千年的壁画长廊</p>
-                        </div>
-                        <div class="scene-drag-hint" id="dragHint3">← 左右滑动探索全景 →</div>
-                        <div class="enter-third-btn" onclick="enterThirdScene()">
-                            <span class="enter-third-btn-text text-gradient-gold">进入乐舞世界</span>
-                            <div class="enter-third-btn-line"></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-dot active" data-scene="0" onclick="scrollToScene(0)"></div>
-            <div class="progress-dot" data-scene="1" onclick="scrollToScene(1)"></div>
-            <div class="progress-dot" data-scene="2" onclick="scrollToScene(2)"></div>
-            <div class="progress-dot" data-scene="3" onclick="scrollToScene(3)"></div>
-        </div>
-        <div class="scroll-hint" id="scrollHint">
-            <span>滑动探索</span><div class="scroll-hint-arrow"></div>
-        </div>
     </div>
 <!-- ========== 第三幕：乐舞敦煌（重制·寻乐器） ========== -->
     <div id="scene-third" class="scene">
+        <!-- 奏音视频层 -->
+        <div class="zouyin-video-wrap" id="zouyinVideoWrap">
+            <video class="zouyin-video-el" id="zouyinVideo" playsinline preload="auto" onended="onZouyinVideoEnded()">
+                <source src="assets/yi/yanzou-zouyin.mp4" type="video/mp4">
+            </video>
+        </div>
         <img class="yi-bg yi-bg-show" id="yiBgA" src="assets/yi/beijingtu.png" alt="">
         <img class="yi-bg" id="yiBgC" src="assets/yi/xuanze-beijing.png" alt="">
         <div class="yi-stage">
@@ -1222,9 +487,9 @@
                         <img class="yi-abs yi-juanzhou1" src="assets/yi/juanzhou1.png" alt="卷轴">
                         <img class="yi-abs yi-huhan" src="assets/yi/huhan.png" alt="胡人汉人">
                         <img class="yi-abs yi-dialog yi-dialog-a" src="assets/yi/xunzhaowz.png" alt="提示">
-                        <img class="yi-abs yi-btn yi-btn-a1" src="assets/yi/xunzhaoyueqi.png" alt="寻找乐器" onclick="yiInitHunt()">
-                        <img class="yi-abs yi-btn yi-btn-a2" src="assets/yi/dongkujianjie.png" alt="洞窟简介" onclick="yiShowScreen('yiScreenC')">
-                        <img class="yi-abs yi-btn yi-btn-a3" src="assets/yi/fanhui.png" alt="返回" onclick="yiBackToPrologue()">
+                        <img class="yi-abs yi-btn yi-btn-a1" src="assets/yi/dongkujianjie.png" alt="洞窟简介" onclick="yiShowScreen('yiScreenC')">
+                        <img class="yi-abs yi-btn yi-btn-a2" src="assets/yi/xunzhaoyueqi.png" alt="寻找乐器" onclick="yiInitHunt()">
+                        <img class="yi-abs yi-btn yi-btn-a3" src="assets/yi/fanhui.png" alt="返回" onclick="yiBackToGuide()">
                     </div>
 
                     <!-- 画面C：洞窟简介 -->
@@ -1275,7 +540,7 @@
                         <img class="yi-abs yi-huhan" src="assets/yi/huhan.png" alt="胡人汉人">
                         <img class="yi-abs yi-dialog yi-dialog-gongxi" src="assets/yi/gongxiw.png" alt="恭喜">
                         <img class="yi-abs yi-btn yi-btn-e1" src="assets/yi/yueqiyanzou.png" alt="乐器演奏" onclick="yiGoSelect()">
-                        <img class="yi-abs yi-btn yi-btn-e2" src="assets/yi/zailaiyici.png" alt="再来一次" onclick="yiRestartHunt()">
+                        <img class="yi-abs yi-btn yi-btn-e2" src="assets/yi/fanhui.png" alt="返回" onclick="yiBackToGuide()">
                     </div>
 
                     <!-- 画面F：选择乐器 -->
@@ -1286,9 +551,10 @@
                         <img class="yi-abs yi-f-kuang" src="assets/yi/xuanzekuang.png" alt="选择框">
                         <img class="yi-abs yi-f-inst" id="yiSelInst" src="assets/yi/xuanze-bili.png" alt="筚篥">
                         <img class="yi-abs yi-f-mingzi" id="yiSelMingzi" src="assets/yi/mingzi-bili.png" alt="筚篥">
-                        <img class="yi-abs yi-btn yi-f-btn1" src="assets/yi/shangyige.png" alt="上一个" onclick="yiSelPrev()">
-                        <img class="yi-abs yi-btn yi-f-btn2" src="assets/yi/xiayige.png" alt="下一个" onclick="yiSelNext()">
-                        <img class="yi-abs yi-btn yi-f-btn3" src="assets/yi/lijitiyan.png" alt="立即体验" onclick="yiGoExperience()">
+                        <img class="yi-abs yi-btn yi-f-btn-left" src="assets/er/zuojiantou.png" alt="上一个" onclick="yiSelPrev()">
+                        <img class="yi-abs yi-btn yi-f-btn-right" src="assets/er/youjiantou.png" alt="下一个" onclick="yiSelNext()">
+                        <img class="yi-abs yi-btn yi-f-btn-back" src="assets/er/fanhui.png" alt="返回" onclick="yiBackToGuideZouyin()">
+                        <img class="yi-abs yi-btn yi-f-btn-experience" src="assets/yi/lijitiyan.png" alt="立即体验" onclick="yiGoExperience()">
                     </div>
 
                     <!-- 画面G：体验演奏 -->
@@ -1326,10 +592,15 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- ========== 第二幕：遗音不绝 ========== -->
     <div id="scene-er" class="scene">
+        <!-- 传音视频层 -->
+        <div class="chuanyin-video-wrap" id="chuanyinVideoWrap">
+            <video class="chuanyin-video-el" id="chuanyinVideo" playsinline preload="auto" onended="onChuanyinVideoEnded()">
+                <source src="assets/er/chuanyin.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="er-canvas">
 
             <!-- 屏幕1：转场 -->
@@ -1409,125 +680,7 @@
         </div>
     </div>
 
-    <!-- ========== 第四幕：心境·古音答心 ========== -->
-    <div id="scene-fourth" class="scene">
-        <div class="fourth-bg" id="fourthBg"></div>
-        <div class="fourth-bg-overlay"></div>
-        <div class="particles" id="fourthParticles"></div>
-        
-        <div class="fourth-header" id="fourthHeader">
-            <h2 class="fourth-title text-gradient-gold">心境·古音答心</h2>
-            <p class="fourth-subtitle">第四幕 · 以乐为药，以音解忧</p>
-        </div>
 
-        <!-- 第一步：选择心境关键词 -->
-        <div class="mood-selection-page" id="moodSelectionPage">
-            <div class="mood-orbit-container">
-                <div class="mood-center-text">
-                    <p class="mood-main-title">此刻你的心境，敦煌早有回响</p>
-                    <p class="mood-sub-hint">点击标签，聆听千年解忧之音</p>
-                </div>
-                <div class="mood-orbit-ring" id="moodTagsContainer"></div>
-                <div class="mood-footer-hint">点击心境标签 · 寻找敦煌遗音</div>
-            </div>
-        </div>
-
-        <!-- 第二步：解忧卡片 -->
-        <div class="relief-card-page" id="reliefCardPage">
-            <button class="card-back-btn" onclick="backToMoodSelection()">← 重新选择</button>
-            <div class="relief-card-wrapper">
-                <div class="relief-card" id="reliefCard">
-                    <div class="card-art-area" id="cardArtArea">
-                        <div class="card-art-placeholder" id="cardArtPlaceholder">[敦煌壁画素材]</div>
-                    </div>
-                    <div class="card-poem-area">
-                        <div class="card-poem-lines" id="cardPoemLines"></div>
-                        <div class="card-poem-source" id="cardPoemSource"></div>
-                    </div>
-                    <div class="card-mood-transition">
-                        <span class="card-old-mood" id="cardOldMood"></span>
-                        <span class="card-arrow">→</span>
-                        <span class="card-new-mood" id="cardNewMood"></span>
-                    </div>
-                    <div class="card-advice" id="cardAdvice"></div>
-                    <div class="card-music-control">
-                        <button class="card-music-btn" id="cardMusicBtn" onclick="toggleCardMusic()">
-                            <span class="music-icon">♪</span>
-                            <span class="music-text">播放解忧古音</span>
-                        </button>
-                        <p class="card-music-hint">点击聆听对应心境的敦煌古乐</p>
-                    </div>
-                    <div class="card-seal">敦煌<br>遗音</div>
-                </div>
-                <div class="card-buttons">
-                    <button class="card-btn" onclick="backToMoodSelection()">再次体验</button>
-                    <button class="card-btn card-btn-primary" onclick="enterFifthScene()">进入终章</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 底部按钮 -->
-        <div class="fourth-footer" id="fourthFooter">
-            <p class="fourth-hint">点击心境 · 聆听敦煌遗音</p>
-            <button class="btn-gold" onclick="enterFifthScene()">进入终章</button>
-        </div>
-    </div>
-
-    <!-- ========== 第五幕：结果·敦煌守护人 ========== -->
-    <div id="scene-fifth" class="scene">
-        <div class="fifth-bg"></div>
-        <div class="fifth-glow"></div>
-        <div class="particles" id="fifthParticles"></div>
-        <div class="identity-page" id="identityPage">
-            <div class="scroll-card" id="scrollCard">
-                <div class="scroll-texture"></div><div class="scroll-aging"></div><div class="scroll-wear"></div>
-                <div class="scroll-bottom-rod"></div>
-                <div class="scroll-header">
-                    <h3 class="scroll-header-title">敦煌守护人</h3>
-                    <p class="scroll-header-sub">专属身份凭证</p>
-                </div>
-                <div class="scroll-divider"></div>
-                <div class="scroll-content">
-                    <div class="scroll-item-row"><span class="scroll-item-label">敦煌名号</span><span class="scroll-item-value" id="identityName">-</span></div>
-                    <div class="scroll-item-row"><span class="scroll-item-label">守护乐器</span><span class="scroll-item-value" id="identityInstrument">-</span></div>
-                    <div class="scroll-item-row"><span class="scroll-item-label">守护心境</span><span class="scroll-item-value" id="identityMood">-</span></div>
-                    <div class="scroll-proverb" id="identityProverb">-</div>
-                    <div class="scroll-item-row" style="border-bottom:none;margin-bottom:0;"><span class="scroll-item-label">守护编号</span><span class="scroll-item-value" id="identityNumber">-</span></div>
-                </div>
-                <div class="scroll-footer">
-                    <p class="scroll-time" id="identityTime">敦煌纪年 公元2026年</p>
-                </div>
-                <div class="identity-seal">敦煌<br>遗音</div>
-            </div>
-        </div>
-        <div class="poster-page" id="posterPage">
-            <div class="poster-card" id="posterCard">
-                <div class="poster-border-inner"></div>
-                <div class="poster-header">
-                    <h3 class="poster-title">敦煌守护人</h3>
-                    <p class="poster-subtitle">千年丝路的音乐回响</p>
-                </div>
-                <div class="poster-mural">
-                    <img src="assets/第五幕/poster_mural.png" alt="敦煌壁画" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <span class="poster-mural-placeholder" style="display:none;">[壁画素材]</span>
-                </div>
-                <div class="poster-info">
-                    <div class="poster-info-row"><span class="poster-info-label">名号</span><span class="poster-info-value" id="posterName">-</span></div>
-                    <div class="poster-info-row"><span class="poster-info-label">乐器</span><span class="poster-info-value" id="posterInstrument">-</span></div>
-                    <div class="poster-info-row"><span class="poster-info-label">心境</span><span class="poster-info-value" id="posterMood">-</span></div>
-                    <div class="poster-proverb" id="posterProverb">-</div>
-                </div>
-                <div class="poster-footer">
-                    <p class="poster-slogan">敦煌遗音 · 寻找你的千年守护音</p>
-                </div>
-            </div>
-        </div>
-        <div class="fifth-buttons">
-            <button class="page-toggle-btn" id="togglePosterBtn" onclick="togglePoster()">生成分享海报</button>
-            <button class="btn-gold" onclick="reselectMood()">重新选择心境</button>
-            <button class="btn-gold" onclick="restartExperience()">再次进入洞窟</button>
-        </div>
-    </div>
 
     <script>
 
@@ -1559,9 +712,7 @@
         const ambientMusic = {
             opening: 'assets/sound/ambient_desert.mp3',
             second: 'assets/sound/ambient_desert.mp3',
-            third: 'assets/sound/ambient_mural.mp3',
-            fourth: 'assets/sound/ambient_cave.mp3',
-            fifth: 'assets/sound/ambient_scroll.mp3'
+            third: 'assets/sound/ambient_mural.mp3'
         };
 
         function playAmbient(scene) {
@@ -1637,11 +788,6 @@
             }
         }
 
-        // ========== 全局变量 ==========
-        let currentScene = 0;
-        const totalScenes = 4;
-        let isScrolling = false;
-        /* 第二幕变量已在initPanorama中定义 */
 
         // 开场音乐
         let openingMusic = null;
@@ -1661,377 +807,6 @@
         let currentAudio = null;
         let currentInstrument = null;
 
-        // ========== 第四幕数据（敦煌解忧） ==========
-        const moodData = [
-            {
-                key: 'anxiety',
-                label: '焦虑',
-                subLabel: '学业压力 · 未来迷茫',
-                poem: ['莫高千佛映霞光', '丝路驼铃入梦乡'],
-                poemTitle: '《敦煌夜思》',
-                poemAuthor: '【唐】佚名',
-                newMood: '心如止水',
-                advice: '敦煌壁画历经千年风沙，每一笔都是工匠们放下焦虑、专注当下的见证。莫高千佛静观世事，驼铃声远，心自安宁。',
-                artDesc: '莫高窟夕阳下的九层楼',
-                music: 'assets/第四幕/music_anxiety.mp3'
-            },
-            {
-                key: 'confused',
-                label: '迷茫',
-                subLabel: '找不到方向',
-                poem: ['大漠孤烟直', '长河落日圆'],
-                poemTitle: '《使至塞上》',
-                poemAuthor: '【唐】王维',
-                newMood: '豁然开朗',
-                advice: '丝路之上，谁不是在迷雾中摸索前行？张骞西行十三载才归，玄奘取经十七年方回。你此刻的迷茫，正是寻找答案的必经之路。',
-                artDesc: '大漠中前行的商队',
-                music: 'assets/第四幕/music_confused.mp3'
-            },
-            {
-                key: 'obsession',
-                label: '执念',
-                subLabel: '放不下 · 想不通',
-                poem: ['飞天舞袖散花雨', '一曲琵琶解千愁'],
-                poemTitle: '《敦煌乐舞》',
-                poemAuthor: '【唐】敦煌曲子词',
-                newMood: '放下自在',
-                advice: '执念如手中沙，握得越紧，流失越快。看飞天散花，听琵琶一曲，千年洞窟中的壁画告诉我们：放下，即是拥有。',
-                artDesc: '飞天散花壁画',
-                music: 'assets/第四幕/music_obsession.mp3'
-            },
-            {
-                key: 'depressed',
-                label: '消沉',
-                subLabel: '提不起劲 · 情绪低落',
-                poem: ['春风不度玉门关', '羌笛何须怨杨柳'],
-                poemTitle: '《凉州词》',
-                poemAuthor: '【唐】王之涣',
-                newMood: '重拾信心',
-                advice: '玉门关外虽春风难度，但敦煌的壁画却将春色永留人间。低谷不是终点，而是蓄力的起点。千年洞窟中的每一笔，都是希望的见证。',
-                artDesc: '玉门关遗址',
-                music: 'assets/第四幕/music_depressed.mp3'
-            },
-            {
-                key: 'regret',
-                label: '遗憾',
-                subLabel: '错过 · 后悔',
-                poem: ['阳关三叠送故人', '西出阳关无故人'],
-                poemTitle: '《送元二使安西》',
-                poemAuthor: '【唐】王维',
-                newMood: '珍惜当下',
-                advice: '阳关道上，古人送别时也曾遗憾。但敦煌的壁画将那些美好瞬间永远定格。遗憾是人生的常态，但不必让它成为心头的重负。',
-                artDesc: '阳关古道送别图',
-                music: 'assets/第四幕/music_regret.mp3'
-            },
-            {
-                key: 'wasted',
-                label: '虚废',
-                subLabel: '浪费时间 · 碌碌无为',
-                poem: ['凿窟造像千秋业', '一笔一画皆心血'],
-                poemTitle: '《敦煌工匠歌》',
-                poemAuthor: '【唐】敦煌民间',
-                newMood: '勤勉精进',
-                advice: '敦煌莫高窟的每一幅壁画，都是工匠们数十年如一日的勤勉结晶。凿窟造像千秋业，你的时间同样珍贵，此刻开始，便是最好的时机。',
-                artDesc: '敦煌工匠绘制壁画',
-                music: 'assets/第四幕/music_wasted.mp3'
-            }
-        ];
-
-        let selectedMood = null;
-        let lastSelectedMood = null;  // 记录最近一次确认的心境，供未重新选择时兜底
-        let cardAudio = null;
-
-        // ========== 第四幕：心境·古音答心 ==========
-        function initFourthScene() {
-            selectedMood = null;
-            stopCardMusic();
-            document.getElementById('fourthHeader').classList.remove('show');
-            document.getElementById('moodSelectionPage').classList.remove('hidden');
-            document.getElementById('reliefCardPage').classList.remove('active');
-            document.getElementById('fourthFooter').style.display = 'block';
-            renderMoodTags();
-            createFourthParticles();
-            playAmbient('fourth');
-            setTimeout(() => {
-                document.getElementById('fourthHeader').classList.add('show');
-            }, 300);
-        }
-
-        function renderMoodTags() {
-            const container = document.getElementById('moodTagsContainer');
-            container.innerHTML = '';
-            moodData.forEach((mood, index) => {
-                const tag = document.createElement('div');
-                tag.className = 'mood-orbit-item';
-                tag.style.animationDelay = (index * 0.1) + 's';
-                tag.onclick = () => selectMood(mood.key);
-                tag.innerHTML = `
-                    <span class="orbit-label">${mood.label}</span>
-                    <span class="orbit-desc">${mood.subLabel}</span>
-                `;
-                container.appendChild(tag);
-            });
-        }
-
-        function selectMood(key) {
-            if (selectedMood) return;
-            selectedMood = moodData.find(m => m.key === key);
-            if (!selectedMood) return;
-            lastSelectedMood = selectedMood;
-            playSound('click');
-            playSound('pageFlip');
-            document.getElementById('moodSelectionPage').classList.add('hidden');
-            document.getElementById('fourthFooter').style.display = 'none';
-            setTimeout(() => {
-                showReliefCard();
-            }, 400);
-        }
-
-        function showReliefCard() {
-            const page = document.getElementById('reliefCardPage');
-            page.classList.add('active');
-            const poemLinesEl = document.getElementById('cardPoemLines');
-            poemLinesEl.innerHTML = selectedMood.poem.map((line, i) => 
-                `<div class="poem-line" style="animation-delay: ${0.3 + i * 0.3}s">${line}</div>`
-            ).join('');
-            document.getElementById('cardPoemSource').textContent = 
-                selectedMood.poemTitle + ' ' + selectedMood.poemAuthor;
-            document.getElementById('cardOldMood').textContent = selectedMood.label;
-            document.getElementById('cardNewMood').textContent = selectedMood.newMood;
-            document.getElementById('cardAdvice').textContent = selectedMood.advice;
-            const artArea = document.getElementById('cardArtArea');
-            const artImg = `assets/第四幕/art_${selectedMood.key}.png`;
-            const testImg = new Image();
-            testImg.onload = function() {
-                artArea.innerHTML = `<img src="${artImg}" alt="${selectedMood.artDesc}">`;
-            };
-            testImg.onerror = function() {
-                artArea.innerHTML = `<div class="card-art-placeholder">[${selectedMood.artDesc}]</div>`;
-            };
-            testImg.src = artImg;
-            const musicBtn = document.getElementById('cardMusicBtn');
-            musicBtn.classList.remove('playing');
-            musicBtn.innerHTML = '<span class="music-icon">♪</span><span class="music-text">播放解忧古音</span>';
-            if (cardAudio) {
-                cardAudio.pause();
-                cardAudio = null;
-            }
-            cardAudio = new Audio(selectedMood.music);
-            cardAudio.loop = false;
-            cardAudio.addEventListener('error', function() {
-                musicBtn.innerHTML = '<span class="music-icon">♪</span><span class="music-text">古音暂未提供</span>';
-                musicBtn.style.opacity = '0.5';
-                musicBtn.style.cursor = 'not-allowed';
-            });
-        }
-
-        function toggleCardMusic() {
-            playSound('click');
-            if (!cardAudio) return;
-            const musicBtn = document.getElementById('cardMusicBtn');
-            if (cardAudio.paused) {
-                if (ambientAudio && currentAmbientScene === 'fourth') {
-                    ambientAudio.pause();
-                }
-                cardAudio.play().catch(function(e) {
-                    musicBtn.innerHTML = '<span class="music-icon">♪</span><span class="music-text">古音暂未提供</span>';
-                });
-                musicBtn.classList.add('playing');
-                musicBtn.innerHTML = '<span class="music-icon">♫</span><span class="music-text">暂停古音</span>';
-                playSound('musicStart');
-            } else {
-                cardAudio.pause();
-                musicBtn.classList.remove('playing');
-                musicBtn.innerHTML = '<span class="music-icon">♪</span><span class="music-text">播放解忧古音</span>';
-                if (currentAmbientScene === 'fourth' && ambientMusic['fourth']) {
-                    ambientAudio = new Audio(ambientMusic['fourth']);
-                    ambientAudio.loop = true;
-                    ambientAudio.volume = 0.3;
-                    ambientAudio.play().catch(() => {});
-                }
-            }
-        }
-
-        function stopCardMusic() {
-            if (cardAudio) {
-                cardAudio.pause();
-                cardAudio = null;
-            }
-        }
-
-        function backToMoodSelection() {
-            playSound('click');
-            stopCardMusic();
-            document.getElementById('reliefCardPage').classList.remove('active');
-            if (currentAmbientScene === 'fourth' && ambientMusic['fourth']) {
-                ambientAudio = new Audio(ambientMusic['fourth']);
-                ambientAudio.loop = true;
-                ambientAudio.volume = 0.3;
-                ambientAudio.play().catch(() => {});
-            }
-            setTimeout(() => {
-                selectedMood = null;
-                document.getElementById('moodSelectionPage').classList.remove('hidden');
-                document.getElementById('fourthFooter').style.display = 'block';
-                renderMoodTags();
-            }, 400);
-        }
-
-        function enterFourthScene() {
-            playSound('click');
-            stopYiMusic();
-            document.getElementById('scene-third').classList.remove('active');
-            document.getElementById('scene-fourth').classList.add('active');
-            initFourthScene();
-        }
-
-        function createFourthParticles() {
-            const container = document.getElementById('fourthParticles');
-            if (!container || container.children.length > 0) return;
-            const particleCount = 50;
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                const sizeType = Math.random();
-                if (sizeType < 0.2) particle.className = 'particle large';
-                else if (sizeType < 0.6) particle.className = 'particle';
-                else particle.className = 'particle small';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.bottom = '-10px';
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                particle.style.animationDuration = (Math.random() * 6 + 8) + 's';
-                particle.style.opacity = Math.random() * 0.4 + 0.2;
-                container.appendChild(particle);
-            }
-        }
-
-        // ========== 第五幕功能 ==========
-        const identityNames = {
-            pipa: '琵琶守护人', ruan: '禅音侍者', konghou: '飞天舞使',
-            sheng: '笙歌使者', xiao: '箫音行者', drum: '鼓韵传人'
-        };
-
-        const moodToIdentity = {
-            'anxiety': { instrumentKey: 'pipa', name: '琵琶守护人', instrument: '琵琶' },
-            'confused': { instrumentKey: 'xiao', name: '箫音行者', instrument: '箫' },
-            'obsession': { instrumentKey: 'konghou', name: '飞天舞使', instrument: '箜篌' },
-            'depressed': { instrumentKey: 'sheng', name: '笙歌使者', instrument: '笙' },
-            'regret': { instrumentKey: 'ruan', name: '禅音侍者', instrument: '阮' },
-            'wasted': { instrumentKey: 'drum', name: '鼓韵传人', instrument: '鼓' }
-        };
-
-        function generateIdentity() {
-            const activeMood = selectedMood || lastSelectedMood;
-            const moodKey = activeMood ? activeMood.key : 'anxiety';
-            const mapping = moodToIdentity[moodKey] || moodToIdentity['anxiety'];
-            const instrumentKey = mapping.instrumentKey;
-            const instrumentName = mapping.instrument;
-            const identityName = mapping.name;
-            const moodTitle = activeMood ? activeMood.label : '未知心境';
-            const proverb = activeMood ? activeMood.poem[0] + '，' + activeMood.poem[1] : '千年遗音，守护于心';
-            const number = 'NO.' + String(Math.floor(Math.random() * 9000) + 1000).padStart(4, '0');
-            const year = new Date().getFullYear();
-
-            document.getElementById('identityName').textContent = identityName;
-            document.getElementById('identityInstrument').textContent = instrumentName;
-            document.getElementById('identityMood').textContent = moodTitle;
-            document.getElementById('identityProverb').textContent = proverb;
-            document.getElementById('identityNumber').textContent = number;
-            document.getElementById('identityTime').textContent = `敦煌纪年 公元${year}年`;
-
-            document.getElementById('posterName').textContent = identityName;
-            document.getElementById('posterInstrument').textContent = instrumentName;
-            document.getElementById('posterMood').textContent = moodTitle;
-            document.getElementById('posterProverb').textContent = proverb;
-        }
-
-        function enterFifthScene() {
-            playSound('click');
-            stopCardMusic();
-            playAmbient('fifth');
-            document.getElementById('scene-fourth').classList.remove('active');
-            document.getElementById('scene-fifth').classList.add('active');
-            generateIdentity();
-            createFifthParticles();
-        }
-
-        function togglePoster() {
-            playSound('click');
-            const identityPage = document.getElementById('identityPage');
-            const posterPage = document.getElementById('posterPage');
-            const btn = document.getElementById('togglePosterBtn');
-
-            if (posterPage.classList.contains('active')) {
-                posterPage.classList.remove('active');
-                identityPage.classList.remove('hidden');
-                btn.textContent = '生成分享海报';
-            } else {
-                identityPage.classList.add('hidden');
-                posterPage.classList.add('active');
-                btn.textContent = '查看身份卡';
-            }
-        }
-
-        function reselectMood() {
-            playSound('click');
-            document.getElementById('scene-fifth').classList.remove('active');
-            document.getElementById('scene-fourth').classList.add('active');
-            initFourthScene();
-        }
-
-        function resetPanorama() {
-            currentScene = 0;
-            sceneOffsets = [0, 0, 0, 0];
-            if (panoramaTrack) {
-                panoramaTrack.style.transition = 'none';
-                panoramaTrack.style.transform = 'translateX(0px)';
-            }
-            if (panoramaScenes && panoramaScenes.length) {
-                panoramaScenes.forEach((scene, i) => {
-                    scene.classList.toggle('active', i === 0);
-                });
-            }
-            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === 0);
-            });
-        }
-
-        function restartExperience() {
-            playSound('click');
-            stopAmbient();
-            stopOpeningMusic();
-            resetPanorama();
-
-            document.getElementById('posterPage').classList.remove('active');
-            document.getElementById('identityPage').classList.remove('hidden');
-            document.getElementById('togglePosterBtn').textContent = '生成分享海报';
-
-            document.getElementById('scene-fifth').classList.remove('active');
-            document.getElementById('scene-opening').classList.add('active');
-
-            const video = document.getElementById('openingVideo');
-            const caveEntrance = document.getElementById('openingCaveEntrance');
-            const particles = document.getElementById('openingParticles');
-            const content = document.getElementById('openingContent');
-            const skipBtn = document.getElementById('skipBtn');
-
-            video.classList.remove('fade-out');
-            caveEntrance.classList.remove('show');
-            particles.classList.remove('show');
-            content.classList.remove('show');
-            skipBtn.classList.remove('hidden');
-
-            // 重新体验直接播放动画（跳过封面）
-            const cover = document.getElementById('openingCover');
-            if (cover) cover.classList.add('hide');
-
-            video.currentTime = 0;
-            video.play();
-
-            // 重置音乐状态
-            musicPlayedOnce = false;
-            isMusicPlaying = false;
-            updateMusicBtn();
-        }
 
         // ========== 封面进入：点击"点击音符进入"后播放开场动画 ==========
         function startOpening() {
@@ -2072,22 +847,16 @@
 
         function showOpeningEndScene() {
             const video = document.getElementById('openingVideo');
-            const caveEntrance = document.getElementById('openingCaveEntrance');
-            const particles = document.getElementById('openingParticles');
             const content = document.getElementById('openingContent');
             const skipBtn = document.getElementById('skipBtn');
 
             if (video) video.classList.add('fade-out');
             if (skipBtn) skipBtn.classList.add('hidden');
 
-            setTimeout(() => {
-                if (caveEntrance) caveEntrance.classList.add('show');
-                if (particles) particles.classList.add('show');
-            }, 500);
-
+            // 直接显示进入画面，跳过洞窟入口
             setTimeout(() => {
                 if (content) content.classList.add('show');
-            }, 1500);
+            }, 500);
         }
 
         function enterSecondScene() {
@@ -2100,12 +869,6 @@
             showGuide('tingyin');
         }
 
-        function enterThirdScene() {
-            playSound('click');
-            playAmbient('third');
-            document.getElementById('scene-second').classList.remove('active');
-            document.getElementById('scene-third').classList.add('active');
-        }
 
         // ========== 序幕：循声入窟（原第二幕丝路寻音改写） ==========
         let xuMusic = null;          // 急胡相问背景音乐
@@ -2156,9 +919,7 @@
             updateXuMusicBtn();
             setTimeout(function() {
                 if (token !== prologueToken) return;
-                var r = document.getElementById('xuRestartBtn');
                 var l = document.getElementById('xuListenBtn');
-                if (r) r.classList.add('show');
                 if (l) l.classList.add('show');
             }, 1500);
         }
@@ -2301,9 +1062,13 @@
             }, 700);
         }
 
-        // 继续探索：跳转甘露视频，背景音乐暂停
+        // 继续探索：显示引导页（寻音呼吸），点寻音后再进甘露视频
         function xuContinue() {
             playSound('click');
+            showGuide('xunyin');
+        }
+        // 点寻音后真正执行：播放甘露视频
+        function xuDoContinue() {
             if (xuMusic) { xuMusic.pause(); xuMusic.currentTime = 0; }
             xuMusicPlaying = false;
             updateXuMusicBtn();
@@ -2328,418 +1093,30 @@
             stopAmbient();
             document.getElementById('scene-second').classList.remove('active');
             document.getElementById('scene-third').classList.add('active');
-            // 甘露视频播放完后显示引导页（寻音呼吸）
-            showGuide('xunyin');
+            yiShowScreen('yiScreenA', true);
+            playYiMusic();
         }
 
-        // ========== 第二幕：全景漫游 ==========
-        // 注意：currentScene/isScrolling/totalScenes 已在全局变量区声明
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchEndX = 0;
-        let isDragging = false;
-        let dragStartX = 0;
-        let dragCurrentX = 0;
-        let sceneOffsets = [0, 0, 0, 0]; // 每个场景内图片的偏移量
-        let viewportWidth = 0;
-        let sceneWidths = [];
-        let imgWidths = [];
-        let panoramaTrack = null;
-        let panoramaScenes = [];
-        let bgLayers = [];
-
-        function initPanorama() {
-            panoramaTrack = document.getElementById('panoramaTrack');
-            panoramaScenes = document.querySelectorAll('.panorama-scene');
-            bgLayers = document.querySelectorAll('.scene-bg-layer');
-            viewportWidth = window.innerWidth;
-
-            // 计算每个场景的宽度（以视口宽度为基准，3:1图片则场景宽度 = 图片宽度）
-            panoramaScenes.forEach((scene, index) => {
-                const img = scene.querySelector('.scene-bg-layer img');
-                if (img) {
-                    // 设置场景宽度为图片原始宽度（按比例）
-                    const imgRatio = 3; // 3:1 长图
-                    const sceneWidth = viewportWidth * imgRatio;
-                    scene.style.width = sceneWidth + 'px';
-                    sceneWidths[index] = sceneWidth;
-                    imgWidths[index] = sceneWidth;
-                } else {
-                    scene.style.width = viewportWidth + 'px';
-                    sceneWidths[index] = viewportWidth;
-                    imgWidths[index] = viewportWidth;
-                }
-
-                // 初始化偏移
-                sceneOffsets[index] = 0;
-            });
-
-            // 设置track总宽度
-            updateTrackWidth();
-
-            // 激活第一个场景
-            updateSceneActiveState();
-
-            // 绑定事件
-            const viewport = document.getElementById('panoramaViewport');
-            viewport.addEventListener('touchstart', handlePanoramaTouchStart, { passive: false });
-            viewport.addEventListener('touchmove', handlePanoramaTouchMove, { passive: false });
-            viewport.addEventListener('touchend', handlePanoramaTouchEnd, { passive: true });
-            viewport.addEventListener('mousedown', handlePanoramaMouseDown);
-            window.addEventListener('mousemove', handlePanoramaMouseMove);
-            window.addEventListener('mouseup', handlePanoramaMouseUp);
-            window.addEventListener('wheel', handlePanoramaWheel, { passive: false });
-            window.addEventListener('keydown', handlePanoramaKeydown);
-            window.addEventListener('resize', handlePanoramaResize);
-
-            // 显示第一个场景的拖拽提示
-            showDragHint(0);
-
-            // 将画卷定位到当前场景起点，确保重体验后从第一张重新开始
-            applyTransform();
-        }
-
-        function updateTrackWidth() {
-            let totalWidth = 0;
-            panoramaScenes.forEach((scene, i) => {
-                totalWidth += sceneWidths[i];
-            });
-            panoramaTrack.style.width = totalWidth + 'px';
-        }
-
-        function updateSceneActiveState() {
-            panoramaScenes.forEach((scene, index) => {
-                scene.classList.toggle('active', index === currentScene);
-            });
-        }
-
-        function showDragHint(sceneIndex) {
-            document.querySelectorAll('.scene-drag-hint').forEach((hint, i) => {
-                hint.classList.toggle('show', i === sceneIndex);
-            });
-            // 3秒后自动隐藏
-            setTimeout(() => {
-                const hint = document.getElementById('dragHint' + sceneIndex);
-                if (hint) hint.classList.remove('show');
-            }, 4000);
-        }
-
-        function getTrackOffset() {
-            let offset = 0;
-            for (let i = 0; i < currentScene; i++) {
-                offset += sceneWidths[i];
-            }
-            return offset;
-        }
-
-        function getMaxOffset(sceneIndex) {
-            const imgW = imgWidths[sceneIndex] || viewportWidth;
-            return Math.max(0, imgW - viewportWidth);
-        }
-
-        function applyTransform() {
-            const trackOffset = getTrackOffset();
-            const currentOffset = sceneOffsets[currentScene] || 0;
-            const totalOffset = -(trackOffset + currentOffset);
-            panoramaTrack.style.transform = `translateX(${totalOffset}px)`;
-            panoramaTrack.style.transition = isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        }
-
-        // ===== 触摸事件 =====
-        function handlePanoramaTouchStart(e) {
-            if (!document.getElementById('scene-second').classList.contains('active')) return;
-            const touch = e.touches[0];
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-            dragStartX = touchStartX;
-            isDragging = true;
-
-            // 暂停过渡动画，直接跟随手指
-            panoramaTrack.style.transition = 'none';
-        }
-
-        function handlePanoramaTouchMove(e) {
-            if (!document.getElementById('scene-second').classList.contains('active')) return;
-            if (!isDragging) return;
-            e.preventDefault();
-
-            const touch = e.touches[0];
-            const deltaX = touch.clientX - dragStartX;
-            const deltaY = touch.clientY - touchStartY;
-
-            // 判断是水平滑动还是垂直滑动
-            if (Math.abs(deltaX) > Math.abs(deltaY) * 0.5) {
-                e.preventDefault();
-            }
-
-            dragCurrentX = deltaX;
-
-            const currentOffset = sceneOffsets[currentScene] || 0;
-            const newOffset = currentOffset - deltaX; // 手指向左滑，图片向右移（显示右侧）
-            const maxOffset = getMaxOffset(currentScene);
-
-            // 边界限制 + 弹性
-            let boundedOffset = newOffset;
-            if (boundedOffset < 0) boundedOffset = deltaX * 0.3; // 左边界弹性
-            if (boundedOffset > maxOffset) boundedOffset = maxOffset + (newOffset - maxOffset) * 0.3; // 右边界弹性
-
-            // 计算场景切换的阈值判断
-            const trackOffset = getTrackOffset();
-            const totalOffset = -(trackOffset + boundedOffset);
-            panoramaTrack.style.transform = `translateX(${totalOffset}px)`;
-        }
-
-        function handlePanoramaTouchEnd(e) {
-            if (!document.getElementById('scene-second').classList.contains('active')) return;
-            if (!isDragging) return;
-            isDragging = false;
-
-            const touch = e.changedTouches[0];
-            touchEndX = touch.clientX;
-            const totalDeltaX = touchStartX - touchEndX; // 正值表示向左滑
-            const totalDeltaY = touch.clientY - touchStartY;
-
-            // 判断是场景内拖拽还是场景切换
-            const currentOffset = sceneOffsets[currentScene] || 0;
-            const maxOffset = getMaxOffset(currentScene);
-
-            // 如果水平滑动距离大，且图片已经拖到边界，则切换场景
-            if (Math.abs(totalDeltaX) > 80 && Math.abs(totalDeltaX) > Math.abs(totalDeltaY)) {
-                if (totalDeltaX > 0 && currentOffset >= maxOffset - 10) {
-                    // 向左滑，且图片已拖到最右（或接近），切到下一场景
-                    if (currentScene < totalScenes - 1) {
-                        nextScene();
-                        return;
-                    }
-                } else if (totalDeltaX < 0 && currentOffset <= 10) {
-                    // 向右滑，且图片已拖到最左，切到上一场景
-                    if (currentScene > 0) {
-                        prevScene();
-                        return;
-                    }
-                }
-            }
-
-            // 场景内：弹性回弹到有效范围
-            let finalOffset = currentOffset;
-            const dragOffset = currentOffset - totalDeltaX;
-
-            if (dragOffset < 0) finalOffset = 0;
-            else if (dragOffset > maxOffset) finalOffset = maxOffset;
-            else finalOffset = dragOffset;
-
-            sceneOffsets[currentScene] = finalOffset;
-            applyTransform();
-        }
-
-        // ===== 鼠标事件（桌面端） =====
-        let isMouseDown = false;
-        let mouseStartX = 0;
-
-        function handlePanoramaMouseDown(e) {
-            if (!document.getElementById('scene-second').classList.contains('active')) return;
-            isMouseDown = true;
-            mouseStartX = e.clientX;
-            dragStartX = e.clientX;
-            isDragging = true;
-            panoramaTrack.style.transition = 'none';
-            e.preventDefault();
-        }
-
-        function handlePanoramaMouseMove(e) {
-            if (!isMouseDown || !document.getElementById('scene-second').classList.contains('active')) return;
-            const deltaX = e.clientX - dragStartX;
-            dragCurrentX = deltaX;
-
-            const currentOffset = sceneOffsets[currentScene] || 0;
-            const newOffset = currentOffset - deltaX;
-            const maxOffset = getMaxOffset(currentScene);
-
-            let boundedOffset = newOffset;
-            if (boundedOffset < 0) boundedOffset = deltaX * 0.3;
-            if (boundedOffset > maxOffset) boundedOffset = maxOffset + (newOffset - maxOffset) * 0.3;
-
-            const trackOffset = getTrackOffset();
-            const totalOffset = -(trackOffset + boundedOffset);
-            panoramaTrack.style.transform = `translateX(${totalOffset}px)`;
-        }
-
-        function handlePanoramaMouseUp(e) {
-            if (!isMouseDown) return;
-            isMouseDown = false;
-            isDragging = false;
-
-            const totalDeltaX = mouseStartX - e.clientX;
-            const currentOffset = sceneOffsets[currentScene] || 0;
-            const maxOffset = getMaxOffset(currentScene);
-
-            // 场景切换判断
-            if (Math.abs(totalDeltaX) > 80) {
-                if (totalDeltaX > 0 && currentOffset >= maxOffset - 10) {
-                    if (currentScene < totalScenes - 1) {
-                        nextScene();
-                        return;
-                    }
-                } else if (totalDeltaX < 0 && currentOffset <= 10) {
-                    if (currentScene > 0) {
-                        prevScene();
-                        return;
-                    }
-                }
-            }
-
-            let finalOffset = currentOffset;
-            const dragOffset = currentOffset - totalDeltaX;
-            if (dragOffset < 0) finalOffset = 0;
-            else if (dragOffset > maxOffset) finalOffset = maxOffset;
-            else finalOffset = dragOffset;
-
-            sceneOffsets[currentScene] = finalOffset;
-            applyTransform();
-        }
-
-        // ===== 滚轮事件 =====
-        let wheelAccumulated = 0;
-        let wheelTimeout = null;
-
-        function handlePanoramaWheel(e) {
-            if (!document.getElementById('scene-second').classList.contains('active')) return;
-            e.preventDefault();
-
-            const delta = e.deltaX || e.deltaY;
-            wheelAccumulated += delta;
-
-            if (wheelTimeout) clearTimeout(wheelTimeout);
-
-            // 实时滚动效果
-            const currentOffset = sceneOffsets[currentScene] || 0;
-            const maxOffset = getMaxOffset(currentScene);
-            let newOffset = currentOffset + wheelAccumulated * 0.5;
-
-            // 边界检查
-            if (newOffset < 0) {
-                // 已经到左边界，继续向左滚则切到上一场景
-                if (wheelAccumulated < -100 && currentScene > 0) {
-                    wheelAccumulated = 0;
-                    prevScene();
-                    return;
-                }
-                newOffset = 0;
-            } else if (newOffset > maxOffset) {
-                // 已经到右边界，继续向右滚则切到下一场景
-                if (wheelAccumulated > 100 && currentScene < totalScenes - 1) {
-                    wheelAccumulated = 0;
-                    nextScene();
-                    return;
-                }
-                newOffset = maxOffset;
-            }
-
-            sceneOffsets[currentScene] = newOffset;
-            applyTransform();
-
-            wheelTimeout = setTimeout(() => {
-                wheelAccumulated = 0;
-            }, 150);
-        }
-
-        // ===== 键盘事件 =====
-        function handlePanoramaKeydown(e) {
-            if (!document.getElementById('scene-second').classList.contains('active')) return;
-            if (isScrolling) return;
-
-            const currentOffset = sceneOffsets[currentScene] || 0;
-            const maxOffset = getMaxOffset(currentScene);
-            const step = viewportWidth * 0.15;
-
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault();
-                if (currentOffset < maxOffset) {
-                    sceneOffsets[currentScene] = Math.min(maxOffset, currentOffset + step);
-                    applyTransform();
-                } else if (currentScene < totalScenes - 1) {
-                    nextScene();
-                }
-            } else if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                if (currentOffset > 0) {
-                    sceneOffsets[currentScene] = Math.max(0, currentOffset - step);
-                    applyTransform();
-                } else if (currentScene > 0) {
-                    prevScene();
-                }
+        // 奏音视频播放完后跳转选择乐器画面
+        function onZouyinVideoEnded() {
+            var zyWrap = document.getElementById('zouyinVideoWrap');
+            // 先切换到选择乐器画面，再淡出视频层
+            yiDoGoSelect();
+            if (zyWrap) {
+                zyWrap.classList.add('hide');
+                setTimeout(function() {
+                    zyWrap.classList.remove('show', 'hide');
+                }, 800);
             }
         }
 
-        // ===== 窗口大小变化 =====
-        function handlePanoramaResize() {
-            viewportWidth = window.innerWidth;
-            panoramaScenes.forEach((scene, index) => {
-                const img = scene.querySelector('.scene-bg-layer img');
-                if (img) {
-                    const imgRatio = 3;
-                    const sceneWidth = viewportWidth * imgRatio;
-                    scene.style.width = sceneWidth + 'px';
-                    sceneWidths[index] = sceneWidth;
-                    imgWidths[index] = sceneWidth;
-                }
-            });
-            updateTrackWidth();
-
-            // 重新约束当前偏移
-            const maxOffset = getMaxOffset(currentScene);
-            if (sceneOffsets[currentScene] > maxOffset) {
-                sceneOffsets[currentScene] = maxOffset;
-            }
-            applyTransform();
+        // 传音视频播放完后跳转三站画面
+        function onChuanyinVideoEnded() {
+            var cyWrap = document.getElementById('chuanyinVideoWrap');
+            if (cyWrap) cyWrap.classList.remove('show');
+            yiXunshengQiannianGoDirect();
         }
 
-        // ===== 场景切换 =====
-        function nextScene() {
-            if (currentScene < totalScenes - 1) {
-                currentScene++;
-                updateScenePosition();
-            }
-        }
-
-        function prevScene() {
-            if (currentScene > 0) {
-                currentScene--;
-                updateScenePosition();
-            }
-        }
-
-        function scrollToScene(sceneIndex) {
-            playSound('click');
-            if (isScrolling) return;
-            currentScene = sceneIndex;
-            updateScenePosition();
-        }
-
-        function updateScenePosition() {
-            isScrolling = true;
-            updateSceneActiveState();
-            applyTransform();
-
-            // 更新进度点
-            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentScene);
-            });
-
-            // 隐藏/显示滚动提示
-            const scrollHint = document.getElementById('scrollHint');
-            if (scrollHint) scrollHint.style.opacity = currentScene > 0 ? '0' : '';
-
-            // 显示新场景的拖拽提示
-            showDragHint(currentScene);
-
-            setTimeout(() => { isScrolling = false; }, 600);
-        }
-
-        function showHotspotInfo(name) { 
-            playSound('click'); 
-            console.log('点击了热点：', name); 
-        }
 // ========== 第三幕：乐舞敦煌（重制·寻乐器） ==========
         var yiFound = { bili: false, shukonghou: false, dalagu: false, jiegu: false };
         var yiPopupOpen = false;
@@ -2790,6 +1167,28 @@
                 xuMusicPlaying = true;
             }
             updateXuMusicBtn();
+        }
+
+        // 返回引导页-寻音呼吸
+        function yiBackToGuide() {
+            playSound('click');
+            stopYiMusic();
+            stopAmbient();
+            document.getElementById('scene-er').classList.remove('active');
+            document.getElementById('scene-second').classList.remove('active');
+            document.getElementById('scene-third').classList.remove('active');
+            showGuide('xunyin');
+        }
+
+        // 返回引导页-奏音呼吸
+        function yiBackToGuideZouyin() {
+            playSound('click');
+            stopYiMusic();
+            stopAmbient();
+            document.getElementById('scene-er').classList.remove('active');
+            document.getElementById('scene-second').classList.remove('active');
+            document.getElementById('scene-third').classList.remove('active');
+            showGuide('zouyin');
         }
 
         // 画面D：初始化寻乐器（重置全部锁定状态）
@@ -3003,6 +1402,8 @@
         function yiXunshengQiannianGoDirect() {
             stopYiMusic();
             stopAmbient();
+            // 停掉序幕音乐，避免与第二幕背景音乐（同为 jihuxiangwen.mp3）同时播放
+            if (xuMusic) { try { xuMusic.pause(); } catch(e){} xuMusicPlaying = false; }
             document.getElementById('scene-third').classList.remove('active');
             document.getElementById('scene-er').classList.add('active');
             erShowScreen('erScreen2', true);
@@ -3152,6 +1553,7 @@
             stopYiMusic();
             stopAmbient();
             if (erBgMusic) { try { erBgMusic.pause(); } catch(e){} erBgMusicPlaying = false; }
+            if (xuMusic) { try { xuMusic.pause(); } catch(e){} xuMusicPlaying = false; }
             // 所有按钮都直接跳转到对应画面
             if (step === 'tingyin') {
                 // 听音 → 上前聆听静态封面
@@ -3161,21 +1563,56 @@
                 document.getElementById('scene-second').classList.add('active');
                 startPrologue();
             } else if (step === 'xunyin') {
-                // 寻音 → 弹出寻找乐器参考图（yiScreenA）
+                // 寻音 → 播放甘露视频（ganlu.mp4）
+                xuReset();
                 document.getElementById('scene-er').classList.remove('active');
-                document.getElementById('scene-second').classList.remove('active');
-                document.getElementById('scene-third').classList.add('active');
-                yiShowScreen('yiScreenA', true);
-                playYiMusic();
+                document.getElementById('scene-third').classList.remove('active');
+                document.getElementById('scene-second').classList.add('active');
+                xuDoContinue();
             } else if (step === 'zouyin') {
-                // 奏音 → 选择乐器画面（yiScreenF）
+                // 奏音 → 先播放视频，再跳转选择乐器画面
                 document.getElementById('scene-er').classList.remove('active');
                 document.getElementById('scene-second').classList.remove('active');
                 document.getElementById('scene-third').classList.add('active');
-                yiDoGoSelect();
+                // 显示奏音视频层并播放
+                var zyWrap = document.getElementById('zouyinVideoWrap');
+                if (zyWrap) zyWrap.classList.add('show');
+                var zyVideo = document.getElementById('zouyinVideo');
+                if (zyVideo) {
+                    zyVideo.currentTime = 0;
+                    zyVideo.play().catch(function(e) {
+                        console.log('奏音视频有声播放失败，降级静音:', e);
+                        zyVideo.muted = true;
+                        zyVideo.play().catch(function(e2) {
+                            console.log('奏音视频静音播放也失败:', e2);
+                            if (zyWrap) zyWrap.classList.remove('show');
+                            yiDoGoSelect();
+                        });
+                    });
+                }
             } else if (step === 'chuanyin') {
-                // 传音 → 三站画面（erScreen2）
-                yiXunshengQiannianGoDirect();
+                // 传音 → 先播放视频，再跳转三站画面
+                stopYiMusic();
+                stopAmbient();
+                document.getElementById('scene-second').classList.remove('active');
+                document.getElementById('scene-third').classList.remove('active');
+                document.getElementById('scene-er').classList.add('active');
+                // 显示传音视频层并播放
+                var cyWrap = document.getElementById('chuanyinVideoWrap');
+                if (cyWrap) cyWrap.classList.add('show');
+                var cyVideo = document.getElementById('chuanyinVideo');
+                if (cyVideo) {
+                    cyVideo.currentTime = 0;
+                    cyVideo.play().catch(function(e) {
+                        console.log('传音视频有声播放失败，降级静音:', e);
+                        cyVideo.muted = true;
+                        cyVideo.play().catch(function(e2) {
+                            console.log('传音视频静音播放也失败:', e2);
+                            if (cyWrap) cyWrap.classList.remove('show');
+                            yiXunshengQiannianGoDirect();
+                        });
+                    });
+                }
             }
         }
 
@@ -3243,25 +1680,6 @@
             }
         }
 
-        function createFifthParticles() {
-            const container = document.getElementById('fifthParticles');
-            if (!container || container.children.length > 0) return;
-            const particleCount = 60;
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                const sizeType = Math.random();
-                if (sizeType < 0.2) particle.className = 'particle large';
-                else if (sizeType < 0.6) particle.className = 'particle';
-                else particle.className = 'particle small';
-
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.bottom = '-10px';
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                particle.style.animationDuration = (Math.random() * 6 + 8) + 's';
-                particle.style.opacity = Math.random() * 0.5 + 0.3;
-                container.appendChild(particle);
-            }
-        }
 
         function createOpeningParticles() {
             const container = document.getElementById('openingParticles');
@@ -3373,7 +1791,6 @@
         // ========== 预加载 ==========
         function preloadImages() {
             const images = [
-                'assets/第二幕/scene_desert.png', 'assets/第二幕/scene_sanwei.png', 'assets/第二幕/scene_mogao.png', 'assets/第二幕/scene_corridor.png',
                 'assets/yi/beijingtu.png', 'assets/yi/juanzhou1.png', 'assets/yi/huhan.png', 'assets/yi/xunzhaowz.png',
                 'assets/yi/juanzhou.png', 'assets/yi/beibi.jpg', 'assets/yi/wenzi.png', 'assets/yi/ju1.png',
                 'assets/yi/bili1.png', 'assets/yi/shukonghou1.png', 'assets/yi/dalagu1.png', 'assets/yi/jiegu1.png',
