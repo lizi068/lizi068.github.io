@@ -252,6 +252,11 @@
         .yi-g-juanzhou { left: 50%; top: 42.8%; width: 100%; }
         .yi-g-inst { left: 50%; top: 43.4%; width: 35.7%; cursor: pointer; pointer-events: auto; -webkit-tap-highlight-color: transparent; transition: filter 0.2s ease, transform 0.2s ease; }
         .yi-g-inst:hover { filter: brightness(1.1) drop-shadow(0 0 14px rgba(255,220,150,0.7)); }
+        .yi-g-inst.playing { animation: yiInstBreath 1.2s ease-in-out infinite; }
+        @keyframes yiInstBreath {
+            0%, 100% { transform: translate(-50%,-50%) scale(1); }
+            50% { transform: translate(-50%,-50%) scale(1.06); }
+        }
         .yi-g-finger { left: 30.2%; top: 32.8%; width: 9.8%; animation: yiFinger 2.2s ease-in-out infinite; }
         .yi-g-finger.paused { animation-play-state: paused; }
         @keyframes yiFinger {
@@ -998,6 +1003,26 @@
         .xu-music-btn { position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; background: rgba(45, 28, 12, 0.55); border: 1px solid rgba(225, 195, 145, 0.65); color: #EAD8AE; font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 8; -webkit-tap-highlight-color: transparent; }
         .xu-music-btn.muted { opacity: 0.55; }
 
+        /* ========== 引导页（听音/寻音/奏音/传音） ========== */
+        .guide-overlay { position: fixed; inset: 0; z-index: 9999; background: #f0e3c4; display: none; overflow: hidden; }
+        .guide-overlay.show { display: block; }
+        .guide-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .guide-btn { position: absolute; transform: translate(-50%, -50%); cursor: pointer; pointer-events: auto; -webkit-tap-highlight-color: transparent; transition: filter 0.2s ease; }
+        .guide-btn:hover { filter: brightness(1.08); }
+        .guide-btn.breathing { animation: guideBreath 1.6s ease-in-out infinite; }
+        @keyframes guideBreath {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.08); }
+        }
+        .guide-arrow { position: absolute; transform: translate(-50%, -50%); pointer-events: none; }
+        /* 布局（对照 引导页.jpg 941×1672） */
+        .guide-tingyin { left: 29%; top: 16%; width: 30%; }
+        .guide-jiantou1 { left: 55%; top: 24%; width: 26%; }
+        .guide-xunyin { left: 71%; top: 41%; width: 30%; }
+        .guide-jiantou2 { left: 33%; top: 48%; width: 26%; }
+        .guide-zouyin { left: 29%; top: 63%; width: 30%; }
+        .guide-jiantou3 { left: 50%; top: 76%; width: 26%; }
+        .guide-chuanyin { left: 72%; top: 86%; width: 30%; }
     </style>
 </head>
 <body>
@@ -2070,8 +2095,9 @@
             stopOpeningMusic();
             document.getElementById('scene-opening').classList.remove('active');
             document.getElementById('scene-second').classList.add('active');
-            startPrologue();
             createParticles();
+            // 显示引导页（听音呼吸），点听音后再播放视频
+            showGuide('tingyin');
         }
 
         function enterThirdScene() {
@@ -2300,9 +2326,10 @@
             var ganlu = document.getElementById('prologueGanlu');
             if (ganlu) ganlu.classList.remove('show');
             stopAmbient();
-            playYiMusic();
             document.getElementById('scene-second').classList.remove('active');
             document.getElementById('scene-third').classList.add('active');
+            // 甘露视频播放完后显示引导页（寻音呼吸）
+            showGuide('xunyin');
         }
 
         // ========== 第二幕：全景漫游 ==========
@@ -2824,26 +2851,44 @@
         var yiSelKeys = ['bili', 'shukonghou', 'dalagu', 'jiegu'];
         var yiSelIndex = 0;
         var yiPlayAudio = null;
+        // 预加载所有乐器图片（避免切换时卡顿/先放大）
+        (function preloadYueqi() {
+            yiSelKeys.forEach(function(k) {
+                new Image().src = 'assets/yi/xuanze-' + k + '.png';
+                new Image().src = 'assets/yi/mingzi-' + k + '.png';
+                new Image().src = 'assets/yi/tiyan-' + k + '.png';
+            });
+        })();
 
         // 画面E 乐器演奏 → 画面F（选择乐器），恢复背景音乐
         function yiGoSelect() {
             playSound('click');
+            // 显示引导页（奏音呼吸），点奏音后才进入选择乐器
+            showGuide('zouyin');
+        }
+        // 点奏音后真正执行：进入选择乐器画面F
+        function yiDoGoSelect() {
             yiSelShow();
             yiShowScreen('yiScreenF', true);
             playYiMusic();
         }
         // 画面F 逐乐器尺寸（对齐 选择乐器-筚篥/竖箜篌/答腊鼓/羯鼓.jpg，中心均 (50%,53%)）
         var yiFInstConf = { bili: 25, shukonghou: 21.9, dalagu: 36.7, jiegu: 51.5 };
-        // 刷新选择框内乐器与名字（按 yiSelIndex）
+        // 刷新选择框内乐器与名字（按 yiSelIndex）：先加载新图，onload 后再切换，避免旧图被拉伸
         function yiSelShow() {
             var key = yiSelKeys[yiSelIndex];
             var inst = document.getElementById('yiSelInst');
             var mz = document.getElementById('yiSelMingzi');
-            if (inst) {
-                inst.src = 'assets/yi/xuanze-' + key + '.png';
-                inst.style.width = (yiFInstConf[key] || 13) + '%';
-            }
-            if (mz) mz.src = 'assets/yi/mingzi-' + key + '.png';
+            var newW = (yiFInstConf[key] || 13) + '%';
+            var img = new Image();
+            img.onload = function() {
+                if (inst) {
+                    inst.src = img.src;
+                    inst.style.width = newW;
+                }
+                if (mz) mz.src = 'assets/yi/mingzi-' + key + '.png';
+            };
+            img.src = 'assets/yi/xuanze-' + key + '.png';
         }
         // 上一个：筚篥→羯鼓→答腊鼓→竖箜篌→筚篥
         function yiSelPrev() {
@@ -2869,28 +2914,33 @@
             playSound('click');
             stopYiMusic();
             var key = yiSelKeys[yiSelIndex];
-            var t = document.getElementById('yiTiyanInst');
-            if (t) t.src = 'assets/yi/tiyan-' + key + '.png';
             var conf = yiGConf[key] || yiGConf.bili;
-            if (t) {
-                t.style.left = conf.inst.l + '%';
-                t.style.top = conf.inst.t + '%';
-                t.style.width = conf.inst.w + '%';
-            }
-            var f = document.getElementById('yiFinger');
-            if (f) {
-                f.style.left = conf.finger.l + '%';
-                f.style.top = conf.finger.t + '%';
-                f.style.width = conf.finger.w + '%';
-            }
-            var tip = document.getElementById('yiGTip');
-            if (tip) {
-                tip.style.left = conf.tip.l + '%';
-                tip.style.top = conf.tip.t + '%';
-                tip.style.width = conf.tip.w + '%';
-            }
-            yiShowScreen('yiScreenG', true);
-            if (f) f.classList.remove('paused');
+            var tiyanSrc = 'assets/yi/tiyan-' + key + '.png';
+            var img = new Image();
+            img.onload = function() {
+                var t = document.getElementById('yiTiyanInst');
+                if (t) {
+                    t.src = tiyanSrc;
+                    t.style.left = conf.inst.l + '%';
+                    t.style.top = conf.inst.t + '%';
+                    t.style.width = conf.inst.w + '%';
+                }
+                var f = document.getElementById('yiFinger');
+                if (f) {
+                    f.style.left = conf.finger.l + '%';
+                    f.style.top = conf.finger.t + '%';
+                    f.style.width = conf.finger.w + '%';
+                }
+                var tip = document.getElementById('yiGTip');
+                if (tip) {
+                    tip.style.left = conf.tip.l + '%';
+                    tip.style.top = conf.tip.t + '%';
+                    tip.style.width = conf.tip.w + '%';
+                }
+                yiShowScreen('yiScreenG', true);
+                if (f) f.classList.remove('paused');
+            };
+            img.src = tiyanSrc;
         }
         // 画面G：点击乐器 → 播放对应音频（单次），播放期间手指暂停
         function yiPlayInstrument() {
@@ -2899,12 +2949,15 @@
             var key = yiSelKeys[yiSelIndex];
             var f = document.getElementById('yiFinger');
             if (f) f.classList.add('paused');
+            var inst = document.getElementById('yiTiyanInst');
+            if (inst) inst.classList.add('playing');
             var a = new Audio('assets/yi/' + key + '.mp3');
             a.volume = 1;
             a.play().catch(function(e) { console.log('乐器音频播放失败:', e); });
             a.addEventListener('ended', function() {
                 if (yiPlayAudio === a) yiPlayAudio = null;
                 if (f) f.classList.remove('paused');
+                if (inst) inst.classList.remove('playing');
             });
             yiPlayAudio = a;
         }
@@ -2916,6 +2969,8 @@
             }
             var f = document.getElementById('yiFinger');
             if (f) f.classList.remove('paused');
+            var inst = document.getElementById('yiTiyanInst');
+            if (inst) inst.classList.remove('playing');
         }
         // 画面G：重新选择 → 回画面F（保留刚才体验的乐器），背景音乐自动恢复
         function yiReselect() {
@@ -2941,12 +2996,16 @@
         // 画面H：循声千年 → 返回序幕演奏画面，重新开始
         function yiXunshengQiannian() {
             playSound('click');
+            // 显示引导页（传音呼吸），点传音后直接进 erScreen2
+            showGuide('chuanyin');
+        }
+        // 点传音后真正执行的逻辑：直接进 erScreen2（删除 erScreen1 转场）
+        function yiXunshengQiannianGoDirect() {
             stopYiMusic();
             stopAmbient();
             document.getElementById('scene-third').classList.remove('active');
-            // 进入第二幕：遗音不绝
             document.getElementById('scene-er').classList.add('active');
-            erShowScreen('erScreen1', true);
+            erShowScreen('erScreen2', true);
             erStartBgMusic();
         }
 
@@ -3060,6 +3119,66 @@
         }
 
         // 重新体验：回到开场画面
+        /* ========== 引导页逻辑 ========== */
+        var guideNextStep = null; // 记录用户从哪个节点进来的引导页
+        function showGuide(nextStep) {
+            guideNextStep = nextStep;
+            // 清除所有呼吸动画
+            ['guideTingyin', 'guideXunyin', 'guideZouyin', 'guideChuanyin'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.classList.remove('breathing');
+            });
+            // 给"理论上下一环节"按钮加呼吸动画
+            var breathId = { tingyin: 'guideTingyin', xunyin: 'guideXunyin', zouyin: 'guideZouyin', chuanyin: 'guideChuanyin' }[nextStep];
+            if (breathId) {
+                var b = document.getElementById(breathId);
+                if (b) b.classList.add('breathing');
+            }
+            var ov = document.getElementById('guideOverlay');
+            if (ov) ov.classList.add('show');
+        }
+        function hideGuide() {
+            var ov = document.getElementById('guideOverlay');
+            if (ov) ov.classList.remove('show');
+            ['guideTingyin', 'guideXunyin', 'guideZouyin', 'guideChuanyin'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.classList.remove('breathing');
+            });
+        }
+        function guideGo(step) {
+            playSound('click');
+            hideGuide();
+            // 先停所有背景音乐，避免同时播放
+            stopYiMusic();
+            stopAmbient();
+            if (erBgMusic) { try { erBgMusic.pause(); } catch(e){} erBgMusicPlaying = false; }
+            // 所有按钮都直接跳转到对应画面
+            if (step === 'tingyin') {
+                // 听音 → 上前聆听静态封面
+                xuReset();
+                document.getElementById('scene-er').classList.remove('active');
+                document.getElementById('scene-third').classList.remove('active');
+                document.getElementById('scene-second').classList.add('active');
+                startPrologue();
+            } else if (step === 'xunyin') {
+                // 寻音 → 弹出寻找乐器参考图（yiScreenA）
+                document.getElementById('scene-er').classList.remove('active');
+                document.getElementById('scene-second').classList.remove('active');
+                document.getElementById('scene-third').classList.add('active');
+                yiShowScreen('yiScreenA', true);
+                playYiMusic();
+            } else if (step === 'zouyin') {
+                // 奏音 → 选择乐器画面（yiScreenF）
+                document.getElementById('scene-er').classList.remove('active');
+                document.getElementById('scene-second').classList.remove('active');
+                document.getElementById('scene-third').classList.add('active');
+                yiDoGoSelect();
+            } else if (step === 'chuanyin') {
+                // 传音 → 三站画面（erScreen2）
+                yiXunshengQiannianGoDirect();
+            }
+        }
+
         function erRestart() {
             playSound('click');
             // 停止所有第二幕音频
@@ -3301,5 +3420,17 @@
             document.removeEventListener('click', unlockAudio);
         }, { once: false });
     </script>
+    <!-- ========== 引导页 overlay ========== -->
+    <div class="guide-overlay" id="guideOverlay">
+        <img class="guide-bg" src="assets/beijing-huanjie.png" alt="">
+        <img class="guide-btn guide-tingyin" id="guideTingyin" src="assets/tingyin.png" alt="听音" onclick="guideGo('tingyin')">
+        <img class="guide-arrow guide-jiantou1" src="assets/jiantou1.png" alt="">
+        <img class="guide-btn guide-xunyin" id="guideXunyin" src="assets/xunyin.png" alt="寻音" onclick="guideGo('xunyin')">
+        <img class="guide-arrow guide-jiantou2" src="assets/jiantou2.png" alt="">
+        <img class="guide-btn guide-zouyin" id="guideZouyin" src="assets/zouyin.png" alt="奏音" onclick="guideGo('zouyin')">
+        <img class="guide-arrow guide-jiantou3" src="assets/jiantou3.png" alt="">
+        <img class="guide-btn guide-chuanyin" id="guideChuanyin" src="assets/chuanyin.png" alt="传音" onclick="guideGo('chuanyin')">
+    </div>
+
 </body>
 </html>
